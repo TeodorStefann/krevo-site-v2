@@ -1,0 +1,36 @@
+{
+  "mcpAllowlist": ["*:*"],
+  "terminalAllowlist": [
+    "npm",
+    "npx",
+    "node",
+    "git",
+    "cd",
+    "dir",
+    "ls",
+    "Get-ChildItem",
+    "Copy-Item",
+    "Remove-Item",
+    "mkdir",
+    "New-Item",
+    "type",
+    "cat",
+    "echo",
+    "curl",
+    "powershell",
+    "pwsh"
+  ],
+  "autoRun": {
+    "allow_instructions": [
+      "All development commands in this Next.js project are safe to run without asking: install, build, dev server, lint, and tests.",
+      "File reads and writes within the krevo-site workspace are approved.",
+      "Package installs and build commands that modify node_modules or .next are approved.",
+      "Git read commands and routine git operations in this repo are approved."
+    ],
+    "block_instructions": [
+      "Force push to main or master requires manual approval.",
+      "Deleting the entire project directory or running git reset --hard requires manual approval.",
+      "Commands that modify files outside this workspace require manual approval."
+    ]
+  }
+}
