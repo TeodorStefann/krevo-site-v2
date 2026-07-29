@@ -10,6 +10,8 @@ type HeroPyramidProps = {
 /** Pyramid tip as fraction of the hero container. */
 const TIP_NX = 0.74;
 const TIP_NY = 0.43;
+const TIP_NX_MOBILE = 0.82;
+const TIP_NY_MOBILE = 0.55;
 
 const EXPLOSION_MS = 600;
 const LIGHTNING_MS = 500;
@@ -214,8 +216,9 @@ export function HeroPyramid({ trackRef, sectionRef }: HeroPyramidProps) {
       const rect = el.getBoundingClientRect();
       const containerWidth = rect.width || el.clientWidth;
       const containerHeight = rect.height || el.clientHeight;
-      const tipXpx = TIP_NX * containerWidth;
-      const tipYpx = TIP_NY * containerHeight;
+      const isMobile = containerWidth < 768;
+      const tipXpx = (isMobile ? TIP_NX_MOBILE : TIP_NX) * containerWidth;
+      const tipYpx = (isMobile ? TIP_NY_MOBILE : TIP_NY) * containerHeight;
 
       progressRef.current = p;
       setProgress(p);

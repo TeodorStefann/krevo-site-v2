@@ -6,10 +6,10 @@ import { Mail, Linkedin } from "lucide-react";
 const LINKEDIN_URL = "https://www.linkedin.com/in/teodor-chiurtu";
 
 const linkClass =
-  "text-[13px] text-krevo-silver transition-colors duration-200 hover:text-[#a855f7]";
+  "block py-2 text-[13px] text-krevo-silver transition-colors duration-200 hover:text-[#a855f7]";
 
 const socialClass =
-  "text-[#a855f7] transition-colors duration-200 hover:text-[#c084fc]";
+  "flex h-11 w-11 items-center justify-center text-[#a855f7] transition-colors duration-200 hover:text-[#c084fc]";
 
 const products = [
   { label: "FirmFlow", href: "/#portofoliu" },
@@ -85,7 +85,7 @@ export function Footer() {
           {/* Produse */}
           <div>
             <p className="text-[14px] font-bold text-white">Produse</p>
-            <ul className="mt-4 space-y-2.5">
+            <ul className="mt-4 space-y-1">
               {products.map((item) => (
                 <li key={item.label}>
                   <a href={item.href} className={linkClass}>
@@ -99,7 +99,7 @@ export function Footer() {
           {/* Companie */}
           <div>
             <p className="text-[14px] font-bold text-white">Companie</p>
-            <ul className="mt-4 space-y-2.5">
+            <ul className="mt-4 space-y-1">
               {company.map((item) => (
                 <li key={item.label}>
                   <a href={item.href} className={linkClass}>

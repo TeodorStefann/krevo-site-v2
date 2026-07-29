@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { PortfolioCurtain } from "./animations/PortfolioCurtain";
 import { FirmFlowProductCard } from "./FirmFlowProductCard";
 
-const PLATFORM_LOGIN = "https://buildflow-eight-tan.vercel.app/login";
+const PLATFORM_LOGIN = "https://firmflow-eight-tan.vercel.app/login";
 
 function FirmFlowBrand({ className = "" }: { className?: string }) {
   return (
@@ -62,6 +62,8 @@ function DemoMedia({ src, alt }: { src: string; alt: string }) {
       <img
         src={src}
         alt={alt}
+        loading="lazy"
+        decoding="async"
         className="block h-auto w-full rounded-2xl"
       />
     </div>
@@ -148,10 +150,10 @@ export function Portfolio() {
   return (
     <section
       id="portofoliu"
-      className="relative overflow-hidden bg-[#000000] px-6 py-[100px]"
+      className="relative overflow-hidden bg-[#000000] px-6 py-16 md:py-[100px]"
     >
         <div className="relative z-10 mx-auto max-w-6xl">
-          <h2 className="text-center font-serif text-4xl font-bold text-white italic md:text-[3.25rem]">
+          <h2 className="text-center font-serif text-[28px] font-bold text-white italic sm:text-4xl md:text-[3.25rem]">
             Ce am{" "}
             <span
               style={{
@@ -166,19 +168,19 @@ export function Portfolio() {
             </span>
           </h2>
 
-          <PortfolioCurtain className="mt-20">
+          <PortfolioCurtain className="mt-12 md:mt-20">
             <FirmFlowProductCard quizTheme="purple" />
           </PortfolioCurtain>
 
-          <div className="mt-20 bg-[#000000] py-[80px]">
-            <h2 className="text-center text-[32px] font-bold text-white md:text-[36px]">
+          <div className="mt-12 bg-[#000000] py-12 md:mt-20 md:py-[80px]">
+            <h2 className="text-center text-[26px] font-bold text-white sm:text-[32px] md:text-[36px]">
               <FirmFlowBrand /> în acțiune
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-center text-[16px] text-krevo-silver italic">
+            <p className="mx-auto mt-4 max-w-xl text-center text-[15px] text-krevo-silver italic md:text-[16px]">
               Nu îți cerem să ne crezi pe cuvânt. Uite cum arată.
             </p>
 
-            <div className="mt-16 flex flex-col gap-[100px]">
+            <div className="mt-12 flex flex-col gap-14 md:mt-16 md:gap-[100px]">
               {/* ROW 1 — media left */}
               <FadeInOnScroll>
                 <div className="flex flex-col items-center gap-10 md:flex-row md:gap-12">

@@ -32,7 +32,7 @@ export function CookieConsent() {
 
   return (
     <div
-      className={`fixed bottom-6 left-1/2 z-[10000] w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 transition-opacity duration-300 ${
+      className={`fixed bottom-4 left-1/2 z-[10000] w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 transition-opacity duration-300 sm:bottom-6 ${
         leaving ? "opacity-0" : "opacity-100"
       }`}
       role="dialog"
@@ -61,14 +61,14 @@ export function CookieConsent() {
           <button
             type="button"
             onClick={() => accept("all")}
-            className="rounded-full bg-[#c9a84c] px-5 py-2.5 text-[13px] font-semibold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c]"
+            className="min-h-11 rounded-full bg-[#c9a84c] px-5 py-2.5 text-[13px] font-semibold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c]"
           >
             Accept toate
           </button>
           <button
             type="button"
             onClick={() => accept("essential")}
-            className="rounded-full border border-[#c9a84c]/60 bg-transparent px-5 py-2.5 text-[13px] font-medium text-krevo-silver transition-colors hover:border-[#c9a84c] hover:text-white"
+            className="min-h-11 rounded-full border border-[#c9a84c]/60 bg-transparent px-5 py-2.5 text-[13px] font-medium text-krevo-silver transition-colors hover:border-[#c9a84c] hover:text-white"
           >
             Doar esențiale
           </button>

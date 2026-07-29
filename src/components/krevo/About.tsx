@@ -23,9 +23,9 @@ export function About() {
   return (
     <section
       id="despre"
-      className="relative overflow-hidden bg-[#05000f] px-6 py-[100px]"
+      className="relative overflow-hidden bg-[#05000f] px-6 py-16 md:py-[100px]"
     >
-      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16">
+      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-16">
         <SlideReveal direction="left">
           <div className="flex justify-center md:justify-center">
             {!imgError ? (
@@ -34,11 +34,11 @@ export function About() {
                 alt="Teodor Chiurtu"
                 width={320}
                 height={320}
-                className="about-photo-glow block h-auto w-[320px] max-w-full bg-transparent"
+                className="about-photo-glow block h-auto w-[240px] max-w-full bg-transparent sm:w-[280px] md:w-[320px]"
                 onError={() => setImgError(true)}
               />
             ) : (
-              <div className="flex h-[320px] w-[320px] max-w-full items-center justify-center bg-transparent font-serif text-6xl text-[#a855f7]">
+              <div className="flex h-[240px] w-[240px] max-w-full items-center justify-center bg-transparent font-serif text-5xl text-[#a855f7] sm:h-[280px] sm:w-[280px] md:h-[320px] md:w-[320px] md:text-6xl">
                 TC
               </div>
             )}
@@ -47,7 +47,7 @@ export function About() {
 
         <SlideReveal direction="right" delay={0.08}>
           <div className="text-left">
-            <h2 className="font-serif text-[32px] font-bold text-white">
+            <h2 className="font-serif text-[28px] font-bold text-white md:text-[32px]">
               Hai să ne{" "}
               <span className="section-title-accent">cunoaștem</span>
             </h2>
@@ -81,11 +81,11 @@ export function About() {
               ))}
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               {stats.map((s) => (
                 <span
                   key={s}
-                  className="rounded-lg border border-[#7c3aed]/35 bg-transparent px-3.5 py-2 text-[13px] text-[#d0d0d0]"
+                  className="w-full rounded-lg border border-[#7c3aed]/35 bg-transparent px-3.5 py-2 text-left text-[13px] text-[#d0d0d0] sm:w-auto"
                 >
                   {s}
                 </span>
@@ -94,7 +94,7 @@ export function About() {
 
             <a
               href="#contact"
-              className="mt-8 inline-flex items-center justify-center rounded-full bg-[#6b21a8] px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#7c3aed]"
+              className="mt-8 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#6b21a8] px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#7c3aed] sm:w-auto"
             >
               Hai să construim împreună
             </a>

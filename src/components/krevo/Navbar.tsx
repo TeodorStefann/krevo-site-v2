@@ -24,7 +24,7 @@ type IconType = ComponentType<{
   className?: string;
 }>;
 
-const productHref = "https://buildflow-eight-tan.vercel.app/login";
+const productHref = "https://firmflow-eight-tan.vercel.app/login";
 
 const saasLinks: { label: string; href: string; icon: IconType }[] = [
   { label: "FirmFlow", href: "/firmflow", icon: Building2 },
@@ -71,7 +71,7 @@ export function Navbar() {
 
   return (
     <header className="fixed top-0 right-0 left-0 z-50 border-b border-transparent bg-transparent backdrop-blur-sm">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-12 py-5">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 sm:py-5 lg:px-12">
         <div className="flex items-center gap-8">
           <Link
             href="/"
@@ -223,7 +223,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="relative z-[60] flex h-10 w-10 items-center justify-center text-[#a855f7] lg:hidden"
+          className="relative z-[60] flex h-11 w-11 items-center justify-center text-[#a855f7] lg:hidden"
           aria-label={menuOpen ? "Închide meniul" : "Deschide meniul"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((o) => !o)}

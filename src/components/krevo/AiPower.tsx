@@ -72,11 +72,11 @@ export function AiPower() {
   return (
     <section
       id="puterea-ai"
-      className="relative overflow-hidden bg-[#05000f] px-6 py-[100px]"
+      className="relative overflow-hidden bg-[#05000f] px-6 py-16 md:py-[100px]"
     >
       <div className="relative z-10 mx-auto max-w-6xl">
-        <header className="mx-auto mb-14 max-w-3xl text-center md:mb-16">
-          <h2 className="text-center text-[36px] leading-tight font-bold text-white">
+        <header className="mx-auto mb-10 max-w-3xl text-center md:mb-16">
+          <h2 className="text-center text-[26px] leading-tight font-bold text-white sm:text-[32px] md:text-[36px]">
             De la 4 ore de muncă la{" "}
             <span className="section-title-accent">30 de secunde</span>. Asta e
             puterea Krevo.
@@ -88,13 +88,13 @@ export function AiPower() {
 
         <SlideReveal direction="left">
           <div className="overflow-hidden rounded-2xl border border-[#2d1b69]">
-            <div className="grid grid-cols-2 border-b border-[#2d1b69]">
-              <div className="bg-[#1a0000] px-4 py-4 text-center sm:px-6">
+            <div className="hidden border-b border-[#2d1b69] sm:grid sm:grid-cols-2">
+              <div className="bg-[#1a0000] px-4 py-3 text-center sm:px-6 sm:py-4">
                 <p className="text-sm font-bold tracking-wide text-red-300/90 uppercase sm:text-base">
                   Fără Krevo AI
                 </p>
               </div>
-              <div className="bg-[#0d0020] px-4 py-4 text-center sm:px-6">
+              <div className="bg-[#0d0020] px-4 py-3 text-center sm:px-6 sm:py-4">
                 <p className="text-sm font-bold tracking-wide text-[#a855f7] uppercase sm:text-base">
                   Cu Krevo AI
                 </p>
@@ -104,14 +104,20 @@ export function AiPower() {
             {comparisons.map((row, i) => (
               <div
                 key={row.without}
-                className={`grid grid-cols-2 ${
+                className={`grid grid-cols-1 sm:grid-cols-2 ${
                   i < comparisons.length - 1 ? "border-b border-[#2d1b69]/60" : ""
                 }`}
               >
-                <div className="bg-[#1a0000]/80 px-3 py-4 text-xs leading-snug text-red-200/75 sm:px-6 sm:text-sm">
+                <div className="bg-[#1a0000]/80 px-4 py-3 text-[13px] leading-snug text-red-200/75 sm:px-6 sm:py-4 sm:text-sm">
+                  <span className="mb-1 block text-[10px] font-semibold tracking-wide text-red-300/70 uppercase sm:hidden">
+                    Fără Krevo AI
+                  </span>
                   {row.without}
                 </div>
-                <div className="bg-[#0d0020]/90 px-3 py-4 text-xs leading-snug text-[#c4b5fd] sm:px-6 sm:text-sm">
+                <div className="bg-[#0d0020]/90 px-4 py-3 text-[13px] leading-snug text-[#c4b5fd] sm:px-6 sm:py-4 sm:text-sm">
+                  <span className="mb-1 block text-[10px] font-semibold tracking-wide text-[#a855f7]/80 uppercase sm:hidden">
+                    Cu Krevo AI
+                  </span>
                   {row.with}
                 </div>
               </div>
@@ -161,10 +167,10 @@ export function AiPower() {
 
         <div className="mt-14 flex justify-center md:mt-16">
           <a
-            href="https://buildflow-eight-tan.vercel.app/login"
+            href="https://firmflow-eight-tan.vercel.app/login"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex max-w-xl items-center justify-center rounded-full bg-[#6b21a8] px-8 py-4 text-center text-sm font-bold text-white transition-colors hover:bg-[#7c3aed] hover:shadow-[0_0_28px_rgba(124,58,237,0.4)] sm:px-10 sm:text-base"
+            className="inline-flex w-full max-w-xl items-center justify-center rounded-full bg-[#6b21a8] px-5 py-3.5 text-center text-[13px] leading-snug font-bold text-white transition-colors hover:bg-[#7c3aed] hover:shadow-[0_0_28px_rgba(124,58,237,0.4)] sm:px-10 sm:text-base"
           >
             Vrei să vezi AI-ul la lucru în firma ta? Încearcă 7 zile gratuit
           </a>

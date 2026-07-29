@@ -174,7 +174,7 @@ export default function FirmFlowPage() {
           <div className="mx-auto max-w-6xl">
             <FirmFlowProductCard
               navigateOnClick={false}
-              accessHref="https://buildflow-eight-tan.vercel.app/login"
+              accessHref="https://firmflow-eight-tan.vercel.app/login"
               quizTheme="gold"
             />
           </div>
@@ -363,7 +363,7 @@ export default function FirmFlowPage() {
 
             <div className="mt-16 flex justify-center">
               <a
-                href="https://buildflow-eight-tan.vercel.app/login"
+                href="https://firmflow-eight-tan.vercel.app/login"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex w-full max-w-[400px] items-center justify-center rounded-full bg-[#c9a84c] px-8 py-4 text-center text-sm font-bold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c] sm:text-base"

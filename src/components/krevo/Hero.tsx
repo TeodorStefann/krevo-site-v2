@@ -7,14 +7,6 @@ import { Mail, Linkedin, Phone } from "lucide-react";
 import { HeroMeander } from "./HeroMeander";
 import { HeroPyramid } from "./HeroPyramid";
 
-const HeroWorkspaceCanvas = dynamic(
-  () =>
-    import("./HeroWorkspaceCanvas").then((m) => ({
-      default: m.HeroWorkspaceCanvas,
-    })),
-  { ssr: false },
-);
-
 const HeroParticleNetwork = dynamic(
   () =>
     import("./HeroParticleNetwork").then((m) => ({
@@ -30,6 +22,17 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const [typedSlogan, setTypedSlogan] = useState("");
   const [showTypingCursor, setShowTypingCursor] = useState(true);
+  const [enableHeavyFx, setEnableHeavyFx] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(
+      "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+    );
+    const sync = () => setEnableHeavyFx(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     let index = 0;
@@ -46,10 +49,13 @@ export function Hero() {
   }, []);
 
   return (
-    <div ref={trackRef} className="relative h-[300vh]">
+    <div
+      ref={trackRef}
+      className="relative h-auto md:h-[300vh]"
+    >
       <section
         ref={sectionRef}
-        className="sticky top-0 flex h-screen items-center overflow-hidden bg-[#0a0a0a] px-6 pt-24 pb-16"
+        className="sticky top-0 flex min-h-[100dvh] items-start overflow-x-hidden overflow-y-auto bg-[#0a0a0a] px-4 pt-20 pb-10 sm:px-6 sm:pt-24 sm:pb-16 md:h-screen md:items-center md:overflow-hidden md:pb-16"
         style={{
           backgroundImage: "url(/piramida1.png)",
           backgroundSize: "cover",
@@ -66,8 +72,14 @@ export function Hero() {
           aria-hidden="true"
         />
 
-        <HeroPyramid trackRef={trackRef} sectionRef={sectionRef} />
-        <HeroParticleNetwork />
+        {enableHeavyFx ? (
+          <HeroPyramid trackRef={trackRef} sectionRef={sectionRef} />
+        ) : null}
+        {enableHeavyFx ? (
+          <div className="max-md:hidden">
+            <HeroParticleNetwork />
+          </div>
+        ) : null}
 
         <div
           className="pointer-events-none absolute bottom-0 left-0 z-[8] h-[200px] w-full"
@@ -78,13 +90,13 @@ export function Hero() {
           aria-hidden="true"
         />
 
-        <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-12">
+        <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-8 lg:grid-cols-[1fr_1fr] lg:gap-12">
           <div className="flex flex-col items-center text-center lg:items-center lg:text-center">
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="font-serif text-[72px] leading-[0.9] font-black tracking-tight md:text-[120px]"
+              className="font-serif text-[48px] leading-[0.9] font-black tracking-tight sm:text-[56px] md:text-[120px]"
             >
               <span className="krevo-gradient-text" data-text="KREVO">
                 KREVO
@@ -97,7 +109,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-8 font-serif text-[28px] text-[#a855f7] italic"
+              className="mt-5 max-w-[22rem] font-serif text-[18px] leading-snug text-[#a855f7] italic sm:mt-8 sm:max-w-none sm:text-[22px] md:text-[28px]"
               aria-label={HERO_SLOGAN}
             >
               {typedSlogan}
@@ -112,25 +124,25 @@ export function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-8 flex flex-wrap items-stretch justify-center gap-6"
+              className="mt-6 flex w-full max-w-md flex-col items-stretch gap-3 sm:mt-8 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-stretch sm:justify-center sm:gap-6"
             >
               <a
-                href="https://buildflow-eight-tan.vercel.app/login"
+                href="https://firmflow-eight-tan.vercel.app/login"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex flex-col items-center justify-center rounded-full bg-[#6b21a8] px-10 py-[18px] text-center transition-colors hover:bg-[#7c3aed]"
+                className="inline-flex w-full flex-col items-center justify-center rounded-full bg-[#6b21a8] px-6 py-3.5 text-center transition-colors hover:bg-[#7c3aed] sm:w-auto sm:px-10 sm:py-[18px]"
               >
-                <span className="text-[18px] font-bold text-white">
+                <span className="text-[15px] font-bold text-white sm:text-[18px]">
                   Încearcă FirmFlow — 7 zile gratuit
                 </span>
-                <span className="mt-1 text-[13px] text-krevo-silver">
+                <span className="mt-1 text-[12px] text-krevo-silver sm:text-[13px]">
                   Cel mai avansat produs al nostru
                 </span>
               </a>
 
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center rounded-full border border-[#7c3aed] bg-transparent px-10 py-[18px] text-[18px] font-semibold text-[#7c3aed] transition-colors hover:bg-[#7c3aed]/10"
+                className="inline-flex w-full items-center justify-center rounded-full border border-[#7c3aed] bg-transparent px-6 py-3.5 text-[15px] font-semibold text-[#7c3aed] transition-colors hover:bg-[#7c3aed]/10 sm:w-auto sm:px-10 sm:py-[18px] sm:text-[18px]"
               >
                 Hai să construim împreună →
               </a>
@@ -141,7 +153,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-6 inline-flex items-center gap-2.5 text-[16px] text-white transition-opacity hover:opacity-80"
+              className="mt-6 inline-flex min-h-11 items-center gap-2.5 text-[16px] text-white transition-opacity hover:opacity-80"
             >
               <Phone
                 size={20}
@@ -156,13 +168,13 @@ export function Hero() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-5 flex items-center justify-center gap-10"
+              className="mt-5 flex items-center justify-center gap-8 sm:gap-10"
             >
               <a
                 href="https://wa.me/40774451822"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col items-center gap-1.5"
+                className="group flex min-h-11 flex-col items-center justify-center gap-1.5"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -178,7 +190,7 @@ export function Hero() {
 
               <a
                 href="mailto:teodor@krevo.ro"
-                className="group flex flex-col items-center gap-1.5"
+                className="group flex min-h-11 flex-col items-center justify-center gap-1.5"
               >
                 <Mail
                   size={32}
@@ -194,7 +206,7 @@ export function Hero() {
                 href="https://www.linkedin.com/in/teodor-chiurtu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col items-center gap-1.5"
+                className="group flex min-h-11 flex-col items-center justify-center gap-1.5"
               >
                 <Linkedin
                   size={32}
@@ -207,17 +219,6 @@ export function Hero() {
               </a>
             </motion.div>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex items-center justify-center"
-          >
-            <div className="lg:hidden">
-              <HeroWorkspaceCanvas />
-            </div>
-          </motion.div>
         </div>
       </section>
     </div>

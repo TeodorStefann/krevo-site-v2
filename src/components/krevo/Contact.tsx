@@ -127,7 +127,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-[#000000] px-6 py-[100px]"
+      className="relative overflow-hidden bg-[#000000] px-6 py-16 md:py-[100px]"
     >
       <div className="relative z-10 mx-auto max-w-6xl">
         <h2 className="text-center font-serif text-[36px] font-bold text-white">
@@ -307,13 +307,13 @@ export function Contact() {
                   />
                 </div>
 
-                <label className="flex cursor-pointer items-start gap-3 text-[13px] leading-relaxed text-krevo-silver">
+                <label className="flex min-h-11 cursor-pointer items-start gap-3 text-[13px] leading-relaxed text-krevo-silver">
                   <input
                     type="checkbox"
                     required
                     checked={privacyAccepted}
                     onChange={(e) => setPrivacyAccepted(e.target.checked)}
-                    className="mt-1 h-4 w-4 shrink-0 rounded border-[#2d1b69] bg-[#050508] accent-[#a855f7]"
+                    className="mt-0.5 h-5 w-5 shrink-0 rounded border-[#2d1b69] bg-[#050508] accent-[#a855f7]"
                   />
                   <span>
                     Sunt de acord cu prelucrarea datelor mele conform{" "}

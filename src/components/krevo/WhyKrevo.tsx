@@ -20,10 +20,10 @@ export function WhyKrevo() {
   return (
     <section
       id="de-ce-krevo"
-      className="relative overflow-hidden bg-[#000000] px-6 py-[100px]"
+      className="relative overflow-hidden bg-[#000000] px-6 py-16 md:py-[100px]"
     >
       <div className="relative z-10 mx-auto max-w-6xl">
-        <h2 className="text-center font-serif text-[36px] font-bold text-white">
+        <h2 className="text-center font-serif text-[26px] leading-tight font-bold text-white sm:text-[32px] md:text-[36px]">
           Nu ești un ticket de suport. Ești un{" "}
           <span className="section-title-accent">partener</span>.
         </h2>

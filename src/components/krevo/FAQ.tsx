@@ -65,10 +65,10 @@ export function FAQ() {
   return (
     <section
       id="faq"
-      className="relative overflow-hidden bg-[#05000f] px-6 py-[100px]"
+      className="relative overflow-hidden bg-[#05000f] px-6 py-16 md:py-[100px]"
     >
       <div className="relative z-10 mx-auto max-w-3xl">
-        <h2 className="text-center font-serif text-[36px] font-bold text-white">
+        <h2 className="text-center font-serif text-[28px] font-bold text-white sm:text-[36px]">
           Întrebări <span className="section-title-accent">frecvente</span>
         </h2>
         <div
@@ -89,7 +89,7 @@ export function FAQ() {
                   type="button"
                   onClick={() => toggle(index)}
                   aria-expanded={isOpen}
-                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left md:px-6 md:py-5"
+                  className="flex min-h-11 w-full items-center justify-between gap-4 px-5 py-4 text-left md:px-6 md:py-5"
                 >
                   <span className="text-[15px] font-semibold text-white md:text-base">
                     {item.question}

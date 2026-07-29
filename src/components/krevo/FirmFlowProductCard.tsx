@@ -190,7 +190,7 @@ function TimeLossQuizModal({
           <button
             type="button"
             onClick={onClose}
-            className="absolute top-4 right-4 text-krevo-silver transition-colors hover:text-white"
+            className="absolute top-3 right-3 flex h-11 w-11 items-center justify-center text-krevo-silver transition-colors hover:text-white"
             aria-label="Închide"
           >
             <X size={20} />
@@ -396,8 +396,8 @@ export function FirmFlowProductCard({
             navigateOnClick ? "cursor-pointer" : ""
           }`}
         >
-          <div className="relative overflow-hidden rounded-[calc(2rem-5px)] border border-[#c9a84c]/80 bg-gradient-to-br from-[#0a0a0a] to-[#0f0d00] p-10">
-            <span className="absolute top-4 right-4 z-20 rounded-full border border-[#c9a84c] px-2.5 py-1 text-[11px] font-medium text-[#c9a84c]">
+          <div className="relative overflow-hidden rounded-[calc(2rem-5px)] border border-[#c9a84c]/80 bg-gradient-to-br from-[#0a0a0a] to-[#0f0d00] p-5 sm:p-8 md:p-10">
+            <span className="absolute top-3 right-3 z-20 rounded-full border border-[#c9a84c] px-2 py-1 text-[10px] font-medium text-[#c9a84c] sm:top-4 sm:right-4 sm:px-2.5 sm:text-[11px]">
               ✦ Disponibil acum
             </span>
             <div
@@ -450,21 +450,21 @@ export function FirmFlowProductCard({
               <span className="mb-4 inline-block rounded-full bg-[#c9a84c] px-3 py-1 text-xs font-semibold tracking-[0.12em] text-[#0a0a0a] uppercase">
                 Produs principal · Disponibil acum
               </span>
-              <h3 className="mt-4 flex items-center font-serif text-5xl font-bold md:text-6xl lg:text-7xl">
+              <h3 className="mt-4 flex flex-wrap items-center font-serif text-3xl font-bold sm:text-4xl md:text-6xl lg:text-7xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/firmflow-logo.png"
                   alt=""
-                  className="mr-4 h-24 w-auto object-contain"
+                  className="mr-2 h-12 w-auto object-contain sm:mr-4 sm:h-16 md:h-24"
                   aria-hidden="true"
                 />
                 <span className="leading-none text-white">Firm</span>
                 <span className="leading-none text-[#c9a84c]">Flow</span>
               </h3>
-              <p className="mt-5 font-serif text-xl text-[#e8d5a3] italic md:text-2xl">
+              <p className="mt-4 font-serif text-lg text-[#e8d5a3] italic sm:mt-5 sm:text-xl md:text-2xl">
                 Tot ce mișcă în firma ta — într-un singur loc
               </p>
-              <p className="mt-6 max-w-2xl text-base leading-relaxed text-krevo-silver md:text-lg">
+              <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-krevo-silver sm:mt-6 sm:text-base md:text-lg">
                 Platforma care adună proiecte, echipe, materiale și pontaj
                 într-un flux clar — fără Excel, fără haos.
               </p>
@@ -480,7 +480,7 @@ export function FirmFlowProductCard({
                   {...(accessHref.startsWith("http")
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
-                  className="inline-flex items-center justify-center rounded-full bg-[#c9a84c] px-7 py-3.5 text-sm font-bold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c]"
+                  className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#c9a84c] px-7 py-3.5 text-sm font-bold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c] sm:w-auto"
                 >
                   Accesează platforma
                 </a>
@@ -488,7 +488,7 @@ export function FirmFlowProductCard({
                   href={PDF_HREF}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[#c9a84c] bg-transparent px-7 py-3.5 text-sm font-semibold text-[#c9a84c] transition-colors hover:bg-[#c9a84c]/10"
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-[#c9a84c] bg-transparent px-7 py-3.5 text-sm font-semibold text-[#c9a84c] transition-colors hover:bg-[#c9a84c]/10 sm:w-auto"
                 >
                   <Download size={16} strokeWidth={2} aria-hidden="true" />
                   Descarcă Ghidul PDF
@@ -498,7 +498,7 @@ export function FirmFlowProductCard({
               <button
                 type="button"
                 onClick={() => setQuizOpen(true)}
-                className="mt-4 inline-flex items-center justify-center rounded-full border border-[#c9a84c]/50 bg-transparent px-7 py-3.5 text-sm font-semibold text-[#e8d5a3] transition-colors hover:border-[#c9a84c] hover:text-[#c9a84c]"
+                className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-full border border-[#c9a84c]/50 bg-transparent px-7 py-3.5 text-sm font-semibold text-[#e8d5a3] transition-colors hover:border-[#c9a84c] hover:text-[#c9a84c] sm:w-auto"
               >
                 Cât timp pierzi zilnic? →
               </button>

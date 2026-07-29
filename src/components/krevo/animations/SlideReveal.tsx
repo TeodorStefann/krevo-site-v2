@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
 import { springNatural } from "./motionConfig";
 
@@ -19,14 +19,51 @@ export function SlideReveal({
 }: SlideRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
-  const x = direction === "left" ? -80 : 80;
+  const [reduceMotion, setReduceMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const motionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mobileMq = window.matchMedia("(max-width: 767px)");
+    const sync = () => {
+      setReduceMotion(motionMq.matches);
+      setIsMobile(mobileMq.matches);
+    };
+    sync();
+    motionMq.addEventListener("change", sync);
+    mobileMq.addEventListener("change", sync);
+    return () => {
+      motionMq.removeEventListener("change", sync);
+      mobileMq.removeEventListener("change", sync);
+    };
+  }, []);
+
+  if (reduceMotion) {
+    return (
+      <div ref={ref} className={className}>
+        {children}
+      </div>
+    );
+  }
+
+  const offset = isMobile ? 24 : 80;
+  const x = direction === "left" ? -offset : offset;
+  const initial = isMobile
+    ? { opacity: 0, y: 24 }
+    : { opacity: 0, x };
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, x }}
-      animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x }}
+      initial={initial}
+      animate={
+        inView
+          ? { opacity: 1, x: 0, y: 0 }
+          : isMobile
+            ? { opacity: 0, y: 24 }
+            : { opacity: 0, x }
+      }
       transition={{ ...springNatural, delay }}
       style={{ willChange: "transform, opacity" }}
     >

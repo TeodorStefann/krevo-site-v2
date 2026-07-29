@@ -452,3 +452,26 @@ input:-webkit-autofill:focus {
   background-repeat: repeat;
   background-size: 180px 180px;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .firmflow-float-card,
+  .hero-typing-cursor,
+  .pyramid-purple-glow,
+  .shimmer-text,
+  .premium-glow-card,
+  .final-cta-glow,
+  .services-aurora-bg,
+  .about-photo-glow {
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .firmflow-float-card {
+    animation: none !important;
+  }
+}

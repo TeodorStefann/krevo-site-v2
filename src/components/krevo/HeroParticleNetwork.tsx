@@ -16,6 +16,14 @@ export function HeroParticleNetwork() {
     const container = containerRef.current;
     if (!container) return;
 
+    if (
+      window.matchMedia(
+        "(max-width: 767px), (prefers-reduced-motion: reduce)",
+      ).matches
+    ) {
+      return;
+    }
+
     const width = container.clientWidth;
     const height = container.clientHeight;
 
@@ -35,7 +43,7 @@ export function HeroParticleNetwork() {
       alpha: true,
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
 
@@ -184,7 +192,7 @@ export function HeroParticleNetwork() {
   return (
     <div
       ref={containerRef}
-      className="pointer-events-none absolute inset-0 opacity-[0.35]"
+      className="pointer-events-none absolute inset-0 opacity-[0.35] max-md:hidden"
       aria-hidden="true"
     />
   );

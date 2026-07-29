@@ -37,11 +37,11 @@ export function ServicesSimple() {
   return (
     <section
       id="servicii-preview"
-      className="relative bg-[#000000] px-6 py-[100px]"
+      className="relative bg-[#000000] px-6 py-16 md:py-[100px]"
     >
       <div className="mx-auto max-w-6xl">
-        <div className="mb-16 text-center md:mb-20">
-          <h2 className="text-[42px] font-bold text-white">
+        <div className="mb-12 text-center md:mb-20">
+          <h2 className="text-[32px] font-bold text-white sm:text-[42px]">
             Ce <span className="section-title-accent">facem</span>
           </h2>
           <div
@@ -128,7 +128,7 @@ export function ServicesSimple() {
         <div className="mt-10 flex justify-center md:mt-12">
           <a
             href="/servicii"
-            className="rounded-full border border-[#6b21a8] bg-transparent px-6 py-2.5 text-[14px] font-medium text-white transition-colors duration-200 hover:border-[#7c3aed] hover:bg-[#6b21a8]/10"
+            className="inline-flex min-h-11 items-center rounded-full border border-[#6b21a8] bg-transparent px-6 py-3 text-[14px] font-medium text-white transition-colors duration-200 hover:border-[#7c3aed] hover:bg-[#6b21a8]/10"
           >
             Vezi toate serviciile →
           </a>
