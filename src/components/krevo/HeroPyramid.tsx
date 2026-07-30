@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 
 type HeroPyramidProps = {
   sectionRef: RefObject<HTMLElement | null>;
-  /** Box painting piramida-blue.png with background-size contain, right bottom. */
+  /** Box painting piramida-blue.png with object-fit cover, object-position bottom. */
   pyramidRef: RefObject<HTMLDivElement | null>;
   /** True once the loading screen has finished. */
   siteReady?: boolean;
@@ -14,8 +14,8 @@ type HeroPyramidProps = {
 const IMG_W = 1672;
 const IMG_H = 941;
 /** Pyramid apex in normalized image coordinates. */
-const TIP_NX_IMG = 0.72;
-const TIP_NY_IMG = 0.1;
+const TIP_NX_IMG = 0.734;
+const TIP_NY_IMG = 0.455;
 
 const LASER_DELAY_MS = 1500;
 const LASER_GROW_MS = 1200;
@@ -238,11 +238,11 @@ export function HeroPyramid({
       const boxRect = box.getBoundingClientRect();
       setIsMobile(window.innerWidth < 768);
 
-      // Mirror background-size: contain with background-position: right bottom
-      const scale = Math.min(boxRect.width / IMG_W, boxRect.height / IMG_H);
+      // Mirror object-fit: cover with object-position: bottom center
+      const scale = Math.max(boxRect.width / IMG_W, boxRect.height / IMG_H);
       const drawnW = IMG_W * scale;
       const drawnH = IMG_H * scale;
-      const insetX = boxRect.width - drawnW;
+      const insetX = (boxRect.width - drawnW) / 2;
       const insetY = boxRect.height - drawnH;
 
       setGeom({

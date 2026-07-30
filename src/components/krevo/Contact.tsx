@@ -117,6 +117,12 @@ export function Contact() {
           </a>
         </div>
 
+        <p className="mx-auto mt-8 max-w-[600px] text-center text-[15px] leading-relaxed text-krevo-silver italic">
+          Hai să vorbim 15 minute despre firma ta. Fără obligații, fără pitch de
+          vânzare — doar o conversație sinceră despre cum poți simplifica ce
+          faci zilnic.
+        </p>
+
         {success ? (
           <div className="mt-10 flex flex-col items-center rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-6 py-10 text-center">
             <CheckCircle2

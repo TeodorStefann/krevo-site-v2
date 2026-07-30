@@ -10,8 +10,10 @@ import { PainCalculator } from "./PainCalculator";
 import { AiPower } from "./AiPower";
 import { Portfolio } from "./Portfolio";
 import { Founder } from "./Founder";
+import { Testimonials } from "./Testimonials";
 import { Contact } from "./Contact";
 import { Footer } from "./Footer";
+import { SectionDivider } from "./SectionDivider";
 
 export function KrevoHome() {
   const [loaded, setLoaded] = useState(false);
@@ -27,10 +29,17 @@ export function KrevoHome() {
         <main>
           <Hero siteReady={loaded} />
           <TrustBar />
+          <SectionDivider />
           <PainCalculator />
+          <SectionDivider />
           <AiPower />
+          <SectionDivider />
           <Portfolio />
+          <SectionDivider />
           <Founder />
+          <SectionDivider />
+          <Testimonials />
+          <SectionDivider />
           <Contact />
         </main>
         <Footer />

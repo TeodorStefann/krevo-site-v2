@@ -1,29 +1,26 @@
 import Image from "next/image";
 
-const links = [
+const pageLinks = [
+  { label: "Acasă", href: "/" },
   { label: "FirmFlow", href: "/firmflow" },
   { label: "Servicii", href: "/servicii" },
-  { label: "Termeni", href: "/termeni" },
-  { label: "Confidențialitate", href: "/confidentialitate" },
-  { label: "Cookies", href: "/cookie-policy" },
+  { label: "Despre", href: "/#despre" },
 ];
 
-const linkClass =
-  "text-[13px] text-krevo-silver transition-colors duration-200 hover:text-[#3399FF]";
+const legalLinks = [
+  { label: "Termeni și condiții", href: "/termeni" },
+  { label: "Politică de confidențialitate", href: "/confidentialitate" },
+  { label: "Politică de cookies", href: "/cookie-policy" },
+];
 
-const legalLinkClass =
-  "transition-colors duration-200 hover:text-[#3399FF]";
+const columnHeading =
+  "text-[13px] font-semibold tracking-widest text-white uppercase";
+
+const columnLink =
+  "text-[13px] text-krevo-silver transition-colors duration-200 hover:text-[#3399FF]";
 
 const socialClass =
   "flex h-9 w-9 items-center justify-center rounded-full text-krevo-silver transition-colors duration-200 hover:text-[#3399FF]";
-
-function Separator() {
-  return (
-    <span className="text-krevo-silver/40" aria-hidden="true">
-      ·
-    </span>
-  );
-}
 
 function LinkedInIcon() {
   return (
@@ -53,60 +50,128 @@ function WhatsAppIcon() {
   );
 }
 
+function MailIcon() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="m22 7-10 6L2 7" />
+    </svg>
+  );
+}
+
 export function Footer() {
   return (
     <footer className="relative border-t border-[#002B66] bg-[#000000] px-6 py-[60px]">
       <div className="mx-auto max-w-6xl">
-        <div className="flex items-center justify-center gap-2.5">
-          <Image
-            src="/krevo-logo.png"
-            alt=""
-            width={96}
-            height={28}
-            className="h-7 w-auto object-contain"
-            aria-hidden="true"
-          />
-          <span className="text-[16px] text-white">Krevo</span>
-        </div>
+        <div className="grid grid-cols-1 gap-10 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-4">
+          <div>
+            <div className="flex items-center justify-center gap-2.5 sm:justify-start">
+              <Image
+                src="/krevo-logo.png"
+                alt=""
+                width={140}
+                height={40}
+                className="h-10 w-auto object-contain"
+                aria-hidden="true"
+              />
+              <span className="text-[18px] text-white">Krevo</span>
+            </div>
 
-        <nav className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
-          {links.map((item, i) => (
-            <span key={item.label} className="flex items-center gap-x-3">
-              {i > 0 && <Separator />}
-              <a href={item.href} className={linkClass}>
-                {item.label}
+            <p className="mt-4 text-[13px] leading-relaxed text-krevo-silver">
+              Platforme digitale pentru firme din România
+            </p>
+
+            <div className="mt-4 flex items-center justify-center gap-2 sm:justify-start">
+              <a
+                href="https://linkedin.com/in/teodor-chiurtu"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className={socialClass}
+              >
+                <LinkedInIcon />
               </a>
-            </span>
-          ))}
-        </nav>
+              <a
+                href="https://wa.me/40774451822"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className={socialClass}
+              >
+                <WhatsAppIcon />
+              </a>
+              <a
+                href="mailto:teodor@krevo.ro"
+                aria-label="Email"
+                className={socialClass}
+              >
+                <MailIcon />
+              </a>
+            </div>
+          </div>
 
-        <div className="mt-4 flex items-center justify-center gap-2">
-          <a
-            href="https://linkedin.com/in/teodor-chiurtu"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className={socialClass}
-          >
-            <LinkedInIcon />
-          </a>
-          <a
-            href="https://wa.me/40774451822"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="WhatsApp"
-            className={socialClass}
-          >
-            <WhatsAppIcon />
-          </a>
+          <div>
+            <p className={columnHeading}>Pagini</p>
+            <ul className="mt-4 space-y-2.5">
+              {pageLinks.map((item) => (
+                <li key={item.label}>
+                  <a href={item.href} className={columnLink}>
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className={columnHeading}>Legal</p>
+            <ul className="mt-4 space-y-2.5">
+              {legalLinks.map((item) => (
+                <li key={item.label}>
+                  <a href={item.href} className={columnLink}>
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className={columnHeading}>Contact</p>
+            <ul className="mt-4 space-y-2.5">
+              <li>
+                <a href="tel:+40774451822" className={columnLink}>
+                  0774451822
+                </a>
+              </li>
+              <li>
+                <a href="mailto:teodor@krevo.ro" className={columnLink}>
+                  teodor@krevo.ro
+                </a>
+              </li>
+              <li className="text-[13px] text-krevo-silver">Craiova, România</li>
+            </ul>
+          </div>
         </div>
 
-        <p className="mt-6 text-center text-[11px] text-krevo-silver">
+        <div className="mt-12 h-px w-full bg-[#0066FF]" aria-hidden="true" />
+
+        <p className="mt-6 text-center text-[11px] leading-relaxed text-krevo-silver">
           <a
             href="https://anpc.ro/ce-este-sal/"
             target="_blank"
             rel="noopener noreferrer"
-            className={legalLinkClass}
+            className="transition-colors duration-200 hover:text-[#3399FF]"
           >
             ANPC
           </a>
@@ -115,15 +180,15 @@ export function Footer() {
             href="https://ec.europa.eu/consumers/odr"
             target="_blank"
             rel="noopener noreferrer"
-            className={legalLinkClass}
+            className="transition-colors duration-200 hover:text-[#3399FF]"
           >
             Platforma SOL
           </a>
+          {" · Construit cu Next.js · Alimentat de Claude AI · Made in România"}
         </p>
 
         <p className="mt-2 text-center text-[11px] text-krevo-silver">
-          © 2026 Krevo · Persoană fizică autorizată · teodor@krevo.ro ·
-          0774451822
+          © 2026 Krevo · Persoană fizică autorizată
         </p>
       </div>
     </footer>

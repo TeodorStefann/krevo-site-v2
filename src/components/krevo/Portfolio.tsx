@@ -2,6 +2,12 @@
 
 import { PortfolioCurtain } from "./animations/PortfolioCurtain";
 
+const CARD_PILLS = [
+  "🔒 Date securizate",
+  "📱 Funcționează pe telefon",
+  "🤖 AI integrat nativ",
+];
+
 export function Portfolio() {
   return (
     <section
@@ -43,9 +49,27 @@ export function Portfolio() {
               <span className="text-[#0066FF]">Flow</span>
             </h3>
 
-            <p className="mt-4 text-[16px] text-krevo-silver italic">
-              Tot ce mișcă în firma ta — într-un singur loc.
+            <p className="mt-5 text-[15px] leading-relaxed text-white">
+              FirmFlow este sistemul de operare al firmei tale. Pontaj cu GPS,
+              proiecte cu faze, sarcini cu confirmare, oferte generate cu AI în
+              30 de secunde — totul într-un singur loc.
             </p>
+
+            <p className="mt-4 text-[14px] leading-relaxed text-krevo-silver italic">
+              Construit specific pentru firme din România cu 5-50 de angajați
+              care vor mai mult decât Excel.
+            </p>
+
+            <ul className="mt-6 flex flex-wrap justify-center gap-2">
+              {CARD_PILLS.map((pill) => (
+                <li
+                  key={pill}
+                  className="rounded-full border border-[#0066FF] px-3 py-1 text-[12px] text-krevo-silver"
+                >
+                  {pill}
+                </li>
+              ))}
+            </ul>
 
             <a
               href="/firmflow"

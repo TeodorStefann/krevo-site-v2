@@ -38,8 +38,20 @@ export function Founder() {
         </div>
 
         <div>
+          <p className="mb-4 text-[14px] font-semibold tracking-widest text-[#0066FF] uppercase">
+            Cine construiește asta?
+          </p>
+
           <p className="text-[24px] font-bold text-white">Teodor Chiurtu</p>
           <p className="mt-1 text-[14px] text-[#0066FF]">Fondator Krevo</p>
+
+          <p className="mt-5 text-[15px] leading-relaxed text-krevo-silver">
+            Am pornit Krevo cu o convingere simplă: firmele mici din România
+            merită aceleași unelte pe care le au corporațiile — dar fără prețul
+            și complexitatea lor. FirmFlow este rezultatul a 3 luni de
+            dezvoltare intensivă, construit cu cele mai avansate tehnologii AI
+            disponibile în 2026.
+          </p>
 
           <p className="mt-6 text-[20px] leading-relaxed text-white">
             Construiesc singur ce alte firme fac cu echipe de 10 oameni — pentru
@@ -63,6 +75,16 @@ export function Founder() {
           >
             Scrie-mi direct →
           </a>
+
+          <p className="mt-4 text-[13px] text-krevo-silver">
+            Sau scrie-mi un email:{" "}
+            <a
+              href="mailto:teodor@krevo.ro"
+              className="underline-offset-2 transition-colors hover:text-[#3399FF] hover:underline"
+            >
+              teodor@krevo.ro
+            </a>
+          </p>
         </div>
       </div>
     </section>

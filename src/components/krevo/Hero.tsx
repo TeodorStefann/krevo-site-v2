@@ -1,11 +1,19 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { HeroPyramid } from "./HeroPyramid";
+import { Counter } from "./Counter";
 
 const HERO_TITLE = "Firmele mari au sisteme. Tu ai Excel.";
+
+const HERO_STATS = [
+  { value: 30, suffix: "+", label: "module" },
+  { value: 7, suffix: "", label: "roluri unice" },
+  { value: 1, suffix: "", label: "fondator dedicat" },
+];
 
 export function Hero({ siteReady = false }: { siteReady?: boolean }) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -27,22 +35,25 @@ export function Hero({ siteReady = false }: { siteReady?: boolean }) {
     >
       <div
         ref={pyramidRef}
-        className="pointer-events-none absolute right-0 bottom-0 z-0 h-[42%] w-full md:h-[75%] md:w-[58%]"
-        style={{
-          backgroundImage: "url(/piramida-blue.png)",
-          backgroundSize: "contain",
-          backgroundPosition: "right bottom",
-          backgroundRepeat: "no-repeat",
-          opacity: 0.75,
-        }}
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{ opacity: 0.85 }}
         aria-hidden="true"
-      />
+      >
+        <Image
+          src="/piramida-blue.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-bottom"
+        />
+      </div>
 
       <div
         className="pointer-events-none absolute inset-0 z-[1]"
         style={{
           background:
-            "linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 40%, transparent 100%)",
+            "linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 40%, transparent 100%)",
         }}
         aria-hidden="true"
       />
@@ -65,6 +76,18 @@ export function Hero({ siteReady = false }: { siteReady?: boolean }) {
 
       <div className="relative z-10 mx-auto w-full max-w-7xl">
         <div className="max-w-2xl text-center md:text-left">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.6,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="mb-4 text-[14px] font-semibold tracking-widest text-[#0066FF] uppercase"
+          >
+            Krevo
+          </motion.p>
+
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -77,6 +100,20 @@ export function Hero({ siteReady = false }: { siteReady?: boolean }) {
           >
             {HERO_TITLE}
           </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.7,
+              delay: 0.25,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="mt-5 text-[20px] leading-relaxed text-krevo-silver italic"
+          >
+            Krevo construiește sistemul pe care firma ta îl merită — cu AI
+            integrat, personalizat complet.
+          </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -94,6 +131,27 @@ export function Hero({ siteReady = false }: { siteReady?: boolean }) {
             >
               Vezi FirmFlow →
             </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.55 }}
+            className="mt-8 flex flex-wrap justify-center gap-x-7 gap-y-2 md:justify-start"
+          >
+            {HERO_STATS.map((stat) => (
+              <p key={stat.label} className="text-[13px] text-white">
+                <span className="font-bold text-[#0066FF]">
+                  {siteReady ? (
+                    <Counter value={stat.value} duration={1500} />
+                  ) : (
+                    0
+                  )}
+                  {stat.suffix}
+                </span>{" "}
+                {stat.label}
+              </p>
+            ))}
           </motion.div>
         </div>
       </div>
