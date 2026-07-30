@@ -16,7 +16,7 @@ export default function CookiePolicyPage() {
             <span className="section-title-accent">cookies</span>
           </h1>
           <div
-            className="mt-4 h-px w-[60px] bg-[#6b21a8]"
+            className="mt-4 h-px w-[60px] bg-[#0052CC]"
             aria-hidden="true"
           />
           <p className="mt-4 text-sm text-krevo-silver">
@@ -85,12 +85,12 @@ export default function CookiePolicyPage() {
                 teodor@krevo.ro · 0774451822 · Craiova, România. Vezi și{" "}
                 <a
                   href="/confidentialitate"
-                  className="text-[#a855f7] hover:text-white"
+                  className="text-[#3399FF] hover:text-white"
                 >
                   Politica de confidențialitate
                 </a>{" "}
                 și{" "}
-                <a href="/termeni" className="text-[#a855f7] hover:text-white">
+                <a href="/termeni" className="text-[#3399FF] hover:text-white">
                   Termenii și condițiile
                 </a>
                 .

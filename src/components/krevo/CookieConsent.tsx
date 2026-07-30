@@ -39,20 +39,20 @@ export function CookieConsent() {
       aria-live="polite"
       aria-label="Consimțământ cookies"
     >
-      <div className="rounded-2xl border border-[#2d1b69] bg-[#0a0a0a] px-5 py-4 shadow-[0_20px_60px_rgba(0,0,0,0.55)]">
+      <div className="rounded-2xl border border-[#002B66] bg-[#0a0a0a] px-5 py-4 shadow-[0_20px_60px_rgba(0,0,0,0.55)]">
         <p className="text-center text-[13px] leading-relaxed text-krevo-silver">
           Folosim cookies esențiale pentru funcționarea site-ului. Preferința
           ta este salvată local. Vezi{" "}
           <Link
             href="/confidentialitate"
-            className="text-[#c9a84c] underline-offset-2 hover:underline"
+            className="text-[#3399FF] underline-offset-2 hover:underline"
           >
             Politica de confidențialitate
           </Link>{" "}
           și{" "}
           <Link
             href="/cookie-policy"
-            className="text-[#c9a84c] underline-offset-2 hover:underline"
+            className="text-[#3399FF] underline-offset-2 hover:underline"
           >
             Politica de cookies
           </Link>
@@ -62,14 +62,14 @@ export function CookieConsent() {
           <button
             type="button"
             onClick={() => accept("all")}
-            className="min-h-11 rounded-full bg-[#c9a84c] px-5 py-2.5 text-[13px] font-semibold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c]"
+            className="min-h-11 rounded-full bg-[#0066FF] px-5 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[#3399FF]"
           >
             Am înțeles
           </button>
           <button
             type="button"
             onClick={() => accept("essential")}
-            className="min-h-11 rounded-full border border-[#c9a84c]/60 bg-transparent px-5 py-2.5 text-[13px] font-medium text-krevo-silver transition-colors hover:border-[#c9a84c] hover:text-white"
+            className="min-h-11 rounded-full border border-[#0066FF]/60 bg-transparent px-5 py-2.5 text-[13px] font-medium text-krevo-silver transition-colors hover:border-[#0066FF] hover:text-white"
           >
             Doar esențiale
           </button>

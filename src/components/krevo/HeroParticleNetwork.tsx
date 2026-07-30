@@ -3,8 +3,8 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const GOLD = new THREE.Color(0xa855f7);
-const BLUE = new THREE.Color(0x7c3aed);
+const GOLD = new THREE.Color(0x3399FF);
+const BLUE = new THREE.Color(0x0066FF);
 const COUNT = 52;
 const CONNECT_DIST = 140;
 const CONNECT_DIST_SQ = CONNECT_DIST * CONNECT_DIST;

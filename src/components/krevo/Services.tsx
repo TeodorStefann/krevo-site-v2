@@ -128,8 +128,8 @@ function Card({ card }: { card: ServiceCard }) {
   const Icon = card.icon;
 
   return (
-    <article className="group flex h-full flex-col rounded-[12px] border border-[#2d1b69] bg-[#0a0a0a] p-6 transition-all duration-300 hover:border-[#7c3aed] hover:shadow-[0_0_28px_rgba(124,58,237,0.28)]">
-      <span className="mb-4 flex h-12 w-12 items-center justify-center text-[#a855f7] transition-colors group-hover:text-[#c084fc]">
+    <article className="group flex h-full flex-col rounded-[12px] border border-[#002B66] bg-[#0a0a0a] p-6 transition-all duration-300 hover:border-[#0066FF] hover:shadow-[0_0_28px_rgba(0,102,255,0.28)]">
+      <span className="mb-4 flex h-12 w-12 items-center justify-center text-[#3399FF] transition-colors group-hover:text-[#66B2FF]">
         <Icon size={32} strokeWidth={1.5} />
       </span>
       <h3 className="text-[15px] font-bold text-white">{card.title}</h3>
@@ -137,7 +137,7 @@ function Card({ card }: { card: ServiceCard }) {
         {card.description}
       </p>
       <div className="mt-auto pt-4">
-        <span className="rounded-full border border-[#2d1b69] px-2.5 py-0.5 text-[10px] tracking-wide text-[#a855f7]/85">
+        <span className="rounded-full border border-[#002B66] px-2.5 py-0.5 text-[10px] tracking-wide text-[#3399FF]/85">
           {card.tag}
         </span>
       </div>
@@ -148,9 +148,9 @@ function Card({ card }: { card: ServiceCard }) {
 function CategoryHeading({ title }: { title: string }) {
   return (
     <div className="mb-6 flex items-center gap-4">
-      <h2 className="shrink-0 text-[20px] font-bold text-[#a855f7]">{title}</h2>
+      <h2 className="shrink-0 text-[20px] font-bold text-[#3399FF]">{title}</h2>
       <div
-        className="h-px min-w-0 flex-1 bg-[#7c3aed]/70"
+        className="h-px min-w-0 flex-1 bg-[#0066FF]/70"
         aria-hidden="true"
       />
     </div>
@@ -161,7 +161,7 @@ export function Services() {
   return (
     <section
       id="servicii"
-      className="relative overflow-hidden bg-[#000000] px-6 py-20 md:py-24"
+      className="relative overflow-hidden bg-[#000000] px-6 py-[120px]"
     >
       <div className="relative z-10 mx-auto max-w-6xl">
         <header className="mb-16 text-center md:mb-20">
@@ -170,7 +170,7 @@ export function Services() {
             <span className="section-title-accent">tine</span>
           </h2>
           <div
-            className="mx-auto mt-5 h-px w-24 bg-[#7c3aed]"
+            className="mx-auto mt-5 h-px w-24 bg-[#0066FF]"
             aria-hidden="true"
           />
           <p className="mx-auto mt-5 max-w-2xl text-center text-[16px] text-krevo-silver italic">
@@ -201,7 +201,7 @@ export function Services() {
         <div className="mt-14 flex justify-center">
           <Link
             href="/#contact"
-            className="inline-flex items-center justify-center rounded-full bg-[#6b21a8] px-10 py-4 text-base font-bold text-white transition-colors hover:bg-[#7c3aed] hover:shadow-[0_0_28px_rgba(124,58,237,0.4)]"
+            className="inline-flex items-center justify-center rounded-full bg-[#0052CC] px-10 py-4 text-base font-bold text-white transition-colors hover:bg-[#0066FF] hover:shadow-[0_0_28px_rgba(0,102,255,0.4)]"
           >
             Solicită o ofertă personalizată
           </Link>

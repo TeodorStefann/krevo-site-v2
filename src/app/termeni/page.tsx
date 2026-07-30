@@ -16,7 +16,7 @@ export default function TermeniPage() {
             <span className="section-title-accent">condiții</span>
           </h1>
           <div
-            className="mt-4 h-px w-[60px] bg-[#6b21a8]"
+            className="mt-4 h-px w-[60px] bg-[#0052CC]"
             aria-hidden="true"
           />
           <p className="mt-4 text-sm text-krevo-silver">
@@ -34,7 +34,7 @@ export default function TermeniPage() {
                 România. Persoana de contact: Teodor Chiurtu. Email:{" "}
                 <a
                   href="mailto:teodor@krevo.ro"
-                  className="text-[#a855f7] hover:text-white"
+                  className="text-[#3399FF] hover:text-white"
                 >
                   teodor@krevo.ro
                 </a>
@@ -227,7 +227,7 @@ export default function TermeniPage() {
                 Detaliile complete privind confidențialitatea sunt în{" "}
                 <a
                   href="/confidentialitate"
-                  className="text-[#a855f7] hover:text-white"
+                  className="text-[#3399FF] hover:text-white"
                 >
                   Politica de confidențialitate
                 </a>

@@ -47,11 +47,11 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/logooo.png"
+            src="/krevo-logo.png"
             alt="Krevo"
             style={{ height: 44, width: "auto", display: "block" }}
           />
-          <span className="font-serif text-[32px] font-bold text-[#a855f7]">
+          <span className="font-serif text-[32px] font-bold text-[#0066FF]">
             KREVO
           </span>
         </div>
@@ -61,7 +61,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
             style={{
               width: lineExpanded ? 180 : 0,
               height: 1,
-              backgroundColor: "#7c3aed",
+              backgroundColor: "#0066FF",
               transition: "width 0.6s ease",
             }}
           />

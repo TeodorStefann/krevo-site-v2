@@ -29,7 +29,7 @@ export function ScrollProgressBar() {
       className="pointer-events-none fixed top-0 left-0 z-[9999] h-[2px] transition-[width] duration-150 ease-out"
       style={{
         width: `${progress}%`,
-        background: "linear-gradient(90deg, #7c3aed 0%, #a855f7 100%)",
+        background: "linear-gradient(90deg, #0066FF 0%, #3399FF 100%)",
       }}
       aria-hidden="true"
     />

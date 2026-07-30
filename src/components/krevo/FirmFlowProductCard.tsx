@@ -70,7 +70,7 @@ function TimeLossQuizModal({
 }: {
   open: boolean;
   onClose: () => void;
-  theme?: "gold" | "purple";
+  theme?: "gold" | "blue";
 }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -183,7 +183,7 @@ function TimeLossQuizModal({
           className={
             gold
               ? "relative w-full max-w-lg overflow-hidden rounded-2xl border border-[#c9a84c]/40 bg-gradient-to-b from-[#0f0d00] to-[#050508] p-6 shadow-[0_0_60px_rgba(201,168,76,0.2)] md:p-8"
-              : "relative w-full max-w-lg overflow-hidden rounded-2xl border border-[#7c3aed]/40 bg-gradient-to-b from-[#0d0020] to-[#050508] p-6 shadow-[0_0_60px_rgba(124,58,237,0.25)] md:p-8"
+              : "relative w-full max-w-lg overflow-hidden rounded-2xl border border-[#0066FF]/40 bg-gradient-to-b from-[#000D20] to-[#050508] p-6 shadow-[0_0_60px_rgba(0,102,255,0.25)] md:p-8"
           }
           onClick={(e) => e.stopPropagation()}
         >
@@ -200,7 +200,7 @@ function TimeLossQuizModal({
             className={
               gold
                 ? "text-xs tracking-[0.2em] text-[#c9a84c] uppercase"
-                : "text-xs tracking-[0.2em] text-[#a855f7] uppercase"
+                : "text-xs tracking-[0.2em] text-[#3399FF] uppercase"
             }
           >
             Diagnostic rapid
@@ -226,7 +226,7 @@ function TimeLossQuizModal({
                     className={
                       gold
                         ? "rounded-xl border border-[#c9a84c]/30 bg-[#0a0a0a] px-4 py-3 text-left text-sm font-medium text-white transition-colors hover:border-[#c9a84c] hover:bg-[#c9a84c]/10"
-                        : "rounded-xl border border-[#2d1b69] bg-[#0a0a0a] px-4 py-3 text-left text-sm font-medium text-white transition-colors hover:border-[#7c3aed] hover:bg-[#6b21a8]/20"
+                        : "rounded-xl border border-[#002B66] bg-[#0a0a0a] px-4 py-3 text-left text-sm font-medium text-white transition-colors hover:border-[#0066FF] hover:bg-[#0052CC]/20"
                     }
                   >
                     {opt}
@@ -241,7 +241,7 @@ function TimeLossQuizModal({
                   className={
                     gold
                       ? "text-base leading-relaxed text-[#e8d5a3] md:text-lg"
-                      : "text-base leading-relaxed text-[#c4b5fd] md:text-lg"
+                      : "text-base leading-relaxed text-[#99C2FF] md:text-lg"
                   }
                 >
                   Pierzi aproximativ{" "}
@@ -249,7 +249,7 @@ function TimeLossQuizModal({
                     className={
                       gold
                         ? "font-bold text-[#c9a84c]"
-                        : "font-bold text-[#a855f7]"
+                        : "font-bold text-[#3399FF]"
                     }
                   >
                     {monthlyHours} ore
@@ -296,7 +296,7 @@ function TimeLossQuizModal({
                     className={
                       gold
                         ? "w-full rounded-xl border border-[#c9a84c]/30 bg-[#050508] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-krevo-silver/40 focus:border-[#c9a84c]"
-                        : "w-full rounded-xl border border-[#2d1b69] bg-[#050508] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-krevo-silver/40 focus:border-[#c9a84c]"
+                        : "w-full rounded-xl border border-[#002B66] bg-[#050508] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-krevo-silver/40 focus:border-[#c9a84c]"
                     }
                   />
                   <button
@@ -354,7 +354,7 @@ export function FirmFlowProductCard({
 }: {
   navigateOnClick?: boolean;
   accessHref?: string;
-  quizTheme?: "gold" | "purple";
+  quizTheme?: "gold" | "blue";
   animate?: boolean;
 }) {
   const router = useRouter();
@@ -452,6 +452,8 @@ export function FirmFlowProductCard({
                 <img
                   src="/firmflow-logo.png"
                   alt=""
+                  loading="lazy"
+                  decoding="async"
                   className="mr-2 h-12 w-auto object-contain sm:mr-4 sm:h-16 md:h-24"
                   aria-hidden="true"
                 />

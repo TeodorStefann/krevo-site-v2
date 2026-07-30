@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { ScrollProgressBar } from "@/components/krevo/ScrollProgressBar";
 import { CookieConsent } from "@/components/krevo/CookieConsent";
+import { SectionReveal } from "@/components/krevo/animations/SectionReveal";
 import "./globals.css";
 
 const inter = Inter({
@@ -20,8 +21,8 @@ export const metadata: Metadata = {
   description:
     "Platforme SaaS cu AI integrat pentru firme din România. FirmFlow — tot ce mișcă în firma ta într-un singur loc.",
   icons: {
-    icon: "/logooo.png",
-    apple: "/logooo.png",
+    icon: "/krevo-logo.png",
+    apple: "/krevo-logo.png",
   },
   openGraph: {
     title: "Krevo — Construim fundația digitală a firmei tale",
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "Krevo",
     images: [
       {
-        url: "/logooo.png",
+        url: "/krevo-logo.png",
         width: 1200,
         height: 630,
         alt: "Krevo",
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
     title: "Krevo — Construim fundația digitală a firmei tale",
     description:
       "Platforme SaaS cu AI integrat pentru firme din România. FirmFlow — tot ce mișcă în firma ta într-un singur loc.",
-    images: ["/logooo.png"],
+    images: ["/krevo-logo.png"],
   },
 };
 
@@ -61,6 +62,7 @@ export default function RootLayout({
       >
         <ScrollProgressBar />
         <CookieConsent />
+        <SectionReveal />
         {children}
       </body>
     </html>

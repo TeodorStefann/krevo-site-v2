@@ -137,7 +137,7 @@ export default function FirmFlowPage() {
       <NoiseOverlay />
       <Navbar />
       <main className="pt-24">
-        <section className="px-6 py-16 md:py-20">
+        <section className="px-6 py-[120px]">
           <div className="mx-auto max-w-6xl text-center">
             <p
               className="text-xs font-medium tracking-[0.3em] uppercase"
@@ -186,7 +186,7 @@ export default function FirmFlowPage() {
           </div>
         </section>
 
-        <section className="bg-[#0a0a0a] px-6 py-16 md:py-20">
+        <section className="bg-[#0a0a0a] px-6 py-[120px]">
           <div className="mx-auto max-w-6xl">
             <h2 className="text-center text-[28px] font-bold text-white">
               Vezi platforma în{" "}

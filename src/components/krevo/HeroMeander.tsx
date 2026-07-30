@@ -16,7 +16,7 @@ export function HeroMeander() {
       <motion.path
         d={MEANDER_PATH}
         fill="none"
-        stroke="#6b21a8"
+        stroke="#0052CC"
         strokeWidth="1"
         strokeLinecap="square"
         initial={{ pathLength: 0, opacity: 0 }}

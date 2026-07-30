@@ -11,7 +11,7 @@ type Stat = {
   label: string;
 };
 
-type Theme = "purple" | "gold";
+type Theme = "blue" | "gold";
 
 const stats: Stat[] = [
   {
@@ -55,7 +55,7 @@ function StatCard({
         className={
           isGold
             ? "bg-gradient-to-b from-[#e8d5a3] to-[#c9a84c] bg-clip-text text-[72px] leading-none font-bold text-transparent"
-            : "bg-gradient-to-b from-[#a855f7] to-[#7c3aed] bg-clip-text text-[72px] leading-none font-bold text-transparent"
+            : "bg-gradient-to-b from-[#3399FF] to-[#0066FF] bg-clip-text text-[72px] leading-none font-bold text-transparent"
         }
         style={{ WebkitBackgroundClip: "text" }}
       >
@@ -75,7 +75,7 @@ function StatCard({
   );
 }
 
-export function NumbersSpeak({ theme = "purple" }: { theme?: Theme }) {
+export function NumbersSpeak({ theme = "blue" }: { theme?: Theme }) {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.35 });
   const isGold = theme === "gold";
@@ -84,8 +84,8 @@ export function NumbersSpeak({ theme = "purple" }: { theme?: Theme }) {
     <section
       ref={ref}
       id="numere"
-      className={`relative overflow-hidden px-6 py-20 md:py-24 ${
-        isGold ? "bg-[#0a0a0a]" : "bg-[#05000f]"
+      className={`relative overflow-hidden px-6 py-[120px] ${
+        isGold ? "bg-[#0a0a0a]" : "bg-[#000510]"
       }`}
     >
       <div className="relative z-10 mx-auto max-w-5xl">
@@ -116,7 +116,7 @@ export function NumbersSpeak({ theme = "purple" }: { theme?: Theme }) {
             className={
               isGold
                 ? "inline-flex max-w-xl items-center justify-center rounded-full bg-[#c9a84c] px-8 py-4 text-center text-sm font-bold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c] hover:shadow-[0_0_28px_rgba(201,168,76,0.4)] sm:px-10 sm:text-base"
-                : "inline-flex max-w-xl items-center justify-center rounded-full bg-[#6b21a8] px-8 py-4 text-center text-sm font-bold text-white transition-colors hover:bg-[#7c3aed] hover:shadow-[0_0_28px_rgba(124,58,237,0.4)] sm:px-10 sm:text-base"
+                : "inline-flex max-w-xl items-center justify-center rounded-full bg-[#0052CC] px-8 py-4 text-center text-sm font-bold text-white transition-colors hover:bg-[#0066FF] hover:shadow-[0_0_28px_rgba(0,102,255,0.4)] sm:px-10 sm:text-base"
             }
           >
             Vrei și tu aceste rezultate? Hai să vorbim

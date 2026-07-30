@@ -48,7 +48,7 @@ const dropdownPanel =
   "pointer-events-none absolute top-full left-0 z-50 pt-4 opacity-0 transition-all duration-200 ease-out group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100";
 
 const dropdownCard =
-  "rounded-2xl border border-[#2d1b69] bg-[#0a0a0a] p-6 shadow-[0_20px_60px_rgba(109,33,168,0.3)]";
+  "rounded-2xl border border-[#002B66] bg-[#0a0a0a] p-6 shadow-[0_20px_60px_rgba(0,82,204,0.3)]";
 
 
 export function Navbar() {
@@ -77,7 +77,7 @@ export function Navbar() {
             onClick={closeMobile}
           >
             <Image
-              src="/logooo.png"
+              src="/krevo-logo.png"
               alt="Krevo"
               width={120}
               height={40}
@@ -92,7 +92,7 @@ export function Navbar() {
             <div className="group relative">
               <button
                 type="button"
-                className="flex items-center gap-1 text-[14px] text-white transition-colors duration-200 hover:text-[#a855f7]"
+                className="flex items-center gap-1 text-[14px] text-white transition-colors duration-200 hover:text-[#3399FF]"
               >
                 Produse
                 <ChevronDown
@@ -104,15 +104,17 @@ export function Navbar() {
                 <div className={dropdownCard}>
                   <Link
                     href="/firmflow"
-                    className="flex gap-4 rounded-xl p-3 transition-colors hover:bg-[#6b21a8]/15"
+                    className="flex gap-4 rounded-xl p-3 transition-colors hover:bg-[#0052CC]/15"
                   >
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#c9a84c]/50 bg-[#0a0a0a]">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#0066FF]/50 bg-[#0a0a0a]">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src="/firmflow-logo.png"
                         alt="FirmFlow"
                         width={40}
                         height={40}
+                        loading="lazy"
+                        decoding="async"
                         className="h-10 w-10 object-contain"
                       />
                     </span>
@@ -131,7 +133,7 @@ export function Navbar() {
                       </p>
                     </div>
                   </Link>
-                  <div className="my-4 h-px bg-[#2d1b69]" aria-hidden="true" />
+                  <div className="my-4 h-px bg-[#002B66]" aria-hidden="true" />
                   <p className="px-3 text-[13px] text-krevo-silver/50">
                     Mai multe în curând
                   </p>
@@ -139,18 +141,18 @@ export function Navbar() {
               </div>
             </div>
 
-            <span className="mx-4 select-none text-[#a855f7]/50" aria-hidden="true">
+            <span className="mx-4 select-none text-[#3399FF]/50" aria-hidden="true">
               ·
             </span>
 
             <Link
               href="/firmflow"
-              className="text-[14px] text-white transition-colors duration-200 hover:text-[#a855f7]"
+              className="text-[14px] text-white transition-colors duration-200 hover:text-[#3399FF]"
             >
               FirmFlow
             </Link>
 
-            <span className="mx-4 select-none text-[#a855f7]/50" aria-hidden="true">
+            <span className="mx-4 select-none text-[#3399FF]/50" aria-hidden="true">
               ·
             </span>
 
@@ -158,7 +160,7 @@ export function Navbar() {
             <div className="group relative">
               <Link
                 href="/servicii"
-                className="flex items-center gap-1 text-[14px] text-white transition-colors duration-200 hover:text-[#a855f7]"
+                className="flex items-center gap-1 text-[14px] text-white transition-colors duration-200 hover:text-[#3399FF]"
               >
                 Servicii
                 <ChevronDown
@@ -178,24 +180,24 @@ export function Navbar() {
               </div>
             </div>
 
-            <span className="mx-4 select-none text-[#a855f7]/50" aria-hidden="true">
+            <span className="mx-4 select-none text-[#3399FF]/50" aria-hidden="true">
               ·
             </span>
 
             <Link
               href="/#despre"
-              className="text-[14px] text-white transition-colors duration-200 hover:text-[#a855f7]"
+              className="text-[14px] text-white transition-colors duration-200 hover:text-[#3399FF]"
             >
               Despre
             </Link>
 
-            <span className="mx-4 select-none text-[#a855f7]/50" aria-hidden="true">
+            <span className="mx-4 select-none text-[#3399FF]/50" aria-hidden="true">
               ·
             </span>
 
             <Link
               href="/#contact"
-              className="text-[14px] text-white transition-colors duration-200 hover:text-[#a855f7]"
+              className="text-[14px] text-white transition-colors duration-200 hover:text-[#3399FF]"
             >
               Contact
             </Link>
@@ -213,7 +215,7 @@ export function Navbar() {
           </a>
           <Link
             href="/#contact"
-            className="rounded-full bg-[#6b21a8] px-4 py-2 text-[13px] font-semibold text-white transition-colors duration-200 hover:bg-[#7c3aed]"
+            className="rounded-full bg-[#0052CC] px-4 py-2 text-[13px] font-semibold text-white transition-colors duration-200 hover:bg-[#0066FF]"
           >
             Hai să vorbim
           </Link>
@@ -221,7 +223,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="relative z-[101] flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-[#7c3aed]/50 bg-[#0a0a0a]/80 text-[#a855f7] lg:hidden"
+          className="relative z-[101] flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-[#0066FF]/50 bg-[#0a0a0a]/80 text-[#3399FF] lg:hidden"
           aria-label={menuOpen ? "Închide meniul" : "Deschide meniul"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((o) => !o)}
@@ -251,7 +253,7 @@ export function Navbar() {
         <div className="flex items-center justify-end px-6 pt-6 pb-2">
           <button
             type="button"
-            className="flex h-12 w-12 items-center justify-center text-white transition-colors hover:text-[#a855f7]"
+            className="flex h-12 w-12 items-center justify-center text-white transition-colors hover:text-[#3399FF]"
             aria-label="Închide meniul"
             onClick={closeMobile}
           >
@@ -266,7 +268,7 @@ export function Navbar() {
             className="group relative flex min-h-[56px] items-center justify-center px-4 text-[28px] font-bold text-white"
           >
             Servicii
-            <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#7c3aed] transition-all duration-300 group-hover:w-full" />
+            <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#0066FF] transition-all duration-300 group-hover:w-full" />
           </Link>
 
           <div className="flex w-full flex-col items-center">
@@ -279,20 +281,20 @@ export function Navbar() {
               Produse
               <ChevronDown
                 size={22}
-                className={`text-[#a855f7] transition-transform duration-200 ${
+                className={`text-[#3399FF] transition-transform duration-200 ${
                   produseOpen ? "rotate-180" : ""
                 }`}
               />
-              <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#7c3aed] transition-all duration-300 group-hover:w-full" />
+              <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#0066FF] transition-all duration-300 group-hover:w-full" />
             </button>
             {produseOpen ? (
               <Link
                 href="/firmflow"
                 onClick={closeMobile}
-                className="group relative mt-1 flex min-h-[48px] items-center justify-center gap-2 px-4 text-[20px] font-semibold text-[#c4b5fd]"
+                className="group relative mt-1 flex min-h-[48px] items-center justify-center gap-2 px-4 text-[20px] font-semibold text-[#99C2FF]"
               >
                 FirmFlow
-                <span className="absolute bottom-1 left-1/2 h-px w-0 -translate-x-1/2 bg-[#7c3aed] transition-all duration-300 group-hover:w-full" />
+                <span className="absolute bottom-1 left-1/2 h-px w-0 -translate-x-1/2 bg-[#0066FF] transition-all duration-300 group-hover:w-full" />
               </Link>
             ) : null}
           </div>
@@ -303,7 +305,7 @@ export function Navbar() {
             className="group relative flex min-h-[56px] items-center justify-center px-4 text-[28px] font-bold text-white"
           >
             Despre
-            <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#7c3aed] transition-all duration-300 group-hover:w-full" />
+            <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#0066FF] transition-all duration-300 group-hover:w-full" />
           </Link>
 
           <Link
@@ -312,7 +314,7 @@ export function Navbar() {
             className="group relative flex min-h-[56px] items-center justify-center px-4 text-[28px] font-bold text-white"
           >
             Contact
-            <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#7c3aed] transition-all duration-300 group-hover:w-full" />
+            <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#0066FF] transition-all duration-300 group-hover:w-full" />
           </Link>
         </nav>
       </div>
@@ -329,7 +331,7 @@ function DropdownColumn({
 }) {
   return (
     <div>
-      <p className="mb-3 text-xs font-semibold tracking-wide text-[#a855f7] uppercase">
+      <p className="mb-3 text-xs font-semibold tracking-wide text-[#3399FF] uppercase">
         {title}
       </p>
       <ul className="space-y-1">
@@ -337,9 +339,9 @@ function DropdownColumn({
           <li key={label}>
             <Link
               href={href}
-              className="flex items-center gap-2.5 rounded-lg px-2 py-2 text-[13px] text-krevo-silver transition-colors hover:bg-[#6b21a8]/15 hover:text-white"
+              className="flex items-center gap-2.5 rounded-lg px-2 py-2 text-[13px] text-krevo-silver transition-colors hover:bg-[#0052CC]/15 hover:text-white"
             >
-              <Icon size={16} strokeWidth={1.5} className="shrink-0 text-[#a855f7]" />
+              <Icon size={16} strokeWidth={1.5} className="shrink-0 text-[#3399FF]" />
               {label}
             </Link>
           </li>

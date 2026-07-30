@@ -3,18 +3,22 @@
 import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 
 type HeroPyramidProps = {
-  trackRef: RefObject<HTMLDivElement | null>;
   sectionRef: RefObject<HTMLElement | null>;
+  /** Box painting piramida-blue.png with background-size contain, right bottom. */
+  pyramidRef: RefObject<HTMLDivElement | null>;
   /** True once the loading screen has finished. */
   siteReady?: boolean;
 };
 
-/** Pyramid tip as fraction of the hero container (desktop). */
-const TIP_NX = 0.74;
-const TIP_NY = 0.43;
+/** Intrinsic size of piramida-blue.png. */
+const IMG_W = 1672;
+const IMG_H = 941;
+/** Pyramid apex in normalized image coordinates. */
+const TIP_NX_IMG = 0.72;
+const TIP_NY_IMG = 0.1;
 
-const LASER_DELAY_MS = 2000;
-const LASER_GROW_MS = 1500;
+const LASER_DELAY_MS = 1500;
+const LASER_GROW_MS = 1200;
 const EXPLOSION_MS = 600;
 const LIGHTNING_MS = 500;
 const LIGHTNING_INTERVAL_MS = 2000;
@@ -91,6 +95,7 @@ function zigzagPath(angle: number, length: number, seed: number): string {
  */
 export function HeroPyramid({
   sectionRef,
+  pyramidRef,
   siteReady = false,
 }: HeroPyramidProps) {
   const [expanded, setExpanded] = useState(false);
@@ -120,7 +125,7 @@ export function HeroPyramid({
       Array.from({ length: RAY_COUNT }, (_, i) => {
         const angle = (i / RAY_COUNT) * Math.PI * 2 + 0.2;
         const length = 40 + ((i * 17) % 41);
-        return { angle, length, color: i % 2 === 0 ? "#a855f7" : "#ffffff" };
+        return { angle, length, color: i % 2 === 0 ? "#3399FF" : "#ffffff" };
       }),
     [],
   );
@@ -131,7 +136,7 @@ export function HeroPyramid({
         angle: (i / BURST_PARTICLES) * Math.PI * 2 + (i % 5) * 0.07,
         dist: 28 + ((i * 13) % 55),
         size: 1.2 + (i % 4) * 0.55,
-        color: i % 3 === 0 ? "#ffffff" : "#a855f7",
+        color: i % 3 === 0 ? "#ffffff" : "#3399FF",
       })),
     [],
   );
@@ -144,7 +149,7 @@ export function HeroPyramid({
           lightningCycle * 0.35 +
           i * 0.11,
         length: 20 + ((i * 11 + lightningCycle * 7) % 21),
-        color: i % 2 === 0 ? "#a855f7" : "#ffffff",
+        color: i % 2 === 0 ? "#3399FF" : "#ffffff",
         seed: i * 4.2 + lightningCycle * 1.7,
       })),
     [lightningCycle],
@@ -226,31 +231,39 @@ export function HeroPyramid({
 
     const compute = () => {
       const el = sectionRef.current;
-      if (!el) return;
+      const box = pyramidRef.current;
+      if (!el || !box) return;
 
       const rect = el.getBoundingClientRect();
-      const containerWidth = rect.width || el.clientWidth;
-      const containerHeight = rect.height || el.clientHeight;
+      const boxRect = box.getBoundingClientRect();
       setIsMobile(window.innerWidth < 768);
 
+      // Mirror background-size: contain with background-position: right bottom
+      const scale = Math.min(boxRect.width / IMG_W, boxRect.height / IMG_H);
+      const drawnW = IMG_W * scale;
+      const drawnH = IMG_H * scale;
+      const insetX = boxRect.width - drawnW;
+      const insetY = boxRect.height - drawnH;
+
       setGeom({
-        w: containerWidth,
-        h: containerHeight,
-        tipXpx: TIP_NX * containerWidth,
-        tipYpx: TIP_NY * containerHeight,
+        w: rect.width || el.clientWidth,
+        h: rect.height || el.clientHeight,
+        tipXpx: boxRect.left - rect.left + insetX + TIP_NX_IMG * drawnW,
+        tipYpx: boxRect.top - rect.top + insetY + TIP_NY_IMG * drawnH,
       });
     };
 
     window.addEventListener("resize", compute, { passive: true });
     const resizeObserver = new ResizeObserver(() => compute());
     resizeObserver.observe(section);
+    if (pyramidRef.current) resizeObserver.observe(pyramidRef.current);
     compute();
 
     return () => {
       resizeObserver.disconnect();
       window.removeEventListener("resize", compute);
     };
-  }, [sectionRef]);
+  }, [sectionRef, pyramidRef]);
 
   // After loading screen finishes → wait 2000ms → start CSS height grow
   useEffect(() => {
@@ -363,9 +376,9 @@ export function HeroPyramid({
               x2={localTipX}
               y2={localTopY}
             >
-              <stop offset="0%" stopColor="#a855f7" stopOpacity="1" />
-              <stop offset="50%" stopColor="#a855f7" stopOpacity="0.7" />
-              <stop offset="100%" stopColor="#a855f7" stopOpacity="0.35" />
+              <stop offset="0%" stopColor="#0066FF" stopOpacity="1" />
+              <stop offset="50%" stopColor="#0066FF" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#0066FF" stopOpacity="0.35" />
             </linearGradient>
             <linearGradient
               id="laser-glow-grad"
@@ -375,8 +388,8 @@ export function HeroPyramid({
               x2={localTipX}
               y2={localTopY}
             >
-              <stop offset="0%" stopColor="#6b21a8" stopOpacity="1" />
-              <stop offset="100%" stopColor="#6b21a8" stopOpacity="0.35" />
+              <stop offset="0%" stopColor="#0052CC" stopOpacity="1" />
+              <stop offset="100%" stopColor="#0052CC" stopOpacity="0.35" />
             </linearGradient>
             <filter
               id="laser-medium-blur"
@@ -475,7 +488,7 @@ export function HeroPyramid({
                 cx={0}
                 cy={0}
                 r={36 * explosionT}
-                fill="#a855f7"
+                fill="#3399FF"
                 opacity={0.45 * (1 - explosionT * 0.85)}
               />
 

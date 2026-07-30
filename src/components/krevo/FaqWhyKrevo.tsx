@@ -82,7 +82,7 @@ export function FaqWhyKrevo() {
   return (
     <section
       id="faq"
-      className="relative overflow-hidden bg-[#05000f] px-6 py-[60px]"
+      className="relative overflow-hidden bg-[#000510] px-6 py-[120px]"
     >
       <div className="relative z-10 mx-auto max-w-3xl">
         <h2 className="text-center font-serif text-[28px] font-bold text-white sm:text-[36px]">
@@ -90,7 +90,7 @@ export function FaqWhyKrevo() {
           <span className="section-title-accent">răspunsuri</span>
         </h2>
         <div
-          className="mx-auto mt-5 h-px w-[60px] bg-[#6b21a8] shadow-[0_0_16px_4px_rgba(109,33,168,0.55)]"
+          className="mx-auto mt-5 h-px w-[60px] bg-[#0052CC] shadow-[0_0_16px_4px_rgba(0,82,204,0.55)]"
           aria-hidden="true"
         />
 
@@ -101,7 +101,7 @@ export function FaqWhyKrevo() {
             return (
               <div
                 key={item.question}
-                className="overflow-hidden rounded-xl border border-[#2d1b69] bg-[#0a0a0a] transition-colors hover:border-[#a855f7]/50"
+                className="overflow-hidden rounded-xl border border-[#002B66] bg-[#0a0a0a] transition-colors hover:border-[#3399FF]/50"
               >
                 <button
                   type="button"
@@ -115,7 +115,7 @@ export function FaqWhyKrevo() {
                   <ChevronDown
                     size={20}
                     strokeWidth={1.75}
-                    className={`shrink-0 text-[#a855f7] transition-transform duration-300 ${
+                    className={`shrink-0 text-[#3399FF] transition-transform duration-300 ${
                       isOpen ? "rotate-180" : "rotate-0"
                     }`}
                     aria-hidden="true"
@@ -128,7 +128,7 @@ export function FaqWhyKrevo() {
                   }`}
                 >
                   <div className="min-h-0 overflow-hidden">
-                    <div className="border-t border-[#2d1b69]/60 px-5 pt-3 pb-5 md:px-6 md:pb-6">
+                    <div className="border-t border-[#002B66]/60 px-5 pt-3 pb-5 md:px-6 md:pb-6">
                       <p className="text-[14px] leading-[1.7] text-[#d0d0d0] md:text-[15px]">
                         {item.answer}
                       </p>
