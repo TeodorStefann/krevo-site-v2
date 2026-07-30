@@ -26,7 +26,7 @@ export function KrevoHome() {
         <NoiseOverlay />
         <Navbar />
         <main>
-          <Hero />
+          <Hero siteReady={loaded} />
           <ServicesSimple />
           <AiPower />
           <Portfolio />

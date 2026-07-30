@@ -53,7 +53,8 @@ function MobileHero() {
         <h1
           className="font-serif text-[72px] leading-[0.9] font-black tracking-tight text-[#ffffff]"
           style={{
-            textShadow: "0 0 40px rgba(124,58,237,0.4)",
+            textShadow:
+              "0 0 20px rgba(124,58,237,0.6), 0 0 40px rgba(124,58,237,0.3), 0 0 80px rgba(124,58,237,0.15)",
           }}
         >
           KREVO
@@ -120,7 +121,7 @@ function MobileHero() {
   );
 }
 
-function DesktopHero() {
+function DesktopHero({ siteReady }: { siteReady: boolean }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const [typedSlogan, setTypedSlogan] = useState("");
@@ -171,7 +172,11 @@ function DesktopHero() {
         />
 
         {enableHeavyFx ? (
-          <HeroPyramid trackRef={trackRef} sectionRef={sectionRef} />
+          <HeroPyramid
+            trackRef={trackRef}
+            sectionRef={sectionRef}
+            siteReady={siteReady}
+          />
         ) : null}
         {enableHeavyFx ? <HeroParticleNetwork /> : null}
 
@@ -196,7 +201,8 @@ function DesktopHero() {
               }}
               className="font-serif text-[120px] leading-[0.9] font-black tracking-tight text-[#ffffff]"
               style={{
-                textShadow: "0 0 40px rgba(124,58,237,0.4)",
+                textShadow:
+              "0 0 20px rgba(124,58,237,0.6), 0 0 40px rgba(124,58,237,0.3), 0 0 80px rgba(124,58,237,0.15)",
               }}
             >
               KREVO
@@ -340,11 +346,11 @@ function DesktopHero() {
   );
 }
 
-export function Hero() {
+export function Hero({ siteReady = false }: { siteReady?: boolean }) {
   return (
     <>
       <MobileHero />
-      <DesktopHero />
+      <DesktopHero siteReady={siteReady} />
     </>
   );
 }

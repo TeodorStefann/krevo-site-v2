@@ -5,20 +5,23 @@ import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 type HeroPyramidProps = {
   trackRef: RefObject<HTMLDivElement | null>;
   sectionRef: RefObject<HTMLElement | null>;
+  /** True once the loading screen has finished. */
+  siteReady?: boolean;
 };
 
 /** Pyramid tip as fraction of the hero container (desktop). */
 const TIP_NX = 0.74;
 const TIP_NY = 0.43;
 
-const LASER_DELAY_MS = 1500;
-const LASER_GROW_MS = 1200;
+const LASER_DELAY_MS = 2000;
+const LASER_GROW_MS = 1500;
 const EXPLOSION_MS = 600;
 const LIGHTNING_MS = 500;
 const LIGHTNING_INTERVAL_MS = 2000;
 const RAY_COUNT = 16;
 const BURST_PARTICLES = 24;
 const LIGHTNING_COUNT = 7;
+const BEAM_PAD = 40;
 
 type BurstParticle = {
   angle: number;
@@ -38,7 +41,7 @@ function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
 }
 
-/** Organic wavy beam path from tip (bottom) toward topY, gently shifting ±2–3px. */
+/** Organic wavy beam path from tip (bottom) toward top (y=0). */
 function buildLivingBeamPath(
   tipX: number,
   tipY: number,
@@ -64,7 +67,6 @@ function buildLivingBeamPath(
   return d;
 }
 
-/** Short zigzag path along an angle, length in px. */
 function zigzagPath(angle: number, length: number, seed: number): string {
   const segments = 4;
   const mid = length / segments;
@@ -83,12 +85,16 @@ function zigzagPath(angle: number, length: number, seed: number): string {
 }
 
 /**
- * Auto-play laser: after delay, grows from pyramid tip to top of screen,
- * burst on arrival, then subtle repeating lightning. Stays extended permanently.
- * Hidden on mobile.
+ * Auto-play laser after loading screen + delay.
+ * Grows via CSS height transition (0 → full), then stays permanently.
+ * Hidden on mobile. No scroll control.
  */
-export function HeroPyramid({ sectionRef }: HeroPyramidProps) {
-  const [progress, setProgress] = useState(0);
+export function HeroPyramid({
+  sectionRef,
+  siteReady = false,
+}: HeroPyramidProps) {
+  const [expanded, setExpanded] = useState(false);
+  const [fullyExtended, setFullyExtended] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
   const [geom, setGeom] = useState({
     w: 0,
@@ -103,7 +109,6 @@ export function HeroPyramid({ sectionRef }: HeroPyramidProps) {
 
   const explosionRafRef = useRef(0);
   const lightningRafRef = useRef(0);
-  const growRafRef = useRef(0);
   const lightningIntervalRef = useRef<ReturnType<typeof setInterval> | null>(
     null,
   );
@@ -226,8 +231,7 @@ export function HeroPyramid({ sectionRef }: HeroPyramidProps) {
       const rect = el.getBoundingClientRect();
       const containerWidth = rect.width || el.clientWidth;
       const containerHeight = rect.height || el.clientHeight;
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
+      setIsMobile(window.innerWidth < 768);
 
       setGeom({
         w: containerWidth,
@@ -248,49 +252,55 @@ export function HeroPyramid({ sectionRef }: HeroPyramidProps) {
     };
   }, [sectionRef]);
 
-  // Auto-play: delay → grow ease-out → stay permanently
+  // After loading screen finishes → wait 2000ms → start CSS height grow
   useEffect(() => {
-    if (isMobile) {
-      setProgress(0);
+    if (!siteReady || isMobile) {
+      setExpanded(false);
+      setFullyExtended(false);
       stopLightningLoop();
       return;
     }
 
-    let cancelled = false;
-
     const delayTimer = window.setTimeout(() => {
-      const start = performance.now();
-      const tick = (now: number) => {
-        if (cancelled) return;
-        const raw = Math.min(1, (now - start) / LASER_GROW_MS);
-        const p = easeOutCubic(raw);
-        setProgress(p);
-        if (raw < 1) {
-          growRafRef.current = requestAnimationFrame(tick);
-        } else {
-          setProgress(1);
-          startExplosion();
-          startLightningLoop();
-        }
-      };
-      growRafRef.current = requestAnimationFrame(tick);
+      setExpanded(true);
     }, LASER_DELAY_MS);
 
     return () => {
-      cancelled = true;
       window.clearTimeout(delayTimer);
-      cancelAnimationFrame(growRafRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [siteReady, isMobile]);
+
+  // When grow finishes (1.5s), lock extended + burst + lightning
+  useEffect(() => {
+    if (!expanded || isMobile) return;
+
+    const doneTimer = window.setTimeout(() => {
+      setFullyExtended(true);
+      startExplosion();
+      startLightningLoop();
+    }, LASER_GROW_MS);
+
+    return () => {
+      window.clearTimeout(doneTimer);
       cancelAnimationFrame(explosionRafRef.current);
       stopLightningLoop();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- run when mobile breakpoint flips
-  }, [isMobile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expanded, isMobile]);
 
   const { tipXpx, tipYpx, w, h } = geom;
-  const laserLength = progress * tipYpx;
-  const topY = tipYpx - laserLength;
-  const visible = laserLength > 1;
-  const fullyExtended = progress >= 0.98;
+  const localTipX = BEAM_PAD;
+  const localTipY = tipYpx;
+  const localTopY = 0;
+  const beamPath =
+    tipYpx > 1
+      ? buildLivingBeamPath(localTipX, localTipY, localTopY, animT)
+      : "";
+  const breath = fullyExtended
+    ? 0.8 + 0.2 * (0.5 + 0.5 * Math.sin(animT * Math.PI))
+    : 1;
+
   const burstActive = explosionStarted.current && !explosionDone;
   const burstOpacity = burstActive
     ? explosionT < 0.35
@@ -304,90 +314,90 @@ export function HeroPyramid({ sectionRef }: HeroPyramidProps) {
         ? lightningT / 0.3
         : 1 - (lightningT - 0.3) / 0.7;
 
-  const beamPath = visible
-    ? buildLivingBeamPath(tipXpx, tipYpx, topY, animT)
-    : "";
-  // Subtle breath when fully extended — 80% ↔ 100% every 2s
-  const breath = fullyExtended
-    ? 0.8 + 0.2 * (0.5 + 0.5 * Math.sin(animT * Math.PI))
-    : 1;
-
-  if (isMobile || !geom.w) return null;
+  if (isMobile || !geom.w || tipYpx < 1) return null;
 
   return (
-    <svg
-      className="pointer-events-none absolute inset-0 z-[5] hidden h-full w-full overflow-visible md:block"
-      width={w}
-      height={h}
-      viewBox={`0 0 ${w} ${h}`}
-      fill="none"
+    <div
+      className="pointer-events-none absolute inset-0 z-[5] hidden md:block"
       aria-hidden="true"
-      style={{ opacity: visible ? 1 : 0 }}
     >
-      <defs>
-        <linearGradient
-          id="laser-core-grad"
-          gradientUnits="userSpaceOnUse"
-          x1={tipXpx}
-          y1={tipYpx}
-          x2={tipXpx}
-          y2={topY}
+      {/* Clip grows from tip upward via CSS height transition */}
+      <div
+        style={{
+          position: "absolute",
+          left: tipXpx - BEAM_PAD,
+          top: tipYpx,
+          width: BEAM_PAD * 2,
+          height: expanded ? tipYpx : 0,
+          transform: "translateY(-100%)",
+          overflow: "hidden",
+          transition: `height ${LASER_GROW_MS}ms ease-out`,
+        }}
+      >
+        <svg
+          width={BEAM_PAD * 2}
+          height={tipYpx}
+          viewBox={`0 0 ${BEAM_PAD * 2} ${tipYpx}`}
+          fill="none"
+          className="absolute bottom-0 left-0"
+          style={{ opacity: breath }}
         >
-          <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
-          <stop offset="55%" stopColor="#ffffff" stopOpacity="0.75" />
-          <stop offset="100%" stopColor="#ffffff" stopOpacity="0.4" />
-        </linearGradient>
-        <linearGradient
-          id="laser-mid-grad"
-          gradientUnits="userSpaceOnUse"
-          x1={tipXpx}
-          y1={tipYpx}
-          x2={tipXpx}
-          y2={topY}
-        >
-          <stop offset="0%" stopColor="#a855f7" stopOpacity="1" />
-          <stop offset="50%" stopColor="#a855f7" stopOpacity="0.7" />
-          <stop offset="100%" stopColor="#a855f7" stopOpacity="0.35" />
-        </linearGradient>
-        <linearGradient
-          id="laser-glow-grad"
-          gradientUnits="userSpaceOnUse"
-          x1={tipXpx}
-          y1={tipYpx}
-          x2={tipXpx}
-          y2={topY}
-        >
-          <stop offset="0%" stopColor="#6b21a8" stopOpacity="1" />
-          <stop offset="100%" stopColor="#6b21a8" stopOpacity="0.35" />
-        </linearGradient>
+          <defs>
+            <linearGradient
+              id="laser-core-grad"
+              gradientUnits="userSpaceOnUse"
+              x1={localTipX}
+              y1={localTipY}
+              x2={localTipX}
+              y2={localTopY}
+            >
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+              <stop offset="55%" stopColor="#ffffff" stopOpacity="0.75" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0.4" />
+            </linearGradient>
+            <linearGradient
+              id="laser-mid-grad"
+              gradientUnits="userSpaceOnUse"
+              x1={localTipX}
+              y1={localTipY}
+              x2={localTipX}
+              y2={localTopY}
+            >
+              <stop offset="0%" stopColor="#a855f7" stopOpacity="1" />
+              <stop offset="50%" stopColor="#a855f7" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#a855f7" stopOpacity="0.35" />
+            </linearGradient>
+            <linearGradient
+              id="laser-glow-grad"
+              gradientUnits="userSpaceOnUse"
+              x1={localTipX}
+              y1={localTipY}
+              x2={localTipX}
+              y2={localTopY}
+            >
+              <stop offset="0%" stopColor="#6b21a8" stopOpacity="1" />
+              <stop offset="100%" stopColor="#6b21a8" stopOpacity="0.35" />
+            </linearGradient>
+            <filter
+              id="laser-medium-blur"
+              filterUnits="userSpaceOnUse"
+              x={0}
+              y={-20}
+              width={BEAM_PAD * 2}
+              height={tipYpx + 40}
+            >
+              <feGaussianBlur
+                in="SourceGraphic"
+                stdDeviation="2"
+                result="blur"
+              />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
 
-        <filter
-          id="laser-medium-blur"
-          filterUnits="userSpaceOnUse"
-          x={tipXpx - 40}
-          y={Math.min(topY, tipYpx) - 40}
-          width={80}
-          height={Math.max(laserLength, 1) + 80}
-        >
-          <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-
-        <filter id="burst-glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-
-      {visible && (
-        <g opacity={breath}>
-          {/* Wide atmospheric glow — 20px */}
           <path
             d={beamPath}
             stroke="url(#laser-glow-grad)"
@@ -397,7 +407,6 @@ export function HeroPyramid({ sectionRef }: HeroPyramidProps) {
             fill="none"
             opacity={0.15}
           />
-          {/* Medium beam — 4px + blur */}
           <path
             d={beamPath}
             stroke="url(#laser-mid-grad)"
@@ -408,7 +417,6 @@ export function HeroPyramid({ sectionRef }: HeroPyramidProps) {
             opacity={0.6}
             filter="url(#laser-medium-blur)"
           />
-          {/* Ultra-thin core — 1px */}
           <path
             d={beamPath}
             stroke="url(#laser-core-grad)"
@@ -418,89 +426,118 @@ export function HeroPyramid({ sectionRef }: HeroPyramidProps) {
             fill="none"
             opacity={0.9}
           />
-        </g>
-      )}
+        </svg>
+      </div>
 
-      {/* Initial explosion at screen top */}
-      {burstActive && burstOpacity > 0.01 && (
-        <g
-          filter="url(#burst-glow)"
-          opacity={Math.max(0, Math.min(1, burstOpacity))}
-          transform={`translate(${tipXpx}, ${Math.max(topY, 0)})`}
+      {/* Burst + lightning at screen top once fully extended */}
+      {(burstActive || fullyExtended) && (
+        <svg
+          className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
+          width={w}
+          height={h}
+          viewBox={`0 0 ${w} ${h}`}
+          fill="none"
         >
-          <circle
-            cx={0}
-            cy={0}
-            r={60 * explosionT}
-            fill="#ffffff"
-            opacity={0.55 * (1 - explosionT)}
-          />
-          <circle
-            cx={0}
-            cy={0}
-            r={36 * explosionT}
-            fill="#a855f7"
-            opacity={0.45 * (1 - explosionT * 0.85)}
-          />
-
-          {rays.map((ray, i) => {
-            const len = ray.length * explosionT;
-            return (
-              <line
-                key={`ray-${i}`}
-                x1={0}
-                y1={0}
-                x2={Math.cos(ray.angle) * len}
-                y2={Math.sin(ray.angle) * len}
-                stroke={ray.color}
-                strokeWidth={1.2}
-                strokeLinecap="round"
-                opacity={0.85 * (1 - explosionT * 0.7)}
+          <defs>
+            <filter
+              id="burst-glow"
+              x="-50%"
+              y="-50%"
+              width="200%"
+              height="200%"
+            >
+              <feGaussianBlur
+                in="SourceGraphic"
+                stdDeviation="3"
+                result="blur"
               />
-            );
-          })}
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
 
-          {burstParticles.map((pt, i) => {
-            const d = pt.dist * explosionT;
-            return (
+          {burstActive && burstOpacity > 0.01 && (
+            <g
+              filter="url(#burst-glow)"
+              opacity={Math.max(0, Math.min(1, burstOpacity))}
+              transform={`translate(${tipXpx}, 0)`}
+            >
               <circle
-                key={`pt-${i}`}
-                cx={Math.cos(pt.angle) * d}
-                cy={Math.sin(pt.angle) * d}
-                r={pt.size * (1 - explosionT * 0.4)}
-                fill={pt.color}
-                opacity={0.9 * (1 - explosionT)}
+                cx={0}
+                cy={0}
+                r={60 * explosionT}
+                fill="#ffffff"
+                opacity={0.55 * (1 - explosionT)}
               />
-            );
-          })}
-        </g>
-      )}
+              <circle
+                cx={0}
+                cy={0}
+                r={36 * explosionT}
+                fill="#a855f7"
+                opacity={0.45 * (1 - explosionT * 0.85)}
+              />
 
-      {/* Repeating subtle lightning while laser stays at top */}
-      {fullyExtended && lightningOpacity > 0.01 && (
-        <g
-          filter="url(#burst-glow)"
-          opacity={Math.max(0, Math.min(1, lightningOpacity * 0.75))}
-          transform={`translate(${tipXpx}, ${Math.max(topY, 0)})`}
-        >
-          {lightnings.map((bolt, i) => (
-            <path
-              key={`bolt-${lightningCycle}-${i}`}
-              d={zigzagPath(
-                bolt.angle,
-                bolt.length * (0.55 + 0.45 * lightningT),
-                bolt.seed,
-              )}
-              stroke={bolt.color}
-              strokeWidth={1.1}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              fill="none"
-              opacity={0.7 * (1 - lightningT * 0.55)}
-            />
-          ))}
-        </g>
+              {rays.map((ray, i) => {
+                const len = ray.length * explosionT;
+                return (
+                  <line
+                    key={`ray-${i}`}
+                    x1={0}
+                    y1={0}
+                    x2={Math.cos(ray.angle) * len}
+                    y2={Math.sin(ray.angle) * len}
+                    stroke={ray.color}
+                    strokeWidth={1.2}
+                    strokeLinecap="round"
+                    opacity={0.85 * (1 - explosionT * 0.7)}
+                  />
+                );
+              })}
+
+              {burstParticles.map((pt, i) => {
+                const d = pt.dist * explosionT;
+                return (
+                  <circle
+                    key={`pt-${i}`}
+                    cx={Math.cos(pt.angle) * d}
+                    cy={Math.sin(pt.angle) * d}
+                    r={pt.size * (1 - explosionT * 0.4)}
+                    fill={pt.color}
+                    opacity={0.9 * (1 - explosionT)}
+                  />
+                );
+              })}
+            </g>
+          )}
+
+          {fullyExtended && lightningOpacity > 0.01 && (
+            <g
+              filter="url(#burst-glow)"
+              opacity={Math.max(0, Math.min(1, lightningOpacity * 0.75))}
+              transform={`translate(${tipXpx}, 0)`}
+            >
+              {lightnings.map((bolt, i) => (
+                <path
+                  key={`bolt-${lightningCycle}-${i}`}
+                  d={zigzagPath(
+                    bolt.angle,
+                    bolt.length * (0.55 + 0.45 * lightningT),
+                    bolt.seed,
+                  )}
+                  stroke={bolt.color}
+                  strokeWidth={1.1}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                  opacity={0.7 * (1 - lightningT * 0.55)}
+                />
+              ))}
+            </g>
+          )}
+        </svg>
       )}
-    </svg>
+    </div>
   );
 }
