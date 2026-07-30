@@ -397,9 +397,6 @@ export function FirmFlowProductCard({
           }`}
         >
           <div className="relative overflow-hidden rounded-[calc(2rem-5px)] border border-[#c9a84c]/80 bg-gradient-to-br from-[#0a0a0a] to-[#0f0d00] p-5 sm:p-8 md:p-10">
-            <span className="absolute top-3 right-3 z-20 rounded-full border border-[#c9a84c] px-2 py-1 text-[10px] font-medium text-[#c9a84c] sm:top-4 sm:right-4 sm:px-2.5 sm:text-[11px]">
-              ✦ Disponibil acum
-            </span>
             <div
               className="firmflow-float-card pointer-events-none absolute top-16 right-6 z-20 hidden rounded-xl border border-[#c9a84c] px-4 py-3 text-[13px] text-[#c9a84c] backdrop-blur-sm lg:block"
               style={{

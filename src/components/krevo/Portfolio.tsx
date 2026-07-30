@@ -114,7 +114,7 @@ function DemoCopy({
           rel="noopener noreferrer"
           className="mt-8 inline-flex w-fit items-center justify-center rounded-full border border-[#c9a84c] bg-transparent px-6 py-3 text-sm font-semibold text-[#c9a84c] transition-colors hover:bg-[#c9a84c] hover:text-[#0a0a0a]"
         >
-          Încearcă <GoldPower>7 zile gratuit</GoldPower> →
+          Încearcă <GoldPower>7{" "}zile gratuit</GoldPower> →
         </a>
       ) : null}
     </div>

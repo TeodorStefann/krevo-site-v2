@@ -51,16 +51,16 @@ function MobileHero() {
 
       <div className="relative z-10 flex w-full max-w-sm flex-col items-center text-center">
         <h1
-          className="font-serif text-[72px] leading-[0.9] font-black tracking-tight text-[#c9a84c]"
+          className="font-serif text-[72px] leading-[0.9] font-black tracking-tight text-white"
           style={{
             textShadow:
-              "1px 1px 0 #a88b3a, 2px 2px 0 #8a7030, 3px 3px 0 #6b5520, 4px 4px 0 #4a3a10, 5px 5px 14px rgba(0,0,0,0.55)",
+              "1px 1px 0 #4c1d95, 2px 2px 0 #3b1678, 3px 3px 0 #2e1065, 4px 4px 0 #1a0635, 5px 5px 14px rgba(0,0,0,0.55)",
           }}
         >
           KREVO
         </h1>
 
-        <p className="mt-5 max-w-[18rem] font-serif text-[18px] leading-snug text-[#c9a84c] italic">
+        <p className="mt-5 max-w-[18rem] font-serif text-[18px] leading-snug text-[#a855f7] italic">
           {HERO_SLOGAN}
         </p>
 
@@ -69,13 +69,13 @@ function MobileHero() {
             href={PLATFORM_LOGIN}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-full items-center justify-center rounded-full bg-[#c9a84c] px-6 py-3.5 text-[15px] font-bold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c]"
+            className="inline-flex w-full items-center justify-center rounded-full bg-[#7c3aed] px-6 py-3.5 text-[15px] font-bold text-white transition-colors hover:bg-[#6b21a8]"
           >
             Încearcă FirmFlow — 7 zile gratuit
           </a>
           <a
             href="#contact"
-            className="inline-flex w-full items-center justify-center rounded-full border border-[#c9a84c] bg-transparent px-6 py-3.5 text-[15px] font-semibold text-[#c9a84c] transition-colors hover:bg-[#c9a84c]/10"
+            className="inline-flex w-full items-center justify-center rounded-full border border-[#7c3aed] bg-transparent px-6 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-[#7c3aed]/10"
           >
             Hai să construim împreună →
           </a>
