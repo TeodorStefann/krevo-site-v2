@@ -155,17 +155,16 @@ function DesktopHero({ siteReady }: { siteReady: boolean }) {
   }, []);
 
   return (
-    <div ref={trackRef} className="relative hidden h-[300vh] md:block">
-      <section
-        ref={sectionRef}
-        className="sticky top-0 flex h-screen items-center overflow-hidden bg-[#0a0a0a] px-6 pt-24 pb-16"
-        style={{
-          backgroundImage: "url(/piramida1.png)",
-          backgroundSize: "cover",
-          backgroundPosition: "center right",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
+    <section
+      ref={sectionRef}
+      className="relative hidden h-[100vh] items-center overflow-hidden bg-[#0a0a0a] px-6 pt-24 pb-16 md:flex"
+      style={{
+        backgroundImage: "url(/piramida1.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center right",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
         <div
           className="pointer-events-none absolute inset-0 z-0"
           style={{
@@ -350,7 +349,6 @@ function DesktopHero({ siteReady }: { siteReady: boolean }) {
           </div>
         </div>
       </section>
-    </div>
   );
 }
 
