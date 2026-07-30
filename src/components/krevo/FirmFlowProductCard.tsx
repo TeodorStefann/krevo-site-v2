@@ -466,6 +466,25 @@ export function FirmFlowProductCard({
                 într-un flux clar — fără Excel, fără haos.
               </p>
 
+              <div className="mt-6 flex max-w-2xl flex-wrap gap-2">
+                {[
+                  { value: "30 sec", label: "ofertă AI" },
+                  { value: "0", label: "foi pontaj" },
+                  { value: "100%", label: "vizibilitate" },
+                  { value: "7 zile", label: "până live" },
+                ].map((badge) => (
+                  <span
+                    key={badge.label}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[#c9a84c]/40 bg-[#c9a84c]/10 px-3 py-1.5 text-[12px] text-[#e8d5a3]"
+                  >
+                    <span className="font-bold text-[#c9a84c]">
+                      {badge.value}
+                    </span>
+                    <span className="text-krevo-silver">{badge.label}</span>
+                  </span>
+                ))}
+              </div>
+
               <div
                 className="mt-8 h-px w-full max-w-2xl bg-[#c9a84c]/50"
                 aria-hidden="true"

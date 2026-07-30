@@ -118,7 +118,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-[#000000] px-6 py-16 md:py-[100px]"
+      className="relative overflow-hidden bg-[#000000] px-6 py-[60px]"
     >
       <div className="relative z-10 mx-auto max-w-6xl">
         <h2 className="text-center font-serif text-[36px] font-bold text-white">

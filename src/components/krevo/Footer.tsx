@@ -138,6 +138,32 @@ export function Footer() {
         </div>
 
         <div
+          id="despre"
+          className="mt-10 flex max-w-xl items-start gap-3 rounded-xl border border-[#2d1b69]/60 bg-[#0a0a0a]/50 p-4"
+        >
+          <Image
+            src="/teodor.png"
+            alt="Teodor Chiurtu"
+            width={48}
+            height={48}
+            className="h-12 w-12 shrink-0 rounded-full object-cover"
+          />
+          <div className="min-w-0">
+            <p className="text-[13px] font-semibold text-white">
+              Despre fondator
+            </p>
+            <p className="mt-1 text-[12px] leading-relaxed text-krevo-silver">
+              Teodor Chiurtu — Founder, Krevo. Construiesc platforme digitale
+              personalizate pentru firme din România.
+            </p>
+            <p className="mt-1 text-[12px] leading-relaxed text-krevo-silver">
+              Fără template-uri — fiecare implementare e unică, de la nevoile
+              reale ale firmei tale.
+            </p>
+          </div>
+        </div>
+
+        <div
           className="mt-12 h-px w-full bg-[#6b21a8]/20"
           aria-hidden="true"
         />

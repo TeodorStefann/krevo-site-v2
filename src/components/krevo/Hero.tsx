@@ -51,10 +51,14 @@ function MobileHero() {
 
       <div className="relative z-10 flex w-full max-w-sm flex-col items-center text-center">
         <h1
-          className="font-serif text-[72px] leading-[0.9] font-black tracking-tight text-[#ffffff]"
+          className="font-serif text-[72px] leading-[0.9] font-black tracking-tight"
           style={{
-            textShadow:
-              "0 0 20px rgba(124,58,237,0.6), 0 0 40px rgba(124,58,237,0.3), 0 0 80px rgba(124,58,237,0.15)",
+            background:
+              "linear-gradient(135deg, #ffffff 0%, #e9d5ff 40%, #ffffff 60%, #ddd6fe 100%)",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            color: "transparent",
           }}
         >
           KREVO
@@ -199,10 +203,14 @@ function DesktopHero({ siteReady }: { siteReady: boolean }) {
                 delay: 0.15,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="font-serif text-[120px] leading-[0.9] font-black tracking-tight text-[#ffffff]"
+              className="font-serif text-[120px] leading-[0.9] font-black tracking-tight"
               style={{
-                textShadow:
-              "0 0 20px rgba(124,58,237,0.6), 0 0 40px rgba(124,58,237,0.3), 0 0 80px rgba(124,58,237,0.15)",
+                background:
+                  "linear-gradient(135deg, #ffffff 0%, #e9d5ff 40%, #ffffff 60%, #ddd6fe 100%)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                color: "transparent",
               }}
             >
               KREVO

@@ -72,7 +72,7 @@ export function AiPower() {
   return (
     <section
       id="puterea-ai"
-      className="relative overflow-hidden bg-[#05000f] px-6 py-16 md:py-[100px]"
+      className="relative overflow-hidden bg-[#05000f] px-6 py-[60px]"
     >
       <div className="relative z-10 mx-auto max-w-6xl">
         <header className="mx-auto mb-10 max-w-3xl text-center md:mb-16">

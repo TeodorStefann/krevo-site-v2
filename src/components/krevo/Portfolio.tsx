@@ -152,7 +152,7 @@ export function Portfolio() {
   return (
     <section
       id="portofoliu"
-      className="relative overflow-hidden bg-[#000000] px-6 py-16 md:py-[100px]"
+      className="relative overflow-hidden bg-[#000000] px-6 py-[60px]"
     >
         <div className="relative z-10 mx-auto max-w-6xl">
           <h2 className="text-center font-serif text-[28px] font-bold text-white italic sm:text-4xl md:text-[3.25rem]">
@@ -174,7 +174,7 @@ export function Portfolio() {
             <FirmFlowProductCard quizTheme="purple" />
           </PortfolioCurtain>
 
-          <div className="mt-12 bg-[#000000] py-12 md:mt-20 md:py-[80px]">
+          <div className="mt-12 bg-[#000000] py-12 md:mt-14 md:py-[60px]">
             <h2 className="text-center text-[26px] font-bold text-white sm:text-[32px] md:text-[36px]">
               <FirmFlowBrand /> în acțiune
             </h2>

@@ -5,12 +5,9 @@ import { LoadingScreen } from "./LoadingScreen";
 import { NoiseOverlay } from "./NoiseOverlay";
 import { Navbar } from "./Navbar";
 import { Hero } from "./Hero";
-import { ServicesSimple } from "./ServicesSimple";
 import { AiPower } from "./AiPower";
 import { Portfolio } from "./Portfolio";
-import { About } from "./About";
-import { FAQ } from "./FAQ";
-import { WhyKrevo } from "./WhyKrevo";
+import { FaqWhyKrevo } from "./FaqWhyKrevo";
 import { Contact } from "./Contact";
 import { Footer } from "./Footer";
 
@@ -27,12 +24,9 @@ export function KrevoHome() {
         <Navbar />
         <main>
           <Hero siteReady={loaded} />
-          <ServicesSimple />
           <AiPower />
           <Portfolio />
-          <About />
-          <FAQ />
-          <WhyKrevo />
+          <FaqWhyKrevo />
           <Contact />
         </main>
         <Footer />
