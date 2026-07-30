@@ -3,6 +3,8 @@
 import { FormEvent, useState } from "react";
 import { CheckCircle2, Mail, Phone } from "lucide-react";
 
+const INTEREST_VALUE = "Contact general";
+
 const inputClass =
   "w-full rounded-xl border border-[#002B66] bg-[#050508] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-krevo-silver/40 focus:border-[#0066FF]";
 
@@ -47,7 +49,7 @@ export function Contact() {
           name,
           email,
           message,
-          interest: "Altceva",
+          interest: INTEREST_VALUE,
         }),
       });
 
@@ -79,8 +81,17 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-[#000000] px-6 py-[120px]"
+      className="relative overflow-hidden bg-[#000000] px-6 py-20 md:py-[120px]"
     >
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 55%, rgba(0,102,255,0.03) 0%, transparent 65%)",
+        }}
+        aria-hidden="true"
+      />
+
       <div className="relative z-10 mx-auto max-w-xl">
         <h2 className="text-center text-[32px] font-bold text-white">
           <span className="section-title-accent">Contactează-ne</span>
@@ -119,6 +130,8 @@ export function Contact() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="mt-10 space-y-4" noValidate>
+            <input type="hidden" name="interest" value={INTEREST_VALUE} />
+
             <div>
               <label
                 htmlFor="contact-name"

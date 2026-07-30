@@ -6,8 +6,17 @@ export function Portfolio() {
   return (
     <section
       id="portofoliu"
-      className="relative overflow-hidden bg-[#000000] px-6 py-[120px]"
+      className="relative overflow-hidden bg-[#000000] px-6 py-20 md:py-[120px]"
     >
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(0,102,255,0.02) 0%, transparent 40%)",
+        }}
+        aria-hidden="true"
+      />
+
       <div className="relative z-10 mx-auto max-w-6xl">
         <h2 className="text-center font-serif text-[28px] font-bold text-white italic sm:text-4xl md:text-[3.25rem]">
           Ce am <span className="section-title-accent">construit</span>
@@ -46,6 +55,20 @@ export function Portfolio() {
             </a>
           </article>
         </PortfolioCurtain>
+
+        <figure className="mx-auto mt-12 max-w-[800px]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/gif-oferta.gif"
+            alt="Generare ofertă tehnică în FirmFlow"
+            loading="lazy"
+            decoding="async"
+            className="w-full rounded-[16px] border border-[#0066FF]"
+          />
+          <figcaption className="mt-4 text-center text-[14px] text-krevo-silver italic">
+            Ofertă tehnică completă — generată cu AI în 30 de secunde.
+          </figcaption>
+        </figure>
       </div>
     </section>
   );

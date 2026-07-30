@@ -137,7 +137,7 @@ export default function FirmFlowPage() {
       <NoiseOverlay />
       <Navbar />
       <main className="pt-24">
-        <section className="px-6 py-[120px]">
+        <section className="px-6 py-20 md:py-[120px]">
           <div className="mx-auto max-w-6xl text-center">
             <p
               className="text-xs font-medium tracking-[0.3em] uppercase"
@@ -186,7 +186,7 @@ export default function FirmFlowPage() {
           </div>
         </section>
 
-        <section className="bg-[#0a0a0a] px-6 py-[120px]">
+        <section className="bg-[#0a0a0a] px-6 py-20 md:py-[120px]">
           <div className="mx-auto max-w-6xl">
             <h2 className="text-center text-[28px] font-bold text-white">
               Vezi platforma în{" "}
@@ -204,7 +204,7 @@ export default function FirmFlowPage() {
                 <div className="flex flex-col items-center gap-10 md:flex-row md:gap-12">
                   <div className="w-full md:w-[55%]">
                     <DemoGif
-                      src="/gif-oferta.gif.gif"
+                      src="/gif-oferta.gif"
                       alt="Generare ofertă tehnică în FirmFlow"
                     />
                   </div>
@@ -228,7 +228,7 @@ export default function FirmFlowPage() {
                 <div className="flex flex-col items-center gap-10 md:flex-row-reverse md:gap-12">
                   <div className="w-full md:w-[55%]">
                     <DemoGif
-                      src="/gif-dashboard.gif.gif"
+                      src="/gif-dashboard.gif"
                       alt="Dashboard live FirmFlow"
                     />
                   </div>
@@ -252,7 +252,7 @@ export default function FirmFlowPage() {
                 <div className="flex flex-col items-center gap-10 md:flex-row md:gap-12">
                   <div className="w-full md:w-[55%]">
                     <DemoGif
-                      src="/gif-muncitor.gif.gif"
+                      src="/gif-muncitor.gif"
                       alt="Interfață muncitor FirmFlow pe telefon"
                     />
                   </div>

@@ -6,9 +6,27 @@ export function Founder() {
   return (
     <section
       id="despre"
-      className="relative overflow-hidden bg-[#000510] px-6 py-[120px]"
+      className="relative overflow-hidden bg-[#000510] px-6 py-20 md:py-[120px]"
     >
-      <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-10 md:grid-cols-[2fr_3fr] md:gap-14">
+      {/* Spotlight tracks the photo: centred near the top when stacked, left column on desktop. */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 md:hidden"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 28%, rgba(0,102,255,0.05) 0%, transparent 55%)",
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 z-0 hidden md:block"
+        style={{
+          background:
+            "radial-gradient(circle at 25% 50%, rgba(0,102,255,0.05) 0%, transparent 55%)",
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 mx-auto grid max-w-5xl grid-cols-1 items-center gap-10 md:grid-cols-[2fr_3fr] md:gap-14">
         <div className="flex justify-center md:justify-start">
           <Image
             src="/teodor.png"
@@ -20,7 +38,10 @@ export function Founder() {
         </div>
 
         <div>
-          <p className="text-[20px] leading-relaxed text-white">
+          <p className="text-[24px] font-bold text-white">Teodor Chiurtu</p>
+          <p className="mt-1 text-[14px] text-[#0066FF]">Fondator Krevo</p>
+
+          <p className="mt-6 text-[20px] leading-relaxed text-white">
             Construiesc singur ce alte firme fac cu echipe de 10 oameni — pentru
             că AI-ul mi-a dat un avantaj pe care nu îl avea nimeni acum 2 ani.
           </p>

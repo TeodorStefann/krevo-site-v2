@@ -68,7 +68,7 @@ export function HowWeWork({ theme = "blue" }: { theme?: Theme }) {
   return (
     <section
       id="cum-functioneaza"
-      className="relative bg-[#000000] px-6 py-[120px]"
+      className="relative bg-[#000000] px-6 py-20 md:py-[120px]"
     >
       <div className="mx-auto max-w-6xl">
         <div>

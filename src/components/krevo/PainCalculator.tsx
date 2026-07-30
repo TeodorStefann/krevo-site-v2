@@ -28,8 +28,17 @@ export function PainCalculator() {
     : 0;
 
   return (
-    <section className="bg-[#000000] px-6 py-[120px]">
-      <div className="mx-auto max-w-3xl">
+    <section className="relative overflow-hidden bg-[#000000] px-6 py-20 md:py-[120px]">
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 50%, rgba(0,102,255,0.03) 0%, transparent 70%)",
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 mx-auto max-w-3xl">
         <h2 className="text-center text-[28px] leading-tight font-bold text-white sm:text-[32px] md:text-[36px]">
           Câți angajați ai? Câte ore pierzi cu ei{" "}
           <span className="section-title-accent">săptămânal?</span>

@@ -317,10 +317,6 @@ body {
   }
 }
 
-.pyramid-blue-glow {
-  animation: pyramid-glow-pulse 3s ease-in-out infinite;
-}
-
 @keyframes pyramid-glow-pulse {
   0%,
   100% {
@@ -490,7 +486,6 @@ button.rounded-full {
 @media (prefers-reduced-motion: reduce) {
   .firmflow-float-card,
   .hero-typing-cursor,
-  .pyramid-blue-glow,
   .shimmer-text,
   .premium-glow-card,
   .final-cta-glow,

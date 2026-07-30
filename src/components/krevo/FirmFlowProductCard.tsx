@@ -6,7 +6,7 @@ import { AnimatePresence, motion, useInView } from "framer-motion";
 import { Download, X } from "lucide-react";
 import { springNatural } from "./animations/motionConfig";
 
-const PDF_HREF = "/ghid-firmflow.pdf.pdf";
+const PDF_HREF = "/ghid-firmflow.pdf";
 
 type Question = {
   id: string;

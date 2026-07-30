@@ -29,11 +29,11 @@ export function Hero({ siteReady = false }: { siteReady?: boolean }) {
         ref={pyramidRef}
         className="pointer-events-none absolute right-0 bottom-0 z-0 h-[42%] w-full md:h-[75%] md:w-[58%]"
         style={{
-          backgroundImage: "url(/piramida-blue.png.png)",
+          backgroundImage: "url(/piramida-blue.png)",
           backgroundSize: "contain",
           backgroundPosition: "right bottom",
           backgroundRepeat: "no-repeat",
-          opacity: 0.6,
+          opacity: 0.75,
         }}
         aria-hidden="true"
       />
@@ -42,7 +42,7 @@ export function Hero({ siteReady = false }: { siteReady?: boolean }) {
         className="pointer-events-none absolute inset-0 z-[1]"
         style={{
           background:
-            "linear-gradient(90deg, #000000 0%, rgba(0,0,0,0.8) 40%, transparent 100%)",
+            "linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 40%, transparent 100%)",
         }}
         aria-hidden="true"
       />

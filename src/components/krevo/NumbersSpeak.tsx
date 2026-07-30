@@ -84,7 +84,7 @@ export function NumbersSpeak({ theme = "blue" }: { theme?: Theme }) {
     <section
       ref={ref}
       id="numere"
-      className={`relative overflow-hidden px-6 py-[120px] ${
+      className={`relative overflow-hidden px-6 py-20 md:py-[120px] ${
         isGold ? "bg-[#0a0a0a]" : "bg-[#000510]"
       }`}
     >

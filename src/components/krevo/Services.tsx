@@ -161,7 +161,7 @@ export function Services() {
   return (
     <section
       id="servicii"
-      className="relative overflow-hidden bg-[#000000] px-6 py-[120px]"
+      className="relative overflow-hidden bg-[#000000] px-6 py-20 md:py-[120px]"
     >
       <div className="relative z-10 mx-auto max-w-6xl">
         <header className="mb-16 text-center md:mb-20">

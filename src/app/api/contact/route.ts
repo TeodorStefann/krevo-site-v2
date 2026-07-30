@@ -7,6 +7,7 @@ const INTEREST_OPTIONS = new Set([
   "FirmFlow",
   "Site web profesional",
   "Automatizări AI",
+  "Contact general",
   "Altceva",
 ]);
 

@@ -234,7 +234,7 @@ export function Navbar() {
 
       {/* Mobile menu — backdrop */}
       <div
-        className={`fixed inset-0 z-[11000] bg-black/50 backdrop-blur-md transition-opacity duration-300 ease-out lg:hidden ${
+        className={`fixed inset-0 z-[11000] h-[100dvh] bg-black/50 backdrop-blur-md transition-opacity duration-300 ease-out lg:hidden ${
           menuOpen
             ? "opacity-100"
             : "pointer-events-none opacity-0"
@@ -245,7 +245,7 @@ export function Navbar() {
 
       {/* Mobile menu — panel */}
       <div
-        className={`fixed inset-y-0 right-0 z-[11001] flex w-full max-w-md flex-col bg-[#0a0a0a]/95 shadow-[-20px_0_60px_rgba(0,0,0,0.5)] transition-transform duration-300 ease-out lg:hidden ${
+        className={`fixed inset-y-0 right-0 z-[11001] flex h-[100dvh] w-full max-w-md flex-col overflow-y-auto bg-[#0a0a0a]/95 shadow-[-20px_0_60px_rgba(0,0,0,0.5)] transition-transform duration-300 ease-out lg:hidden ${
           menuOpen ? "translate-x-0" : "pointer-events-none translate-x-full"
         }`}
         aria-hidden={!menuOpen}
@@ -317,6 +317,25 @@ export function Navbar() {
             <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#0066FF] transition-all duration-300 group-hover:w-full" />
           </Link>
         </nav>
+
+        <div className="flex flex-col gap-3 px-8 pb-10">
+          <a
+            href={productHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={closeMobile}
+            className="flex min-h-12 items-center justify-center rounded-full border border-krevo-silver/40 px-6 py-3 text-[15px] text-krevo-silver transition-colors duration-200 hover:border-white hover:text-white"
+          >
+            Demo live →
+          </a>
+          <Link
+            href="/#contact"
+            onClick={closeMobile}
+            className="flex min-h-12 items-center justify-center rounded-full bg-[#0052CC] px-6 py-3 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-[#0066FF]"
+          >
+            Hai să vorbim
+          </Link>
+        </div>
       </div>
     </header>
   );

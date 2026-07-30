@@ -281,7 +281,6 @@ export function HeroPyramid({
     return () => {
       window.clearTimeout(delayTimer);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [siteReady, isMobile]);
 
   // When grow finishes (1.5s), lock extended + burst + lightning
