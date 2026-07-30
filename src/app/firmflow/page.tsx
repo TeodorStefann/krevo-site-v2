@@ -76,7 +76,13 @@ function DemoGif({ src, alt }: { src: string; alt: string }) {
       style={{ boxShadow: "0 25px 80px rgba(201,168,76,0.2)" }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} className="block h-auto w-full rounded-2xl" />
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        className="block h-auto w-full rounded-2xl"
+      />
     </div>
   );
 }
@@ -368,7 +374,7 @@ export default function FirmFlowPage() {
                 rel="noopener noreferrer"
                 className="inline-flex w-full max-w-[400px] items-center justify-center rounded-full bg-[#c9a84c] px-8 py-4 text-center text-sm font-bold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c] sm:text-base"
               >
-                Încearcă FirmFlow 7 zile gratuit →
+                Încearcă FirmFlow — 7 zile gratuit →
               </a>
             </div>
           </div>

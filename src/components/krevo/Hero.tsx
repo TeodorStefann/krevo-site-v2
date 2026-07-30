@@ -51,16 +51,15 @@ function MobileHero() {
 
       <div className="relative z-10 flex w-full max-w-sm flex-col items-center text-center">
         <h1
-          className="font-serif text-[72px] leading-[0.9] font-black tracking-tight text-white"
+          className="font-serif text-[72px] leading-[0.9] font-black tracking-tight text-[#ffffff]"
           style={{
-            textShadow:
-              "1px 1px 0 #4c1d95, 2px 2px 0 #3b1678, 3px 3px 0 #2e1065, 4px 4px 0 #1a0635, 5px 5px 14px rgba(0,0,0,0.55)",
+            textShadow: "0 0 40px rgba(124,58,237,0.4)",
           }}
         >
           KREVO
         </h1>
 
-        <p className="mt-5 max-w-[18rem] font-serif text-[18px] leading-snug text-[#a855f7] italic">
+        <p className="mt-5 max-w-[18rem] font-serif text-[18px] leading-snug text-[#a0a0a0] italic">
           {HERO_SLOGAN}
         </p>
 
@@ -195,11 +194,12 @@ function DesktopHero() {
                 delay: 0.15,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="font-serif text-[120px] leading-[0.9] font-black tracking-tight"
+              className="font-serif text-[120px] leading-[0.9] font-black tracking-tight text-[#ffffff]"
+              style={{
+                textShadow: "0 0 40px rgba(124,58,237,0.4)",
+              }}
             >
-              <span className="krevo-gradient-text" data-text="KREVO">
-                KREVO
-              </span>
+              KREVO
             </motion.h1>
 
             <HeroMeander />
@@ -212,7 +212,7 @@ function DesktopHero() {
                 delay: 0.35,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="mt-8 font-serif text-[28px] text-[#a855f7] italic"
+              className="mt-8 font-serif text-[28px] text-[#a0a0a0] italic"
               aria-label={HERO_SLOGAN}
             >
               {typedSlogan}

@@ -202,8 +202,8 @@ export default function TermeniPage() {
                   Respectarea obligațiilor legale aplicabile în România
                 </li>
                 <li>
-                  Îmbunătățirea experienței pe site, în limitele
-                  consimțământului pentru cookies non-esențiale
+                  Îmbunătățirea experienței pe site, în limitele preferințelor
+                  de cookies
                 </li>
               </ul>
               <p className="mt-3">

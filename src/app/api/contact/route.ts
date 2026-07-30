@@ -77,17 +77,12 @@ async function sendNotificationEmail(data: {
       status: response.status,
       body,
     });
-  } else {
-    console.log("[contact] Notification email sent to teodor@krevo.ro");
   }
 }
 
 export async function POST(request: Request) {
-  console.log("[contact] POST /api/contact — start");
-
   try {
     const body = (await request.json()) as ContactPayload;
-    console.log("[contact] Raw body keys:", Object.keys(body ?? {}));
 
     const name = isNonEmptyString(body.name) ? body.name.trim() : "";
     const email = isNonEmptyString(body.email) ? body.email.trim() : "";
@@ -98,21 +93,7 @@ export async function POST(request: Request) {
     const interest = isNonEmptyString(body.interest) ? body.interest.trim() : "";
     const message = isNonEmptyString(body.message) ? body.message.trim() : "";
 
-    console.log("[contact] Validated fields:", {
-      name: Boolean(name),
-      email: Boolean(email),
-      phone: phone ? "set" : null,
-      interest,
-      messageLength: message.length,
-    });
-
     if (!name || !email || !interest || !message) {
-      console.error("[contact] Validation failed: missing required fields", {
-        name: Boolean(name),
-        email: Boolean(email),
-        interest: Boolean(interest),
-        message: Boolean(message),
-      });
       return NextResponse.json(
         { error: "Completează toate câmpurile obligatorii." },
         { status: 400 },
@@ -120,14 +101,10 @@ export async function POST(request: Request) {
     }
 
     if (!isValidEmail(email)) {
-      console.error("[contact] Validation failed: invalid email", { email });
       return NextResponse.json({ error: "Email invalid." }, { status: 400 });
     }
 
     if (!INTEREST_OPTIONS.has(interest)) {
-      console.error("[contact] Validation failed: invalid interest", {
-        interest,
-      });
       return NextResponse.json(
         { error: "Opțiune de interes invalidă." },
         { status: 400 },
@@ -135,16 +112,8 @@ export async function POST(request: Request) {
     }
 
     if (message.length > 5000 || name.length > 200) {
-      console.error("[contact] Validation failed: payload too long", {
-        nameLength: name.length,
-        messageLength: message.length,
-      });
       return NextResponse.json({ error: "Mesaj prea lung." }, { status: 400 });
     }
-
-    console.log(
-      "[contact] Using SUPABASE_SERVICE_ROLE_KEY (not anon) for insert into contact_requests",
-    );
 
     let supabase;
     try {
@@ -153,9 +122,14 @@ export async function POST(request: Request) {
       console.error("[contact] Failed to create Supabase admin client:", {
         message:
           clientErr instanceof Error ? clientErr.message : String(clientErr),
-        stack: clientErr instanceof Error ? clientErr.stack : undefined,
       });
-      throw clientErr;
+      return NextResponse.json(
+        {
+          error:
+            "Nu am putut trimite mesajul. Te rugăm să încerci din nou.",
+        },
+        { status: 500 },
+      );
     }
 
     const row = {
@@ -167,57 +141,32 @@ export async function POST(request: Request) {
       read: false,
     };
 
-    console.log("[contact] Inserting into table 'contact_requests' with columns:", {
-      name: true,
-      email: true,
-      phone: phone !== null,
-      interest: true,
-      message: true,
-      read: false,
-    });
-
-    const { data, error } = await supabase
-      .from("contact_requests")
-      .insert(row)
-      .select("id")
-      .single();
+    const { error } = await supabase.from("contact_requests").insert(row);
 
     if (error) {
-      console.error("[contact] Supabase insert FAILED — exact error:", {
+      console.error("[contact] Supabase insert failed:", {
         message: error.message,
         code: error.code,
-        details: error.details,
-        hint: error.hint,
-        full: JSON.stringify(error, null, 2),
       });
       return NextResponse.json(
         {
-          error: error.message,
-          code: error.code,
-          details: error.details,
-          hint: error.hint,
+          error:
+            "Nu am putut trimite mesajul. Te rugăm să încerci din nou.",
         },
         { status: 500 },
       );
     }
 
-    console.log("[contact] Supabase insert OK:", { id: data?.id });
-
     await sendNotificationEmail({ name, email, phone, interest, message });
 
     return NextResponse.json({ ok: true });
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    console.error("[contact] Unhandled exception — exact error:", {
-      message,
-      name: err instanceof Error ? err.name : typeof err,
-      stack: err instanceof Error ? err.stack : undefined,
-      full: err,
+    console.error("[contact] Unhandled exception:", {
+      message: err instanceof Error ? err.message : String(err),
     });
     return NextResponse.json(
       {
-        error: message,
-        details: err instanceof Error ? err.stack : undefined,
+        error: "Nu am putut trimite mesajul. Te rugăm să încerci din nou.",
       },
       { status: 500 },
     );

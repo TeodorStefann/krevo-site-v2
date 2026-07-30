@@ -7,12 +7,12 @@ type HeroPyramidProps = {
   sectionRef: RefObject<HTMLElement | null>;
 };
 
-/** Pyramid tip as fraction of the hero container. */
+/** Pyramid tip as fraction of the hero container (desktop). */
 const TIP_NX = 0.74;
 const TIP_NY = 0.43;
-const TIP_NX_MOBILE = 0.82;
-const TIP_NY_MOBILE = 0.55;
 
+const LASER_DELAY_MS = 1500;
+const LASER_GROW_MS = 1200;
 const EXPLOSION_MS = 600;
 const LIGHTNING_MS = 500;
 const LIGHTNING_INTERVAL_MS = 2000;
@@ -68,8 +68,6 @@ function buildLivingBeamPath(
 function zigzagPath(angle: number, length: number, seed: number): string {
   const segments = 4;
   const mid = length / segments;
-  let x = 0;
-  let y = 0;
   let d = `M 0 0`;
   for (let i = 1; i <= segments; i++) {
     const along = i * mid;
@@ -80,18 +78,18 @@ function zigzagPath(angle: number, length: number, seed: number): string {
     const px = Math.cos(angle) * along - Math.sin(angle) * zig;
     const py = Math.sin(angle) * along + Math.cos(angle) * zig;
     d += ` L ${px.toFixed(2)} ${py.toFixed(2)}`;
-    x = px;
-    y = py;
   }
   return d;
 }
 
 /**
- * Sticky-scroll laser: beam grows from pyramid tip to top of screen,
- * burst on arrival, then subtle repeating lightning while held at top.
+ * Auto-play laser: after delay, grows from pyramid tip to top of screen,
+ * burst on arrival, then subtle repeating lightning. Stays extended permanently.
+ * Hidden on mobile.
  */
-export function HeroPyramid({ trackRef, sectionRef }: HeroPyramidProps) {
+export function HeroPyramid({ sectionRef }: HeroPyramidProps) {
   const [progress, setProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(true);
   const [geom, setGeom] = useState({
     w: 0,
     h: 0,
@@ -103,17 +101,14 @@ export function HeroPyramid({ trackRef, sectionRef }: HeroPyramidProps) {
   const [lightningT, setLightningT] = useState(0);
   const [lightningCycle, setLightningCycle] = useState(0);
 
-  const rafRef = useRef(0);
   const explosionRafRef = useRef(0);
   const lightningRafRef = useRef(0);
+  const growRafRef = useRef(0);
   const lightningIntervalRef = useRef<ReturnType<typeof setInterval> | null>(
     null,
   );
-  const ticking = useRef(false);
-  const progressRef = useRef(0);
   const explosionStarted = useRef(false);
   const explosionStartMs = useRef(0);
-  const atTopRef = useRef(false);
 
   const rays = useMemo(
     () =>
@@ -187,6 +182,28 @@ export function HeroPyramid({ trackRef, sectionRef }: HeroPyramidProps) {
     setLightningT(0);
   };
 
+  const startExplosion = () => {
+    if (explosionStarted.current) return;
+    explosionStarted.current = true;
+    explosionStartMs.current = performance.now();
+    setExplosionDone(false);
+
+    const tick = (now: number) => {
+      const raw = Math.min(
+        1,
+        (now - explosionStartMs.current) / EXPLOSION_MS,
+      );
+      setExplosionT(easeOutCubic(raw));
+      if (raw < 1) {
+        explosionRafRef.current = requestAnimationFrame(tick);
+      } else {
+        setExplosionDone(true);
+        setExplosionT(1);
+      }
+    };
+    explosionRafRef.current = requestAnimationFrame(tick);
+  };
+
   useEffect(() => {
     const start = performance.now();
     const tick = (now: number) => {
@@ -197,126 +214,83 @@ export function HeroPyramid({ trackRef, sectionRef }: HeroPyramidProps) {
     return () => cancelAnimationFrame(animRafRef.current);
   }, []);
 
+  // Geometry + mobile detection (no scroll)
   useEffect(() => {
-    const track = trackRef.current;
     const section = sectionRef.current;
-    if (!track || !section) return;
+    if (!section) return;
 
     const compute = () => {
-      ticking.current = false;
       const el = sectionRef.current;
-      const tr = trackRef.current;
-      if (!el || !tr) return;
-
-      const vh = window.innerHeight;
-      const trackTop = tr.getBoundingClientRect().top;
-      const scrolled = Math.min(Math.max(-trackTop, 0), vh * 2);
-      const p = scrolled / (vh * 2);
+      if (!el) return;
 
       const rect = el.getBoundingClientRect();
       const containerWidth = rect.width || el.clientWidth;
       const containerHeight = rect.height || el.clientHeight;
-      const isMobile = containerWidth < 768;
-      const tipXpx = (isMobile ? TIP_NX_MOBILE : TIP_NX) * containerWidth;
-      const tipYpx = (isMobile ? TIP_NY_MOBILE : TIP_NY) * containerHeight;
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
 
-      progressRef.current = p;
-      setProgress(p);
       setGeom({
         w: containerWidth,
         h: containerHeight,
-        tipXpx,
-        tipYpx,
+        tipXpx: TIP_NX * containerWidth,
+        tipYpx: TIP_NY * containerHeight,
       });
-
-      const atTop = p >= 0.98;
-      if (atTop && !atTopRef.current) {
-        atTopRef.current = true;
-        startLightningLoop();
-      } else if (!atTop && atTopRef.current) {
-        atTopRef.current = false;
-        stopLightningLoop();
-      }
-
-      // Initial burst once when laser first reaches the top
-      if (atTop && !explosionStarted.current) {
-        explosionStarted.current = true;
-        explosionStartMs.current = performance.now();
-        setExplosionDone(false);
-
-        const tick = (now: number) => {
-          const raw = Math.min(
-            1,
-            (now - explosionStartMs.current) / EXPLOSION_MS,
-          );
-          setExplosionT(easeOutCubic(raw));
-          if (raw < 1) {
-            explosionRafRef.current = requestAnimationFrame(tick);
-          } else {
-            setExplosionDone(true);
-            setExplosionT(1);
-          }
-        };
-        explosionRafRef.current = requestAnimationFrame(tick);
-      }
     };
 
-    const schedule = () => {
-      if (ticking.current) return;
-      ticking.current = true;
-      rafRef.current = requestAnimationFrame(compute);
-    };
-
-    window.addEventListener("resize", schedule, { passive: true });
-    const resizeObserver = new ResizeObserver(() => schedule());
+    window.addEventListener("resize", compute, { passive: true });
+    const resizeObserver = new ResizeObserver(() => compute());
     resizeObserver.observe(section);
-
-    let scrollListening = false;
-    const onScroll = () => schedule();
-
-    const addScroll = () => {
-      if (scrollListening) return;
-      scrollListening = true;
-      window.addEventListener("scroll", onScroll, { passive: true });
-      schedule();
-    };
-    const removeScroll = () => {
-      if (!scrollListening) return;
-      scrollListening = false;
-      window.removeEventListener("scroll", onScroll);
-    };
-
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) addScroll();
-        else {
-          removeScroll();
-          stopLightningLoop();
-          atTopRef.current = false;
-        }
-      },
-      { root: null, threshold: 0, rootMargin: "50% 0px" },
-    );
-
-    io.observe(track);
-    addScroll();
-    schedule();
+    compute();
 
     return () => {
-      io.disconnect();
       resizeObserver.disconnect();
-      removeScroll();
-      window.removeEventListener("resize", schedule);
-      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("resize", compute);
+    };
+  }, [sectionRef]);
+
+  // Auto-play: delay → grow ease-out → stay permanently
+  useEffect(() => {
+    if (isMobile) {
+      setProgress(0);
+      stopLightningLoop();
+      return;
+    }
+
+    let cancelled = false;
+
+    const delayTimer = window.setTimeout(() => {
+      const start = performance.now();
+      const tick = (now: number) => {
+        if (cancelled) return;
+        const raw = Math.min(1, (now - start) / LASER_GROW_MS);
+        const p = easeOutCubic(raw);
+        setProgress(p);
+        if (raw < 1) {
+          growRafRef.current = requestAnimationFrame(tick);
+        } else {
+          setProgress(1);
+          startExplosion();
+          startLightningLoop();
+        }
+      };
+      growRafRef.current = requestAnimationFrame(tick);
+    }, LASER_DELAY_MS);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(delayTimer);
+      cancelAnimationFrame(growRafRef.current);
       cancelAnimationFrame(explosionRafRef.current);
       stopLightningLoop();
     };
-  }, [trackRef, sectionRef]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- run when mobile breakpoint flips
+  }, [isMobile]);
 
   const { tipXpx, tipYpx, w, h } = geom;
   const laserLength = progress * tipYpx;
   const topY = tipYpx - laserLength;
   const visible = laserLength > 1;
+  const fullyExtended = progress >= 0.98;
   const burstActive = explosionStarted.current && !explosionDone;
   const burstOpacity = burstActive
     ? explosionT < 0.35
@@ -334,16 +308,15 @@ export function HeroPyramid({ trackRef, sectionRef }: HeroPyramidProps) {
     ? buildLivingBeamPath(tipXpx, tipYpx, topY, animT)
     : "";
   // Subtle breath when fully extended — 80% ↔ 100% every 2s
-  const breath =
-    progress >= 0.98
-      ? 0.8 + 0.2 * (0.5 + 0.5 * Math.sin(animT * Math.PI))
-      : 1;
+  const breath = fullyExtended
+    ? 0.8 + 0.2 * (0.5 + 0.5 * Math.sin(animT * Math.PI))
+    : 1;
 
-  if (!geom.w) return null;
+  if (isMobile || !geom.w) return null;
 
   return (
     <svg
-      className="pointer-events-none absolute inset-0 z-[5] h-full w-full overflow-visible"
+      className="pointer-events-none absolute inset-0 z-[5] hidden h-full w-full overflow-visible md:block"
       width={w}
       height={h}
       viewBox={`0 0 ${w} ${h}`}
@@ -504,7 +477,7 @@ export function HeroPyramid({ trackRef, sectionRef }: HeroPyramidProps) {
       )}
 
       {/* Repeating subtle lightning while laser stays at top */}
-      {progress >= 0.98 && lightningOpacity > 0.01 && (
+      {fullyExtended && lightningOpacity > 0.01 && (
         <g
           filter="url(#burst-glow)"
           opacity={Math.max(0, Math.min(1, lightningOpacity * 0.75))}

@@ -230,47 +230,50 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* Mobile fullscreen menu */}
+      {/* Mobile menu — backdrop */}
       <div
-        className={`fixed inset-0 z-[11000] flex flex-col bg-[#050508] transition-transform duration-300 ease-out lg:hidden ${
+        className={`fixed inset-0 z-[11000] bg-black/50 backdrop-blur-md transition-opacity duration-300 ease-out lg:hidden ${
+          menuOpen
+            ? "opacity-100"
+            : "pointer-events-none opacity-0"
+        }`}
+        aria-hidden={!menuOpen}
+        onClick={closeMobile}
+      />
+
+      {/* Mobile menu — panel */}
+      <div
+        className={`fixed inset-y-0 right-0 z-[11001] flex w-full max-w-md flex-col bg-[#0a0a0a]/95 shadow-[-20px_0_60px_rgba(0,0,0,0.5)] transition-transform duration-300 ease-out lg:hidden ${
           menuOpen ? "translate-x-0" : "pointer-events-none translate-x-full"
         }`}
         aria-hidden={!menuOpen}
       >
-        <div className="flex items-center justify-between px-5 py-4">
-          <Link href="/" onClick={closeMobile} className="flex shrink-0 items-center">
-            <Image
-              src="/logooo.png"
-              alt="Krevo"
-              width={120}
-              height={40}
-              className="h-10 w-auto object-contain"
-            />
-          </Link>
+        <div className="flex items-center justify-end px-6 pt-6 pb-2">
           <button
             type="button"
-            className="flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-[#7c3aed]/50 text-white"
+            className="flex h-12 w-12 items-center justify-center text-white transition-colors hover:text-[#a855f7]"
             aria-label="Închide meniul"
             onClick={closeMobile}
           >
-            <X size={28} strokeWidth={2} />
+            <X size={32} strokeWidth={1.75} />
           </button>
         </div>
 
-        <nav className="flex flex-1 flex-col items-center justify-center overflow-y-auto px-6 pb-16">
+        <nav className="flex flex-1 flex-col items-center justify-center gap-2 px-8 pb-20">
           <Link
             href="/servicii"
             onClick={closeMobile}
-            className="flex min-h-[56px] w-full max-w-sm items-center justify-center text-center text-[24px] font-bold text-white transition-colors hover:text-[#a855f7]"
+            className="group relative flex min-h-[56px] items-center justify-center px-4 text-[28px] font-bold text-white"
           >
             Servicii
+            <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#7c3aed] transition-all duration-300 group-hover:w-full" />
           </Link>
 
-          <div className="w-full max-w-sm">
+          <div className="flex w-full flex-col items-center">
             <button
               type="button"
               onClick={() => setProduseOpen((o) => !o)}
-              className="flex min-h-[56px] w-full items-center justify-center gap-2 text-center text-[24px] font-bold text-white transition-colors hover:text-[#a855f7]"
+              className="group relative flex min-h-[56px] items-center justify-center gap-2 px-4 text-[28px] font-bold text-white"
               aria-expanded={produseOpen}
             >
               Produse
@@ -280,23 +283,16 @@ export function Navbar() {
                   produseOpen ? "rotate-180" : ""
                 }`}
               />
+              <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#7c3aed] transition-all duration-300 group-hover:w-full" />
             </button>
             {produseOpen ? (
               <Link
                 href="/firmflow"
                 onClick={closeMobile}
-                className="flex min-h-[56px] w-full items-center justify-center gap-2 text-center text-[20px] font-semibold text-[#c9a84c] transition-colors hover:text-white"
+                className="group relative mt-1 flex min-h-[48px] items-center justify-center gap-2 px-4 text-[20px] font-semibold text-[#c4b5fd]"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/firmflow-logo.png"
-                  alt=""
-                  width={28}
-                  height={28}
-                  className="h-7 w-7 object-contain"
-                  aria-hidden="true"
-                />
                 FirmFlow
+                <span className="absolute bottom-1 left-1/2 h-px w-0 -translate-x-1/2 bg-[#7c3aed] transition-all duration-300 group-hover:w-full" />
               </Link>
             ) : null}
           </div>
@@ -304,17 +300,19 @@ export function Navbar() {
           <Link
             href="/#despre"
             onClick={closeMobile}
-            className="flex min-h-[56px] w-full max-w-sm items-center justify-center text-center text-[24px] font-bold text-white transition-colors hover:text-[#a855f7]"
+            className="group relative flex min-h-[56px] items-center justify-center px-4 text-[28px] font-bold text-white"
           >
             Despre
+            <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#7c3aed] transition-all duration-300 group-hover:w-full" />
           </Link>
 
           <Link
             href="/#contact"
             onClick={closeMobile}
-            className="flex min-h-[56px] w-full max-w-sm items-center justify-center text-center text-[24px] font-bold text-white transition-colors hover:text-[#a855f7]"
+            className="group relative flex min-h-[56px] items-center justify-center px-4 text-[28px] font-bold text-white"
           >
             Contact
+            <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#7c3aed] transition-all duration-300 group-hover:w-full" />
           </Link>
         </nav>
       </div>

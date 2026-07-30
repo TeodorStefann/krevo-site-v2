@@ -55,9 +55,9 @@ export default function CookiePolicyPage() {
                 3. Preferința de consimțământ
               </h2>
               <p>
-                Salvăm local în browser alegerea ta din bannerul de cookies (de
-                exemplu „Accept toate” sau „Doar esențiale”), astfel încât să nu
-                te întrebăm din nou la fiecare vizită. Această preferință este
+                Salvăm local în browser alegerea ta din bannerul de cookies
+                („Am înțeles” sau „Doar esențiale”), astfel încât să nu te
+                întrebăm din nou la fiecare vizită. Această preferință este
                 stocată în localStorage, nu prin cookies de analytics.
               </p>
             </section>

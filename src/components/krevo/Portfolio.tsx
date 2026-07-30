@@ -114,7 +114,9 @@ function DemoCopy({
           rel="noopener noreferrer"
           className="mt-8 inline-flex w-fit items-center justify-center rounded-full border border-[#c9a84c] bg-transparent px-6 py-3 text-sm font-semibold text-[#c9a84c] transition-colors hover:bg-[#c9a84c] hover:text-[#0a0a0a]"
         >
-          Încearcă <GoldPower>7{" "}zile gratuit</GoldPower> →
+          <span>
+            Încearcă <GoldPower>7 zile gratuit</GoldPower> →
+          </span>
         </a>
       ) : null}
     </div>
@@ -386,7 +388,7 @@ export function Portfolio() {
               </p>
             </div>
 
-            {/* Romania stats */}
+            {/* România stats */}
             <div className="mt-[100px] bg-[#000000]">
               <p className="text-center text-[16px] text-white">
                 Construit în România, pentru firme românești.

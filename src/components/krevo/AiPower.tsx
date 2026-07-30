@@ -170,9 +170,10 @@ export function AiPower() {
             href="https://firmflow-eight-tan.vercel.app/login"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-full max-w-xl items-center justify-center rounded-full bg-[#6b21a8] px-5 py-3.5 text-center text-[13px] leading-snug font-bold text-white transition-colors hover:bg-[#7c3aed] hover:shadow-[0_0_28px_rgba(124,58,237,0.4)] sm:px-10 sm:text-base"
+            className="inline-flex min-h-11 w-full max-w-xl items-center justify-center rounded-full bg-[#6b21a8] px-5 py-3.5 text-center text-[13px] leading-snug font-bold text-white transition-colors hover:bg-[#7c3aed] hover:shadow-[0_0_28px_rgba(124,58,237,0.4)] sm:px-10 sm:text-base"
           >
-            Vrei să vezi AI-ul la lucru în firma ta? Încearcă 7 zile gratuit
+            Vrei să vezi AI-ul la lucru în firma ta? Încearcă{" "}
+            7 zile gratuit
           </a>
         </div>
       </div>

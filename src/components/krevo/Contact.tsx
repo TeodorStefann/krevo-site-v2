@@ -86,23 +86,14 @@ export function Contact() {
 
       const data = (await res.json().catch(() => ({}))) as {
         error?: string;
-        code?: string;
-        details?: string;
-        hint?: string;
       };
 
       if (!res.ok) {
-        const debugParts = [
-          data.error || `HTTP ${res.status}`,
-          data.code ? `code=${data.code}` : null,
-          data.details ? `details=${data.details}` : null,
-          data.hint ? `hint=${data.hint}` : null,
-        ].filter(Boolean);
-
-        const debugMessage = debugParts.join(" | ");
         console.error("[contact form] Submit failed:", data);
-        // Temporary: show real error in UI for debugging
-        setError(debugMessage);
+        setError(
+          data.error ||
+            "Nu am putut trimite mesajul. Te rugăm să încerci din nou.",
+        );
         return;
       }
 
@@ -115,10 +106,10 @@ export function Contact() {
       setMessage("");
       setPrivacyAccepted(false);
     } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
       console.error("[contact form] Submit exception:", err);
-      // Keep all field values on error — temporary: show real error in UI
-      setError(message);
+      setError(
+        "Nu am putut trimite mesajul. Verifică conexiunea și încearcă din nou.",
+      );
     } finally {
       setLoading(false);
     }
@@ -340,7 +331,7 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={loading || !privacyAccepted}
-                  className="inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-[#6b21a8] px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#7c3aed] disabled:cursor-not-allowed disabled:opacity-70"
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2.5 rounded-full bg-[#6b21a8] px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#7c3aed] disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {loading ? (
                     <>

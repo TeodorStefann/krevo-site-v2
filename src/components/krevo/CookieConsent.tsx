@@ -41,7 +41,8 @@ export function CookieConsent() {
     >
       <div className="rounded-2xl border border-[#2d1b69] bg-[#0a0a0a] px-5 py-4 shadow-[0_20px_60px_rgba(0,0,0,0.55)]">
         <p className="text-center text-[13px] leading-relaxed text-krevo-silver">
-          Folosim cookies pentru a îmbunătăți experiența ta. Vezi{" "}
+          Folosim cookies esențiale pentru funcționarea site-ului. Preferința
+          ta este salvată local. Vezi{" "}
           <Link
             href="/confidentialitate"
             className="text-[#c9a84c] underline-offset-2 hover:underline"
@@ -63,7 +64,7 @@ export function CookieConsent() {
             onClick={() => accept("all")}
             className="min-h-11 rounded-full bg-[#c9a84c] px-5 py-2.5 text-[13px] font-semibold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c]"
           >
-            Accept toate
+            Am înțeles
           </button>
           <button
             type="button"

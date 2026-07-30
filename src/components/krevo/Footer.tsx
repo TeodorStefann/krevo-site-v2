@@ -22,8 +22,8 @@ const company = [
   { label: "Despre Krevo", href: "/#despre" },
   { label: "Contact", href: "/#contact" },
   { label: "Termeni și condiții", href: "/termeni" },
-  { label: "Politică confidențialitate", href: "/confidentialitate" },
-  { label: "Politică cookies", href: "/cookie-policy" },
+  { label: "Politică de confidențialitate", href: "/confidentialitate" },
+  { label: "Politică de cookies", href: "/cookie-policy" },
 ];
 
 export function Footer() {

@@ -56,12 +56,11 @@ export default function ConfidentialitatePage() {
                   automatizări AI etc.)
                 </li>
                 <li>
-                  Date tehnice: cookies esențiale; cookies de analiză doar cu
-                  consimțământ
+                  Date tehnice: cookies esențiale și preferința de consimțământ
+                  salvată local în browser
                 </li>
                 <li>
-                  Date de navigare uzuale (IP, browser), dacă instrumente de
-                  analiză sunt activate
+                  Nu folosim în prezent cookies de analytics sau de urmărire
                 </li>
               </ul>
             </section>
@@ -91,8 +90,7 @@ export default function ConfidentialitatePage() {
                 </li>
                 <li>Îndeplinirea obligațiilor legale</li>
                 <li>
-                  Îmbunătățirea site-ului și a experienței utilizatorului, în
-                  baza consimțământului unde este necesar
+                  Îmbunătățirea site-ului și a experienței utilizatorului
                 </li>
               </ul>
               <p className="mt-3">

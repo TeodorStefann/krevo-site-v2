@@ -19,16 +19,6 @@ export function getSupabaseAdmin(): SupabaseClient {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
 
-  console.log("[supabaseAdmin] NEXT_PUBLIC_SUPABASE_URL present:", Boolean(url));
-  console.log(
-    "[supabaseAdmin] SUPABASE_SERVICE_ROLE_KEY present:",
-    Boolean(serviceRoleKey),
-  );
-  console.log(
-    "[supabaseAdmin] SUPABASE_SERVICE_ROLE_KEY length:",
-    serviceRoleKey?.length ?? 0,
-  );
-
   if (!url) {
     throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL");
   }
@@ -42,7 +32,6 @@ export function getSupabaseAdmin(): SupabaseClient {
   // Guard: reject if someone accidentally put the anon key in this env var
   const payload = decodeJwtPayload(serviceRoleKey);
   const role = payload?.role;
-  console.log("[supabaseAdmin] JWT role claim:", role ?? "(could not decode)");
 
   if (role && role !== "service_role") {
     throw new Error(
@@ -50,7 +39,6 @@ export function getSupabaseAdmin(): SupabaseClient {
     );
   }
 
-  // Always create with the service role key explicitly (no anon fallback)
   return createClient(url, serviceRoleKey, {
     auth: {
       persistSession: false,
