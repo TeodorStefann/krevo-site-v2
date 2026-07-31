@@ -19,7 +19,7 @@ export function AiPower() {
     <section
       ref={sectionRef}
       id="puterea-ai"
-      className="relative overflow-hidden bg-[#000510] px-6 py-20 md:py-[120px]"
+      className="relative overflow-hidden bg-[#000000] px-6 py-20 md:py-[120px]"
     >
       <div
         className="pointer-events-none absolute inset-0 z-0"

@@ -2,7 +2,8 @@
 
 import { PortfolioCurtain } from "./animations/PortfolioCurtain";
 
-const PLATFORM_LOGIN_HREF = "https://buildflow-eight-tan.vercel.app/login";
+const PLATFORM_LOGIN_HREF =
+  "https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app";
 
 const CARD_PILLS = [
   "🔒 Date securizate",
@@ -38,7 +39,7 @@ export function Portfolio() {
 
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/firmflow-logo.png"
+              src="/firmflow-logo-new.png"
               alt=""
               loading="lazy"
               decoding="async"

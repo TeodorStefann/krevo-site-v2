@@ -450,7 +450,7 @@ export function FirmFlowProductCard({
               <h3 className="mt-4 flex flex-wrap items-center font-serif text-3xl font-bold sm:text-4xl md:text-6xl lg:text-7xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/firmflow-logo.png"
+                  src="/firmflow-logo-new.png"
                   alt=""
                   loading="lazy"
                   decoding="async"

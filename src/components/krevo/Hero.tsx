@@ -6,7 +6,8 @@ import { motion } from "framer-motion";
 import { HeroPyramid } from "./HeroPyramid";
 import { Counter } from "./Counter";
 
-const PLATFORM_LOGIN_HREF = "https://buildflow-eight-tan.vercel.app/login";
+const PLATFORM_LOGIN_HREF =
+  "https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app";
 
 const HERO_STATS = [
   { value: 30, suffix: "+", label: "module" },

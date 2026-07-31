@@ -6,7 +6,7 @@ export function Founder() {
   return (
     <section
       id="despre"
-      className="relative overflow-hidden bg-[#000510] px-6 py-20 md:py-[120px]"
+      className="relative overflow-hidden bg-[#000000] px-6 py-20 md:py-[120px]"
     >
       {/* Spotlight tracks the photo: centred near the top when stacked, left column on desktop. */}
       <div
@@ -45,34 +45,17 @@ export function Founder() {
           <p className="text-[24px] font-bold text-white">Teodor Chiurtu</p>
           <p className="mt-1 text-[14px] text-[#0066FF]">Fondator Krevo</p>
 
-          <p className="mt-5 text-[15px] leading-relaxed text-krevo-silver">
-            Luni de research și testare. Construit cu tehnologii de care
-            majoritatea nici n-au auzit.
-          </p>
-
-          <p className="mt-6 text-[20px] leading-relaxed text-white">
+          <p className="mt-6 text-[20px] leading-relaxed font-bold text-white">
             Ce altora le ia echipe întregi — eu livrez în săptămâni.
           </p>
 
           <p className="mt-6 text-[16px] leading-relaxed text-krevo-silver">
-            Accept maximum 5 firme noi pe lună. Când ai o problemă cu platforma
-            — răspund eu personal.
+            Nu sunt o corporație. Sunt omul care ți-a construit platforma și
+            care îți răspunde personal la telefon.
           </p>
 
-          <p className="mt-6 text-[15px] font-bold text-[#3399FF]">
-            Fiecare client primește linia mea directă. Răspund personal — nu un
-            bot.
-          </p>
-
-          <p className="mt-6 text-[16px] leading-snug font-bold text-white">
-            Singura platformă construită de un om care răspunde personal la
-            telefon.
-          </p>
-
-          <p className="mt-4 text-[15px] leading-relaxed text-krevo-silver italic">
-            Construită de cineva care înțelege că n-ai timp de manuale și
-            training-uri — nu de o corporație care nu ți-a vizitat niciodată
-            firma.
+          <p className="mt-6 text-[15px] font-bold text-[#0066FF]">
+            Accept maximum 5 firme noi pe lună.
           </p>
 
           <a

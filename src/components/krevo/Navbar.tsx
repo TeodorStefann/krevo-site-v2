@@ -24,7 +24,8 @@ type IconType = ComponentType<{
   className?: string;
 }>;
 
-const productHref = "https://firmflow-eight-tan.vercel.app/login";
+const productHref =
+  "https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app";
 
 const saasLinks: { label: string; href: string; icon: IconType }[] = [
   { label: "FirmFlow", href: "/firmflow", icon: Building2 },
@@ -109,7 +110,7 @@ export function Navbar() {
                     <span className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#0066FF]/50 bg-[#0a0a0a]">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src="/firmflow-logo.png"
+                        src="/firmflow-logo-new.png"
                         alt="FirmFlow"
                         width={40}
                         height={40}
