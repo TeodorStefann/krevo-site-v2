@@ -1,6 +1,6 @@
 export function Testimonials() {
   return (
-    <section className="relative overflow-hidden bg-[#000000] px-6 py-20 md:py-[120px]">
+    <section className="relative overflow-hidden px-6 py-20 md:py-[120px]">
       <div className="relative z-10 mx-auto max-w-3xl">
         <h2 className="text-center text-[28px] font-bold text-white sm:text-[32px]">
           Ce spun <span className="section-title-accent">clienții</span>

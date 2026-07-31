@@ -2,7 +2,7 @@
 export function SectionDivider() {
   return (
     <div
-      className="flex justify-center bg-[#000000] py-6"
+      className="flex justify-center py-6"
       aria-hidden="true"
     >
       <span

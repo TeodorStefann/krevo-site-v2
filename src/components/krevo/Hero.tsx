@@ -31,7 +31,7 @@ export function Hero({ siteReady = false }: { siteReady?: boolean }) {
   return (
     <section
       ref={sectionRef}
-      className="relative flex h-[100vh] items-center overflow-hidden bg-[#000000] px-6 pt-24 pb-16"
+      className="relative flex h-[100vh] items-center overflow-hidden px-6 pt-24 pb-16"
     >
       <div
         ref={pyramidRef}
