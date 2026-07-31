@@ -6,7 +6,7 @@ import { NoiseOverlay } from "@/components/krevo/NoiseOverlay";
 
 export default function TermeniPage() {
   return (
-    <div className="relative min-h-screen bg-[#0a0a0a] text-krevo-body selection:bg-krevo-gold/30 selection:text-krevo-white">
+    <div className="relative min-h-screen bg-[#000000] text-krevo-body selection:bg-krevo-gold/30 selection:text-krevo-white">
       <NoiseOverlay />
       <Navbar />
       <main className="px-6 pt-28 pb-[100px]">

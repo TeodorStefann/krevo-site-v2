@@ -133,7 +133,7 @@ export default function FirmFlowPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0a] text-krevo-body selection:bg-[#c9a84c]/30 selection:text-white">
+    <div className="relative min-h-screen bg-[#000000] text-krevo-body selection:bg-[#c9a84c]/30 selection:text-white">
       <NoiseOverlay />
       <Navbar />
       <main className="pt-24">
@@ -186,7 +186,7 @@ export default function FirmFlowPage() {
           </div>
         </section>
 
-        <section className="bg-[#0a0a0a] px-6 py-20 md:py-[120px]">
+        <section className="bg-[#000000] px-6 py-20 md:py-[120px]">
           <div className="mx-auto max-w-6xl">
             <h2 className="text-center text-[28px] font-bold text-white">
               Vezi platforma în{" "}
@@ -384,7 +384,7 @@ export default function FirmFlowPage() {
         <NumbersSpeak theme="gold" />
 
         {/* Legal compliance strip */}
-        <section className="border-t border-[#c9a84c]/20 bg-[#0a0a0a] px-6 py-10">
+        <section className="border-t border-[#c9a84c]/20 bg-[#000000] px-6 py-10">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-[12px] leading-relaxed text-krevo-silver italic">
               Datele prezentate sunt fictive și au scop exclusiv demonstrativ.{" "}

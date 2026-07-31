@@ -7,7 +7,7 @@ import { NoiseOverlay } from "@/components/krevo/NoiseOverlay";
 
 export default function ServiciiPage() {
   return (
-    <div className="relative min-h-screen bg-[#0a0a0a] text-krevo-body selection:bg-krevo-gold/30 selection:text-krevo-white">
+    <div className="relative min-h-screen bg-[#000000] text-krevo-body selection:bg-krevo-gold/30 selection:text-krevo-white">
       <NoiseOverlay />
       <Navbar />
       <main className="pt-24">

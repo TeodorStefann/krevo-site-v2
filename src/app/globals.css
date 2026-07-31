@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --color-krevo-black: #0a0a0a;
-  --color-krevo-deep: #0a0a0a;
+  --color-krevo-black: #000000;
+  --color-krevo-deep: #000000;
   --color-krevo-card: #0a0a0a;
   --color-krevo-border: #1a1a1a;
   --color-krevo-gold: #0052CC;
@@ -22,10 +22,11 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  background-color: #000000;
 }
 
 body {
-  background-color: #0a0a0a;
+  background-color: #000000;
   color: #d0d0d0;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -92,7 +93,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -429,7 +430,7 @@ input:-webkit-autofill:focus {
 }
 
 .services-aurora-bg {
-  background: #0a0a0a;
+  background: #000000;
   background-size: 400% 400%;
   animation: aurora-flow 20s ease infinite;
 }
