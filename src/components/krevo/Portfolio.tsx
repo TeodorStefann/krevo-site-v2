@@ -3,7 +3,7 @@
 import { PortfolioCurtain } from "./animations/PortfolioCurtain";
 
 const PLATFORM_LOGIN_HREF =
-  "https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app";
+  "https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app/login";
 
 const CARD_PILLS = [
   "🔒 Date securizate",

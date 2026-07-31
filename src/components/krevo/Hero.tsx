@@ -7,7 +7,7 @@ import { HeroPyramid } from "./HeroPyramid";
 import { Counter } from "./Counter";
 
 const PLATFORM_LOGIN_HREF =
-  "https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app";
+  "https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app/login";
 
 const HERO_STATS = [
   { value: 30, suffix: "+", label: "module" },

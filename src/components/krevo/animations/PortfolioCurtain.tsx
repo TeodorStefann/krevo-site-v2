@@ -17,14 +17,14 @@ export function PortfolioCurtain({ children, className = "" }: PortfolioCurtainP
     <div ref={ref} className={`relative ${className}`}>
       {children}
       <motion.div
-        className="pointer-events-none absolute inset-y-0 left-0 z-30 w-1/2 bg-[#0a0a0a]"
+        className="pointer-events-none absolute inset-y-0 left-0 z-30 w-1/2 bg-[#000000]"
         initial={{ scaleX: 1 }}
         animate={inView ? { scaleX: 0 } : { scaleX: 1 }}
         transition={{ ...springNatural, delay: 0.1 }}
         style={{ transformOrigin: "right center", willChange: "transform" }}
       />
       <motion.div
-        className="pointer-events-none absolute inset-y-0 right-0 z-30 w-1/2 bg-[#0a0a0a]"
+        className="pointer-events-none absolute inset-y-0 right-0 z-30 w-1/2 bg-[#000000]"
         initial={{ scaleX: 1 }}
         animate={inView ? { scaleX: 0 } : { scaleX: 1 }}
         transition={{ ...springNatural, delay: 0.1 }}

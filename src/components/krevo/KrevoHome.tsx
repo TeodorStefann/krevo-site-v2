@@ -22,7 +22,7 @@ export function KrevoHome() {
     <>
       {!loaded && <LoadingScreen onComplete={() => setLoaded(true)} />}
       <div
-        className={`relative min-h-screen bg-[#0a0a0a] text-krevo-body selection:bg-krevo-gold/30 selection:text-krevo-white ${loaded ? "" : "overflow-hidden"}`}
+        className={`relative min-h-screen bg-[#000000] text-krevo-body selection:bg-krevo-gold/30 selection:text-krevo-white ${loaded ? "" : "overflow-hidden"}`}
       >
         <NoiseOverlay />
         <Navbar />

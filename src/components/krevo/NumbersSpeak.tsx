@@ -85,7 +85,7 @@ export function NumbersSpeak({ theme = "blue" }: { theme?: Theme }) {
       ref={ref}
       id="numere"
       className={`relative overflow-hidden px-6 py-20 md:py-[120px] ${
-        isGold ? "bg-[#0a0a0a]" : "bg-[#000510]"
+        isGold ? "bg-[#0a0a0a]" : "bg-[#000000]"
       }`}
     >
       <div className="relative z-10 mx-auto max-w-5xl">

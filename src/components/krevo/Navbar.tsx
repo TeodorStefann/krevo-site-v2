@@ -25,7 +25,7 @@ type IconType = ComponentType<{
 }>;
 
 const productHref =
-  "https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app";
+  "https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app/login";
 
 const saasLinks: { label: string; href: string; icon: IconType }[] = [
   { label: "FirmFlow", href: "/firmflow", icon: Building2 },
