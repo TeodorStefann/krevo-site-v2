@@ -2,6 +2,8 @@
 
 import { PortfolioCurtain } from "./animations/PortfolioCurtain";
 
+const PLATFORM_LOGIN_HREF = "https://buildflow-eight-tan.vercel.app/login";
+
 const CARD_PILLS = [
   "🔒 Date securizate",
   "📱 Funcționează pe telefon",
@@ -31,7 +33,7 @@ export function Portfolio() {
         <PortfolioCurtain className="mt-12 md:mt-14">
           <article className="mx-auto flex max-w-2xl flex-col items-center rounded-[2rem] border border-[#0066FF] bg-[#0a0a0a] p-8 text-center transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(0,102,255,0.3)] md:p-12">
             <span className="rounded-full border border-[#0066FF]/40 bg-[#0066FF]/10 px-3 py-1 text-[11px] font-semibold tracking-[0.12em] text-[#3399FF] uppercase">
-              Disponibil acum
+              Lansat 2026
             </span>
 
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -71,8 +73,14 @@ export function Portfolio() {
               ))}
             </ul>
 
+            <p className="mt-4 text-center text-[12px] leading-relaxed text-krevo-silver italic">
+              Construit cu tehnologia folosită de Google și Anthropic.
+            </p>
+
             <a
-              href="/firmflow"
+              href={PLATFORM_LOGIN_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-8 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0066FF] px-10 py-4 text-[18px] font-bold text-white transition-colors hover:bg-[#0052CC] sm:w-auto"
             >
               Vezi platforma →

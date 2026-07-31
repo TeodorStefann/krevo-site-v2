@@ -1,13 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { HeroPyramid } from "./HeroPyramid";
 import { Counter } from "./Counter";
 
-const HERO_TITLE = "Firmele mari au sisteme. Tu ai Excel.";
+const PLATFORM_LOGIN_HREF = "https://buildflow-eight-tan.vercel.app/login";
 
 const HERO_STATS = [
   { value: 30, suffix: "+", label: "module" },
@@ -98,7 +97,8 @@ export function Hero({ siteReady = false }: { siteReady?: boolean }) {
             }}
             className="text-[32px] leading-tight font-bold text-white md:text-[48px]"
           >
-            {HERO_TITLE}
+            Firmele mari au sisteme. Tu ai{" "}
+            <span className="text-[#0066FF]">Excel.</span>
           </motion.h1>
 
           <motion.p
@@ -109,10 +109,9 @@ export function Hero({ siteReady = false }: { siteReady?: boolean }) {
               delay: 0.25,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="mt-5 text-[20px] leading-relaxed text-krevo-silver italic"
+            className="mt-4 text-[20px] font-bold text-white md:text-[24px]"
           >
-            Krevo construiește sistemul pe care firma ta îl merită — cu AI
-            integrat, personalizat complet.
+            Până acum.
           </motion.p>
 
           <motion.div
@@ -125,12 +124,14 @@ export function Hero({ siteReady = false }: { siteReady?: boolean }) {
             }}
             className="mt-8"
           >
-            <Link
-              href="/firmflow"
+            <a
+              href={PLATFORM_LOGIN_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex w-full items-center justify-center rounded-full bg-[#0066FF] px-10 py-[18px] text-[18px] font-bold text-white transition-colors hover:bg-[#0052CC] md:w-auto"
             >
               Vezi FirmFlow →
-            </Link>
+            </a>
           </motion.div>
 
           <motion.div

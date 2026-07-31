@@ -17,6 +17,9 @@ const IMG_H = 941;
 const TIP_NX_IMG = 0.734;
 const TIP_NY_IMG = 0.455;
 
+/** Beam exits the frame here, as a fraction of the hero width, giving it its tilt. */
+const LASER_TOP_NX = 0.85;
+
 const LASER_DELAY_MS = 1500;
 const LASER_GROW_MS = 1200;
 const EXPLOSION_MS = 600;
@@ -45,26 +48,35 @@ function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
 }
 
-/** Organic wavy beam path from tip (bottom) toward top (y=0). */
+/** Organic wavy beam path from the pyramid tip to the exit point, waving across the axis. */
 function buildLivingBeamPath(
   tipX: number,
   tipY: number,
+  topX: number,
   topY: number,
   timeSec: number,
 ): string {
-  const length = tipY - topY;
+  const dx = topX - tipX;
+  const dy = topY - tipY;
+  const length = Math.hypot(dx, dy);
   if (length < 1) return `M ${tipX} ${tipY}`;
+
+  const ux = dx / length;
+  const uy = dy / length;
+  const perpX = -uy;
+  const perpY = ux;
 
   const segments = Math.max(12, Math.ceil(length / 6));
   let d = `M ${tipX.toFixed(2)} ${tipY.toFixed(2)}`;
 
   for (let i = 1; i <= segments; i++) {
     const u = i / segments;
-    const y = tipY - u * length;
+    const along = u * length;
     const wave =
       Math.sin(u * Math.PI * 2.8 + timeSec * 2.1) * 2.4 +
       Math.sin(u * Math.PI * 1.1 + timeSec * 1.35) * 0.9;
-    const x = tipX + wave;
+    const x = tipX + ux * along + perpX * wave;
+    const y = tipY + uy * along + perpY * wave;
     d += ` L ${x.toFixed(2)} ${y.toFixed(2)}`;
   }
 
@@ -302,13 +314,18 @@ export function HeroPyramid({
   }, [expanded, isMobile]);
 
   const { tipXpx, tipYpx, w, h } = geom;
-  const localTipX = BEAM_PAD;
-  const localTipY = tipYpx;
-  const localTopY = 0;
+  const topXpx = w * LASER_TOP_NX;
+  const topYpx = 0;
   const beamPath =
     tipYpx > 1
-      ? buildLivingBeamPath(localTipX, localTipY, localTopY, animT)
+      ? buildLivingBeamPath(tipXpx, tipYpx, topXpx, topYpx, animT)
       : "";
+  /** Draws the stroke from the tip outward; pathLength keeps it stable as the path wobbles. */
+  const growStyle = {
+    strokeDasharray: 1,
+    strokeDashoffset: expanded ? 0 : 1,
+    transition: `stroke-dashoffset ${LASER_GROW_MS}ms ease-out`,
+  } as const;
   const breath = fullyExtended
     ? 0.8 + 0.2 * (0.5 + 0.5 * Math.sin(animT * Math.PI))
     : 1;
@@ -333,113 +350,102 @@ export function HeroPyramid({
       className="pointer-events-none absolute inset-0 z-[5] hidden md:block"
       aria-hidden="true"
     >
-      {/* Clip grows from tip upward via CSS height transition */}
-      <div
-        style={{
-          position: "absolute",
-          left: tipXpx - BEAM_PAD,
-          top: tipYpx,
-          width: BEAM_PAD * 2,
-          height: expanded ? tipYpx : 0,
-          transform: "translateY(-100%)",
-          overflow: "hidden",
-          transition: `height ${LASER_GROW_MS}ms ease-out`,
-        }}
+      {/* Diagonal beam: tip → top-right, drawn out from the tip via stroke-dashoffset */}
+      <svg
+        width={w}
+        height={h}
+        viewBox={`0 0 ${w} ${h}`}
+        fill="none"
+        className="absolute inset-0 overflow-visible"
+        style={{ opacity: expanded ? breath : 0 }}
       >
-        <svg
-          width={BEAM_PAD * 2}
-          height={tipYpx}
-          viewBox={`0 0 ${BEAM_PAD * 2} ${tipYpx}`}
-          fill="none"
-          className="absolute bottom-0 left-0"
-          style={{ opacity: breath }}
-        >
-          <defs>
-            <linearGradient
-              id="laser-core-grad"
-              gradientUnits="userSpaceOnUse"
-              x1={localTipX}
-              y1={localTipY}
-              x2={localTipX}
-              y2={localTopY}
-            >
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
-              <stop offset="55%" stopColor="#ffffff" stopOpacity="0.75" />
-              <stop offset="100%" stopColor="#ffffff" stopOpacity="0.4" />
-            </linearGradient>
-            <linearGradient
-              id="laser-mid-grad"
-              gradientUnits="userSpaceOnUse"
-              x1={localTipX}
-              y1={localTipY}
-              x2={localTipX}
-              y2={localTopY}
-            >
-              <stop offset="0%" stopColor="#0066FF" stopOpacity="1" />
-              <stop offset="50%" stopColor="#0066FF" stopOpacity="0.7" />
-              <stop offset="100%" stopColor="#0066FF" stopOpacity="0.35" />
-            </linearGradient>
-            <linearGradient
-              id="laser-glow-grad"
-              gradientUnits="userSpaceOnUse"
-              x1={localTipX}
-              y1={localTipY}
-              x2={localTipX}
-              y2={localTopY}
-            >
-              <stop offset="0%" stopColor="#0052CC" stopOpacity="1" />
-              <stop offset="100%" stopColor="#0052CC" stopOpacity="0.35" />
-            </linearGradient>
-            <filter
-              id="laser-medium-blur"
-              filterUnits="userSpaceOnUse"
-              x={0}
-              y={-20}
-              width={BEAM_PAD * 2}
-              height={tipYpx + 40}
-            >
-              <feGaussianBlur
-                in="SourceGraphic"
-                stdDeviation="2"
-                result="blur"
-              />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
+        <defs>
+          <linearGradient
+            id="laser-core-grad"
+            gradientUnits="userSpaceOnUse"
+            x1={tipXpx}
+            y1={tipYpx}
+            x2={topXpx}
+            y2={topYpx}
+          >
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+            <stop offset="55%" stopColor="#ffffff" stopOpacity="0.75" />
+            <stop offset="100%" stopColor="#ffffff" stopOpacity="0.4" />
+          </linearGradient>
+          <linearGradient
+            id="laser-mid-grad"
+            gradientUnits="userSpaceOnUse"
+            x1={tipXpx}
+            y1={tipYpx}
+            x2={topXpx}
+            y2={topYpx}
+          >
+            <stop offset="0%" stopColor="#0066FF" stopOpacity="1" />
+            <stop offset="50%" stopColor="#0066FF" stopOpacity="0.7" />
+            <stop offset="100%" stopColor="#0066FF" stopOpacity="0.35" />
+          </linearGradient>
+          <linearGradient
+            id="laser-glow-grad"
+            gradientUnits="userSpaceOnUse"
+            x1={tipXpx}
+            y1={tipYpx}
+            x2={topXpx}
+            y2={topYpx}
+          >
+            <stop offset="0%" stopColor="#0052CC" stopOpacity="1" />
+            <stop offset="100%" stopColor="#0052CC" stopOpacity="0.35" />
+          </linearGradient>
+          <filter
+            id="laser-medium-blur"
+            filterUnits="userSpaceOnUse"
+            x={-BEAM_PAD}
+            y={-BEAM_PAD}
+            width={w + BEAM_PAD * 2}
+            height={h + BEAM_PAD * 2}
+          >
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
 
-          <path
-            d={beamPath}
-            stroke="url(#laser-glow-grad)"
-            strokeWidth={20}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-            opacity={0.15}
-          />
-          <path
-            d={beamPath}
-            stroke="url(#laser-mid-grad)"
-            strokeWidth={4}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-            opacity={0.6}
-            filter="url(#laser-medium-blur)"
-          />
-          <path
-            d={beamPath}
-            stroke="url(#laser-core-grad)"
-            strokeWidth={1}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-            opacity={0.9}
-          />
-        </svg>
-      </div>
+        <path
+          d={beamPath}
+          pathLength={1}
+          style={growStyle}
+          stroke="url(#laser-glow-grad)"
+          strokeWidth={20}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          opacity={0.15}
+        />
+        <path
+          d={beamPath}
+          pathLength={1}
+          style={growStyle}
+          stroke="url(#laser-mid-grad)"
+          strokeWidth={4}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          opacity={0.6}
+          filter="url(#laser-medium-blur)"
+        />
+        <path
+          d={beamPath}
+          pathLength={1}
+          style={growStyle}
+          stroke="url(#laser-core-grad)"
+          strokeWidth={1}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          opacity={0.9}
+        />
+      </svg>
 
       {/* Burst + lightning at screen top once fully extended */}
       {(burstActive || fullyExtended) && (
@@ -474,7 +480,7 @@ export function HeroPyramid({
             <g
               filter="url(#burst-glow)"
               opacity={Math.max(0, Math.min(1, burstOpacity))}
-              transform={`translate(${tipXpx}, 0)`}
+              transform={`translate(${topXpx}, ${topYpx})`}
             >
               <circle
                 cx={0}
@@ -528,7 +534,7 @@ export function HeroPyramid({
             <g
               filter="url(#burst-glow)"
               opacity={Math.max(0, Math.min(1, lightningOpacity * 0.75))}
-              transform={`translate(${tipXpx}, 0)`}
+              transform={`translate(${topXpx}, ${topYpx})`}
             >
               {lightnings.map((bolt, i) => (
                 <path

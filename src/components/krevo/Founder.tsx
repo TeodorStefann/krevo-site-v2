@@ -26,14 +26,14 @@ export function Founder() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto grid max-w-5xl grid-cols-1 items-center gap-10 md:grid-cols-[2fr_3fr] md:gap-14">
+      <div className="relative z-10 mx-auto grid max-w-5xl grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14">
         <div className="flex justify-center md:justify-start">
           <Image
             src="/teodor.png"
             alt="Teodor Chiurtu"
-            width={400}
-            height={500}
-            className="h-auto max-h-[400px] w-auto rounded-[12px] object-contain"
+            width={339}
+            height={737}
+            className="h-auto max-h-[800px] w-auto rounded-[12px] object-contain"
           />
         </div>
 
@@ -46,16 +46,12 @@ export function Founder() {
           <p className="mt-1 text-[14px] text-[#0066FF]">Fondator Krevo</p>
 
           <p className="mt-5 text-[15px] leading-relaxed text-krevo-silver">
-            Am pornit Krevo cu o convingere simplă: firmele mici din România
-            merită aceleași unelte pe care le au corporațiile — dar fără prețul
-            și complexitatea lor. FirmFlow este rezultatul a 3 luni de
-            dezvoltare intensivă, construit cu cele mai avansate tehnologii AI
-            disponibile în 2026.
+            Luni de research și testare. Construit cu tehnologii de care
+            majoritatea nici n-au auzit.
           </p>
 
           <p className="mt-6 text-[20px] leading-relaxed text-white">
-            Construiesc singur ce alte firme fac cu echipe de 10 oameni — pentru
-            că AI-ul mi-a dat un avantaj pe care nu îl avea nimeni acum 2 ani.
+            Ce altora le ia echipe întregi — eu livrez în săptămâni.
           </p>
 
           <p className="mt-6 text-[16px] leading-relaxed text-krevo-silver">
@@ -64,7 +60,19 @@ export function Founder() {
           </p>
 
           <p className="mt-6 text-[15px] font-bold text-[#3399FF]">
-            Răspund în maxim 2 ore pe WhatsApp.
+            Fiecare client primește linia mea directă. Răspund personal — nu un
+            bot.
+          </p>
+
+          <p className="mt-6 text-[16px] leading-snug font-bold text-white">
+            Singura platformă construită de un om care răspunde personal la
+            telefon.
+          </p>
+
+          <p className="mt-4 text-[15px] leading-relaxed text-krevo-silver italic">
+            Construită de cineva care înțelege că n-ai timp de manuale și
+            training-uri — nu de o corporație care nu ți-a vizitat niciodată
+            firma.
           </p>
 
           <a

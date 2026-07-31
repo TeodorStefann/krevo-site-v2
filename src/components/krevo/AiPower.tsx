@@ -62,6 +62,10 @@ export function AiPower() {
           pentru tine — generează oferte, analizează performanța echipei și îți
           spune dimineața ce trebuie să faci azi.
         </p>
+
+        <p className="mt-5 text-center text-[14px] text-krevo-silver italic">
+          Tehnologie care nu exista acum 2 ani.
+        </p>
       </div>
     </section>
   );
