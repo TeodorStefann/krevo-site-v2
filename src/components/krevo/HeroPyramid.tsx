@@ -14,8 +14,8 @@ type HeroPyramidProps = {
 const IMG_W = 1672;
 const IMG_H = 941;
 /** Pyramid apex in normalized image coordinates. */
-const TIP_NX_IMG = 0.734;
-const TIP_NY_IMG = 0.455;
+const TIP_NX_IMG = 0.76;
+const TIP_NY_IMG = 0.48;
 
 const LASER_DELAY_MS = 1500;
 const LASER_GROW_MS = 1200;
