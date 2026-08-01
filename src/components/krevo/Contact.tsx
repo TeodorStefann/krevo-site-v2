@@ -82,6 +82,12 @@ export function Contact() {
     <section
       id="contact"
       className="relative overflow-hidden px-6 py-20 md:py-[120px]"
+      style={{
+        backgroundImage: "url('/bg-sub-hero.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
     >
       <div
         className="pointer-events-none absolute inset-0 z-0"

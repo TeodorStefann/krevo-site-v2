@@ -35,18 +35,9 @@ export function KrevoHome() {
         <Navbar />
         <main>
           <Hero siteReady={loaded} />
-          <div
-            style={{
-              backgroundImage: "url('/bg-sub-hero.png')",
-              backgroundSize: "cover",
-              backgroundPosition: "center top",
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-            <TrustBar />
-            <SectionDivider />
-            <PainCalculator />
-          </div>
+          <TrustBar />
+          <SectionDivider />
+          <PainCalculator />
           <SectionDivider />
           <AiPower />
           <SectionDivider />
