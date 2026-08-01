@@ -63,8 +63,8 @@ export function Portfolio() {
             </p>
 
             <p className="mt-4 text-[14px] leading-relaxed text-krevo-silver italic">
-              Construit specific pentru firme din România cu 5-50 de angajați
-              care vor mai mult decât Excel.
+              Pentru firmele din România care au depășit Excel-ul — dar nu au
+              buget de SAP.
             </p>
 
             <ul className="mt-6 flex flex-wrap justify-center gap-2">
