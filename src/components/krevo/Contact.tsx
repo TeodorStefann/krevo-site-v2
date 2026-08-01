@@ -89,7 +89,7 @@ export function Contact() {
           backgroundImage: "url('/bg-contact.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          backgroundAttachment: "fixed",
+          backgroundAttachment: "scroll",
           opacity: 1,
         }}
         aria-hidden="true"

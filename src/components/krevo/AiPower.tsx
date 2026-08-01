@@ -27,7 +27,7 @@ export function AiPower() {
           backgroundImage: "url('/bg-aipower.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          backgroundAttachment: "fixed",
+          backgroundAttachment: "scroll",
           opacity: 1,
         }}
         aria-hidden="true"

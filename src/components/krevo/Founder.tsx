@@ -14,7 +14,7 @@ export function Founder() {
           backgroundImage: "url('/bg-founder.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          backgroundAttachment: "fixed",
+          backgroundAttachment: "scroll",
           opacity: 1,
         }}
         aria-hidden="true"
