@@ -6,27 +6,9 @@ export function Founder() {
   return (
     <section
       id="despre"
-      className="relative overflow-hidden px-6 py-20 md:py-[120px]"
+      className="relative px-6 py-20 md:py-[120px]"
     >
-      {/* Spotlight tracks the photo: centred near the top when stacked, left column on desktop. */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0 md:hidden"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 28%, rgba(0,102,255,0.05) 0%, transparent 55%)",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 z-0 hidden md:block"
-        style={{
-          background:
-            "radial-gradient(circle at 25% 50%, rgba(0,102,255,0.05) 0%, transparent 55%)",
-        }}
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 mx-auto grid max-w-5xl grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14">
+      <div className="relative mx-auto grid max-w-5xl grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14">
         <div className="flex justify-center md:justify-start">
           <Image
             src="/teodor.png"

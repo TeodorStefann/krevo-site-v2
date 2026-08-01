@@ -81,18 +81,9 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden px-6 py-20 md:py-[120px]"
+      className="relative px-6 py-20 md:py-[120px]"
     >
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 55%, rgba(0,102,255,0.03) 0%, transparent 65%)",
-        }}
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 mx-auto max-w-xl">
+      <div className="relative mx-auto max-w-xl">
         <h2 className="text-center text-[32px] font-bold text-white">
           <span className="section-title-accent">Contactează-ne</span>
         </h2>

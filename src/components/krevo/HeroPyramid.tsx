@@ -14,8 +14,8 @@ type HeroPyramidProps = {
 const IMG_W = 1690;
 const IMG_H = 945;
 /** Pyramid apex in normalized image coordinates. */
-const TIP_NX_IMG = 0.732;
-const TIP_NY_IMG = 0.444;
+const TIP_NX_IMG = 0.724;
+const TIP_NY_IMG = 0.392;
 
 const LASER_DELAY_MS = 1500;
 const LASER_GROW_MS = 1200;
@@ -45,30 +45,14 @@ function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
 }
 
-/** Organic wavy beam path straight up from tip (bottom) toward top (y=0). */
+/** Perfectly straight vertical beam from tip (bottom) to top (y=0). */
 function buildLivingBeamPath(
   tipX: number,
   tipY: number,
   topY: number,
-  timeSec: number,
 ): string {
-  const length = tipY - topY;
-  if (length < 1) return `M ${tipX} ${tipY}`;
-
-  const segments = Math.max(12, Math.ceil(length / 6));
-  let d = `M ${tipX.toFixed(2)} ${tipY.toFixed(2)}`;
-
-  for (let i = 1; i <= segments; i++) {
-    const u = i / segments;
-    const y = tipY - u * length;
-    const wave =
-      Math.sin(u * Math.PI * 2.8 + timeSec * 2.1) * 2.4 +
-      Math.sin(u * Math.PI * 1.1 + timeSec * 1.35) * 0.9;
-    const x = tipX + wave;
-    d += ` L ${x.toFixed(2)} ${y.toFixed(2)}`;
-  }
-
-  return d;
+  if (tipY - topY < 1) return `M ${tipX} ${tipY}`;
+  return `M ${tipX.toFixed(2)} ${tipY.toFixed(2)} L ${tipX.toFixed(2)} ${topY.toFixed(2)}`;
 }
 
 function zigzagPath(angle: number, length: number, seed: number): string {
@@ -307,7 +291,7 @@ export function HeroPyramid({
   const localTopY = 0;
   const beamPath =
     tipYpx > 1
-      ? buildLivingBeamPath(localTipX, localTipY, localTopY, animT)
+      ? buildLivingBeamPath(localTipX, localTipY, localTopY)
       : "";
   const breath = fullyExtended
     ? 0.8 + 0.2 * (0.5 + 0.5 * Math.sin(animT * Math.PI))

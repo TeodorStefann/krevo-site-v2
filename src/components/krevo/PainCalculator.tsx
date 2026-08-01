@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 /** Blended hourly cost used for the manual-work estimates. */
 const HOURLY_COST_RON = 45;
@@ -58,20 +58,6 @@ const sliderClass =
   "[&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#0066FF] [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(0,102,255,0.7)] " +
   "[&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-[#0066FF]";
 
-/** Deterministic so server and client markup match. */
-const PARTICLES = [
-  { left: 8, size: 3, delay: 0, duration: 4.2 },
-  { left: 18, size: 2, delay: 0.6, duration: 5 },
-  { left: 27, size: 4, delay: 1.2, duration: 4.6 },
-  { left: 36, size: 2, delay: 0.3, duration: 5.4 },
-  { left: 45, size: 3, delay: 1.8, duration: 4 },
-  { left: 56, size: 2, delay: 0.9, duration: 5.2 },
-  { left: 65, size: 4, delay: 2.1, duration: 4.4 },
-  { left: 74, size: 3, delay: 1.5, duration: 4.8 },
-  { left: 83, size: 2, delay: 0.45, duration: 5.6 },
-  { left: 92, size: 3, delay: 2.4, duration: 4.1 },
-];
-
 function clampForSlider(value: number, max: number) {
   if (!Number.isFinite(value) || value < 1) return 1;
   return Math.min(Math.round(value), max);
@@ -125,7 +111,6 @@ function AnimatedNumber({
 export function PainCalculator() {
   const [employees, setEmployees] = useState("");
   const [checked, setChecked] = useState<Record<string, boolean>>({});
-  const reduceMotion = useReducedMotion();
 
   const employeeCount = Number(employees);
   const hasEmployees =
@@ -240,34 +225,7 @@ export function PainCalculator() {
               transition={{ duration: 0.3 }}
               className="relative mt-12"
             >
-              {!reduceMotion && (
-                <div
-                  className="pointer-events-none absolute inset-x-0 top-0 bottom-0 overflow-hidden"
-                  aria-hidden="true"
-                >
-                  {PARTICLES.map((p) => (
-                    <motion.span
-                      key={p.left}
-                      className="absolute bottom-0 rounded-full bg-[#0066FF]"
-                      style={{
-                        left: `${p.left}%`,
-                        width: p.size,
-                        height: p.size,
-                      }}
-                      initial={{ opacity: 0, y: 0 }}
-                      animate={{ opacity: [0, 0.7, 0], y: -180 }}
-                      transition={{
-                        duration: p.duration,
-                        delay: p.delay,
-                        repeat: Infinity,
-                        ease: "easeOut",
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-
-              <div className="relative z-10 text-center" aria-hidden="true">
+              <div className="relative text-center" aria-hidden="true">
                 <motion.p
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}

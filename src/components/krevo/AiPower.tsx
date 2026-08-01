@@ -19,18 +19,9 @@ export function AiPower() {
     <section
       ref={sectionRef}
       id="puterea-ai"
-      className="relative overflow-hidden px-6 py-20 md:py-[120px]"
+      className="relative px-6 py-20 md:py-[120px]"
     >
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background:
-            "repeating-linear-gradient(to bottom, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 6px)",
-        }}
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 mx-auto max-w-5xl">
+      <div className="relative mx-auto max-w-5xl">
         <h2 className="text-center text-[30px] leading-tight font-bold text-white sm:text-[36px] md:text-[42px]">
           De la 4 ore la 30 de{" "}
           <span className="section-title-accent">secunde</span>
