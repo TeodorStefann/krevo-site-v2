@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, Info } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Navbar } from "@/components/krevo/Navbar";
 import { HowWeWork } from "@/components/krevo/HowWeWork";
 import { NumbersSpeak } from "@/components/krevo/NumbersSpeak";
@@ -133,10 +133,20 @@ export default function FirmFlowPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <div className="relative min-h-screen bg-[#000000] text-krevo-body selection:bg-[#c9a84c]/30 selection:text-white">
-      <NoiseOverlay />
-      <Navbar />
-      <main className="pt-24">
+    <div className="relative min-h-screen text-krevo-body selection:bg-[#c9a84c]/30 selection:text-white">
+      <div
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{
+          backgroundImage: "url('/bg-firmflow-page.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        aria-hidden="true"
+      />
+      <div className="relative z-10">
+        <NoiseOverlay />
+        <Navbar />
+        <main className="pt-24">
         <section className="px-6 py-20 md:py-[120px]">
           <div className="mx-auto max-w-6xl text-center">
             <p
@@ -159,20 +169,6 @@ export default function FirmFlowPage() {
                 <span style={{ color: GOLD }}>Flow</span>
               </h1>
             </div>
-            <p className="mx-auto mt-5 flex max-w-2xl items-start justify-center gap-2 text-[13px] text-krevo-silver italic md:items-center">
-              <Info
-                size={16}
-                strokeWidth={1.75}
-                className="mt-0.5 shrink-0 md:mt-0"
-                style={{ color: GOLD }}
-                aria-hidden="true"
-              />
-              <span>
-                Datele prezentate sunt fictive și au scop demonstrativ.
-                Platforma ta va fi personalizată complet după nevoile firmei
-                tale.
-              </span>
-            </p>
           </div>
         </section>
 
@@ -188,7 +184,7 @@ export default function FirmFlowPage() {
           </div>
         </section>
 
-        <section className="bg-[#000000] px-6 py-20 md:py-[120px]">
+        <section className="px-6 py-20 md:py-[120px]">
           <div className="mx-auto max-w-6xl">
             <h2 className="text-center text-[28px] font-bold text-white">
               Vezi platforma în{" "}
@@ -281,12 +277,7 @@ export default function FirmFlowPage() {
                 className="hidden h-4 w-px bg-[#c9a84c]/50 sm:block"
                 aria-hidden="true"
               />
-              <p className="flex items-center gap-2 px-4 text-[13px] text-white">
-                <span className="text-[#c9a84c]" aria-hidden="true">
-                  ✓
-                </span>
-                7 zile complet gratuit
-              </p>
+              <p className="px-4 text-[13px] text-white">7 zile complet gratuit</p>
               <span
                 className="hidden h-4 w-px bg-[#c9a84c]/50 sm:block"
                 aria-hidden="true"
@@ -349,7 +340,7 @@ export default function FirmFlowPage() {
         <NumbersSpeak theme="gold" />
 
         {/* Legal compliance strip */}
-        <section className="border-t border-[#c9a84c]/20 bg-[#000000] px-6 py-10">
+        <section className="border-t border-[#c9a84c]/20 px-6 py-10">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-[12px] leading-relaxed text-krevo-silver italic">
               Datele prezentate sunt fictive și au scop exclusiv demonstrativ.{" "}
@@ -390,8 +381,9 @@ export default function FirmFlowPage() {
             </div>
           </div>
         </section>
-      </main>
-      <Footer />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }

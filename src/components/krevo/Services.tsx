@@ -38,7 +38,7 @@ const categories: ServiceCategory[] = [
       {
         title: "FirmFlow",
         description:
-          "Management pentru firme de construcții — proiecte, echipe, materiale și pontaj într-un singur loc.",
+          "Management complet pentru firma ta — proiecte, echipe, materiale și pontaj într-un singur loc.",
         icon: Building2,
         href: "/firmflow",
       },
@@ -75,19 +75,19 @@ const categories: ServiceCategory[] = [
       {
         title: "Analiză Firmă",
         description:
-          "Analiză firmă și recomandări concrete pe date operaționale, nu pe intuiție.",
+          "Vezi situația firmei tale în 10 secunde — recomandări concrete nu grafice complicate.",
         icon: LineChart,
       },
       {
         title: "Procesare Documente",
         description:
-          "Procesare automată documente și emailuri — clasificare, extragere, răspunsuri.",
+          "Documente procesate automat — fără muncă manuală de sortare și clasificare.",
         icon: Mail,
       },
       {
         title: "Rapoarte Automate",
         description:
-          "Rapoarte periodice generate și livrate automat, fără muncă manuală de agregare.",
+          "Rapoarte generate și trimise automat — fără ore pierdute pe Excel.",
         icon: BarChart3,
       },
     ],
@@ -163,7 +163,7 @@ export function Services() {
   return (
     <section
       id="servicii"
-      className="relative overflow-hidden bg-[#000000] px-6 py-20 md:py-[120px]"
+      className="relative overflow-hidden px-6 py-20 md:py-[120px]"
     >
       <div className="relative z-10 mx-auto max-w-6xl">
         <header className="mb-16 text-center md:mb-20">
@@ -195,6 +195,12 @@ export function Services() {
                     <Card key={card.title} card={card} />
                   ))}
                 </div>
+                {i < categories.length - 1 ? (
+                  <div
+                    className="mx-auto mt-12 h-px w-[60px] bg-[#0066FF]/20"
+                    aria-hidden="true"
+                  />
+                ) : null}
               </div>
             </SlideReveal>
           ))}

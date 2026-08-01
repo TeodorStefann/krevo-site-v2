@@ -402,39 +402,6 @@ export function FirmFlowProductCard({
         >
           <div className="relative overflow-hidden rounded-[calc(2rem-5px)] border border-[#c9a84c]/80 bg-gradient-to-br from-[#0a0a0a] to-[#0f0d00] p-5 sm:p-8 md:p-10">
             <div
-              className="firmflow-float-card pointer-events-none absolute top-16 right-6 z-20 hidden rounded-xl border border-[#c9a84c] px-4 py-3 text-[13px] text-[#c9a84c] backdrop-blur-sm lg:block"
-              style={{
-                background: "rgba(0,0,0,0.6)",
-                animationDelay: "0s",
-              }}
-              aria-hidden="true"
-            >
-              <p className="font-semibold leading-tight">30 sec</p>
-              <p className="mt-0.5 leading-tight">Generare ofertă AI</p>
-            </div>
-            <div
-              className="firmflow-float-card pointer-events-none absolute top-[42%] right-8 z-20 hidden rounded-xl border border-[#c9a84c] px-4 py-3 text-[13px] text-[#c9a84c] backdrop-blur-sm lg:block"
-              style={{
-                background: "rgba(0,0,0,0.6)",
-                animationDelay: "1s",
-              }}
-              aria-hidden="true"
-            >
-              <p className="font-semibold leading-tight">7 roluri</p>
-              <p className="mt-0.5 leading-tight">Interfețe personalizate</p>
-            </div>
-            <div
-              className="firmflow-float-card pointer-events-none absolute right-6 bottom-16 z-20 hidden rounded-xl border border-[#c9a84c] px-4 py-3 text-[13px] text-[#c9a84c] backdrop-blur-sm lg:block"
-              style={{
-                background: "rgba(0,0,0,0.6)",
-                animationDelay: "2s",
-              }}
-              aria-hidden="true"
-            >
-              <p className="font-semibold leading-tight">GPS</p>
-              <p className="mt-0.5 leading-tight">Pontaj verificat automat</p>
-            </div>
-            <div
               className="pointer-events-none absolute -top-16 -left-16 h-48 w-48 rounded-full bg-[#c9a84c]/20 blur-3xl"
               aria-hidden="true"
             />
@@ -449,7 +416,7 @@ export function FirmFlowProductCard({
 
             <div className="relative z-10 max-w-3xl">
               <span className="mb-4 inline-block rounded-full bg-[#c9a84c] px-3 py-1 text-xs font-semibold tracking-[0.12em] text-[#0a0a0a] uppercase">
-                Produs principal · Disponibil acum
+                Disponibil acum
               </span>
               <h3 className="mt-4 flex flex-wrap items-center font-serif text-3xl font-bold sm:text-4xl md:text-6xl lg:text-7xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -470,25 +437,6 @@ export function FirmFlowProductCard({
                 Platforma care adună proiecte, echipe, materiale și pontaj
                 într-un flux clar — fără Excel, fără haos.
               </p>
-
-              <div className="mt-6 flex max-w-2xl flex-wrap gap-2">
-                {[
-                  { value: "30 sec", label: "ofertă AI" },
-                  { value: "0", label: "foi pontaj" },
-                  { value: "100%", label: "vizibilitate" },
-                  { value: "7 zile", label: "până live" },
-                ].map((badge) => (
-                  <span
-                    key={badge.label}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-[#c9a84c]/40 bg-[#c9a84c]/10 px-3 py-1.5 text-[12px] text-[#e8d5a3]"
-                  >
-                    <span className="font-bold text-[#c9a84c]">
-                      {badge.value}
-                    </span>
-                    <span className="text-krevo-silver">{badge.label}</span>
-                  </span>
-                ))}
-              </div>
 
               <div
                 className="mt-8 h-px w-full max-w-2xl bg-[#c9a84c]/50"
