@@ -134,6 +134,17 @@ export function PainCalculator() {
 
   return (
     <section className="relative overflow-hidden px-6 py-20 md:py-[120px]">
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          backgroundImage: "url('/bg-pain.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+          opacity: 1,
+        }}
+        aria-hidden="true"
+      />
       <div className="relative z-10 mx-auto max-w-2xl">
         <h2 className="text-center text-[28px] leading-tight font-bold text-white sm:text-[32px] md:text-[38px]">
           Recunoști ceva din lista{" "}

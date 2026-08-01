@@ -15,9 +15,20 @@ export function Portfolio() {
   return (
     <section
       id="portofoliu"
-      className="relative px-6 py-20 md:py-[120px]"
+      className="relative overflow-hidden px-6 py-20 md:py-[120px]"
     >
-      <div className="relative mx-auto max-w-6xl">
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          backgroundImage: "url('/bg-firmflow.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+          opacity: 1,
+        }}
+        aria-hidden="true"
+      />
+      <div className="relative z-10 mx-auto max-w-6xl">
         <h2 className="text-center font-serif text-[28px] font-bold text-white italic sm:text-4xl md:text-[3.25rem]">
           Ce am <span className="section-title-accent">construit</span>
         </h2>

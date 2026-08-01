@@ -81,9 +81,20 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative px-6 py-20 md:py-[120px]"
+      className="relative overflow-hidden px-6 py-20 md:py-[120px]"
     >
-      <div className="relative mx-auto max-w-xl">
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          backgroundImage: "url('/bg-contact.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+          opacity: 1,
+        }}
+        aria-hidden="true"
+      />
+      <div className="relative z-10 mx-auto max-w-xl">
         <h2 className="text-center text-[32px] font-bold text-white">
           <span className="section-title-accent">Contactează-ne</span>
         </h2>
