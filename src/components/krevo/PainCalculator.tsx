@@ -148,15 +148,7 @@ export function PainCalculator() {
     setChecked((prev) => ({ ...prev, [id]: !prev[id] }));
 
   return (
-    <section
-      className="relative overflow-hidden px-6 py-20 md:py-[120px]"
-      style={{
-        backgroundImage: "url('/bg-sub-hero.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
-    >
+    <section className="relative overflow-hidden px-6 py-20 md:py-[120px]">
       <div className="relative z-10 mx-auto max-w-2xl">
         <h2 className="text-center text-[28px] leading-tight font-bold text-white sm:text-[32px] md:text-[38px]">
           Recunoști ceva din lista{" "}

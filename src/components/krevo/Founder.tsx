@@ -7,12 +7,6 @@ export function Founder() {
     <section
       id="despre"
       className="relative overflow-hidden px-6 py-20 md:py-[120px]"
-      style={{
-        backgroundImage: "url('/bg-sub-hero.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
     >
       {/* Spotlight tracks the photo: centred near the top when stacked, left column on desktop. */}
       <div

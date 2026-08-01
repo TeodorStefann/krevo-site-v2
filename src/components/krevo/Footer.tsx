@@ -71,15 +71,7 @@ function MailIcon() {
 
 export function Footer() {
   return (
-    <footer
-      className="relative px-6 py-[60px]"
-      style={{
-        backgroundImage: "url('/bg-sub-hero.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
-    >
+    <footer className="relative px-6 py-[60px]">
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 gap-10 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-4">
           <div>
