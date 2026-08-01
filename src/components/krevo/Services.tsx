@@ -120,9 +120,14 @@ const categories: ServiceCategory[] = [
 
 function Card({ card }: { card: ServiceCard }) {
   const Icon = card.icon;
+  const href = card.href ?? "/#contact";
+  const showDetailsHint = !card.href;
 
-  const inner = (
-    <>
+  return (
+    <Link
+      href={href}
+      className="group flex h-full flex-col rounded-[12px] border border-[#002B66] bg-[#0a0a0a] p-6 transition-all duration-300 hover:border-[#0066FF] hover:shadow-[0_0_28px_rgba(0,102,255,0.28)]"
+    >
       <span className="mb-4 flex h-12 w-12 items-center justify-center text-[#3399FF] transition-colors group-hover:text-[#66B2FF]">
         <Icon size={32} strokeWidth={1.5} />
       </span>
@@ -130,21 +135,13 @@ function Card({ card }: { card: ServiceCard }) {
       <p className="mt-2 text-[12px] leading-snug text-krevo-silver">
         {card.description}
       </p>
-    </>
+      {showDetailsHint ? (
+        <span className="mt-3 text-[12px] text-[#0066FF] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          Solicită detalii →
+        </span>
+      ) : null}
+    </Link>
   );
-
-  const className =
-    "group flex h-full flex-col rounded-[12px] border border-[#002B66] bg-[#0a0a0a] p-6 transition-all duration-300 hover:border-[#0066FF] hover:shadow-[0_0_28px_rgba(0,102,255,0.28)]";
-
-  if (card.href) {
-    return (
-      <Link href={card.href} className={className}>
-        {inner}
-      </Link>
-    );
-  }
-
-  return <article className={className}>{inner}</article>;
 }
 
 function CategoryHeading({ title }: { title: string }) {

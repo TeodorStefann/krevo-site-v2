@@ -16,12 +16,12 @@ type Theme = "blue" | "gold";
 const stats: Stat[] = [
   {
     target: 30,
-    suffix: " sec",
+    suffix: " secunde",
     label: "pentru o ofertă tehnică completă cu AI",
   },
   {
     target: 0,
-    suffix: "",
+    suffix: " hârtie",
     label: "foi de pontaj. Zero. Niciodată din nou.",
   },
   {
@@ -54,7 +54,7 @@ function StatCard({
       <p
         className={
           isGold
-            ? "bg-gradient-to-b from-[#e8d5a3] to-[#c9a84c] bg-clip-text text-[72px] leading-none font-bold text-transparent"
+            ? "bg-gradient-to-b from-[#e8d5a3] to-[#c9a84c] bg-clip-text text-[52px] leading-none font-bold text-transparent"
             : "bg-gradient-to-b from-[#3399FF] to-[#0066FF] bg-clip-text text-[72px] leading-none font-bold text-transparent"
         }
         style={{ WebkitBackgroundClip: "text" }}
@@ -85,7 +85,7 @@ export function NumbersSpeak({ theme = "blue" }: { theme?: Theme }) {
       ref={ref}
       id="numere"
       className={`relative overflow-hidden px-6 py-20 md:py-[120px] ${
-        isGold ? "bg-[#0a0a0a]" : "bg-[#000000]"
+        isGold ? "" : "bg-[#000000]"
       }`}
     >
       <div className="relative z-10 mx-auto max-w-5xl">
@@ -119,7 +119,7 @@ export function NumbersSpeak({ theme = "blue" }: { theme?: Theme }) {
                 : "inline-flex max-w-xl items-center justify-center rounded-full bg-[#0052CC] px-8 py-4 text-center text-sm font-bold text-white transition-colors hover:bg-[#0066FF] hover:shadow-[0_0_28px_rgba(0,102,255,0.4)] sm:px-10 sm:text-base"
             }
           >
-            Vrei și tu aceste rezultate? Hai să vorbim
+            Hai să vorbim →
           </Link>
         </div>
       </div>
