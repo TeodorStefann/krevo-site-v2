@@ -38,7 +38,7 @@ export function AiPower() {
           <span className="section-title-accent">secunde</span>
         </h2>
 
-        <div className="mt-12 grid grid-cols-3 gap-4 sm:gap-8">
+        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-8">
           {stats.map((stat) => {
             const Icon = stat.icon;
             return (
@@ -47,7 +47,7 @@ export function AiPower() {
                 className="flex flex-col items-center text-center"
               >
                 <Icon size={32} strokeWidth={1.5} className="text-[#0066FF]" />
-                <p className="mt-4 text-[28px] leading-none font-bold text-white">
+                <p className="mt-4 text-[44px] leading-none font-bold text-white">
                   {inView ? <Counter value={stat.count} /> : 0}
                   {stat.suffix}
                 </p>
@@ -63,10 +63,6 @@ export function AiPower() {
           Nu îți vindem un dashboard frumos. Îți dăm un sistem care gândește
           pentru tine — generează oferte, analizează performanța echipei și îți
           spune dimineața ce trebuie să faci azi.
-        </p>
-
-        <p className="mt-5 text-center text-[14px] text-krevo-silver italic">
-          Tehnologie care nu exista acum 2 ani.
         </p>
       </div>
     </section>

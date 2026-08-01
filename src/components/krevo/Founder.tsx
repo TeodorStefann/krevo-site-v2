@@ -26,7 +26,7 @@ export function Founder() {
             alt="Teodor Chiurtu"
             width={339}
             height={737}
-            className="h-auto max-h-[800px] w-auto rounded-[12px] object-contain"
+            className="h-auto max-h-[500px] w-auto rounded-[12px] object-contain md:max-h-[800px]"
           />
         </div>
 

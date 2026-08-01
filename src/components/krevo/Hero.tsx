@@ -4,16 +4,6 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { HeroPyramid } from "./HeroPyramid";
-import { Counter } from "./Counter";
-
-const PLATFORM_LOGIN_HREF =
-  "https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app/login";
-
-const HERO_STATS = [
-  { value: 30, suffix: "+", label: "module" },
-  { value: 7, suffix: "", label: "roluri unice" },
-  { value: 1, suffix: "", label: "fondator dedicat" },
-];
 
 export function Hero({ siteReady = false }: { siteReady?: boolean }) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -126,34 +116,11 @@ export function Hero({ siteReady = false }: { siteReady?: boolean }) {
             className="mt-8"
           >
             <a
-              href={PLATFORM_LOGIN_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/firmflow"
               className="inline-flex w-full items-center justify-center rounded-full bg-[#0066FF] px-10 py-[18px] text-[18px] font-bold text-white transition-colors hover:bg-[#0052CC] md:w-auto"
             >
               Vezi FirmFlow →
             </a>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.55 }}
-            className="mt-8 flex flex-wrap justify-center gap-x-7 gap-y-2 md:justify-start"
-          >
-            {HERO_STATS.map((stat) => (
-              <p key={stat.label} className="text-[13px] text-white">
-                <span className="font-bold text-[#0066FF]">
-                  {siteReady ? (
-                    <Counter value={stat.value} duration={1500} />
-                  ) : (
-                    0
-                  )}
-                  {stat.suffix}
-                </span>{" "}
-                {stat.label}
-              </p>
-            ))}
           </motion.div>
         </div>
       </div>

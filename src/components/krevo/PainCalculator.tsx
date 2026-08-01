@@ -19,31 +19,31 @@ type PainItem = {
 const PAIN_ITEMS: PainItem[] = [
   {
     id: "pontaj",
-    label: "📋 Pontajul se face pe hârtie sau în Excel",
+    label: "Pontajul se face pe hârtie sau în Excel",
     hint: "Costă firma ~15 RON per angajat pe săptămână",
     monthlyCost: (employees) => employees * 15 * 4,
   },
   {
     id: "oferte",
-    label: "📝 Ofertele se scriu manual în Word",
+    label: "Ofertele se scriu manual în Word",
     hint: "~4 ore per ofertă × salariul inginerului",
     monthlyCost: () => 4 * HOURLY_COST_RON * 4,
   },
   {
     id: "coordonare",
-    label: "📱 Coordonarea se face prin telefon și WhatsApp",
+    label: "Coordonarea se face prin telefon și WhatsApp",
     hint: "~45 min pierdute zilnic per manager",
     monthlyCost: () => Math.floor(0.75 * HOURLY_COST_RON * 22),
   },
   {
     id: "vizibilitate",
-    label: "🔍 Nu știu exact ce face fiecare angajat acum",
+    label: "Nu știu exact ce face fiecare angajat acum",
     hint: "~800 RON pierderi lunare din lipsă vizibilitate",
     monthlyCost: () => 800,
   },
   {
     id: "rapoarte",
-    label: "📊 Rapoartele lunare îmi iau ore întregi",
+    label: "Rapoartele lunare îmi iau ore întregi",
     hint: "~6 ore lunar × costul tău pe oră",
     monthlyCost: () => 6 * HOURLY_COST_RON,
   },
@@ -311,7 +311,7 @@ export function PainCalculator() {
 
         <div className="mt-10 flex justify-center">
           <a
-            href="#puterea-ai"
+            href="#portofoliu"
             className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#0066FF] px-10 py-4 text-[18px] font-bold text-white transition-colors hover:bg-[#0052CC] sm:w-auto"
           >
             Vezi cum →

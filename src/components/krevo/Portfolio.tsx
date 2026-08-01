@@ -1,14 +1,11 @@
 "use client";
 
-import { PortfolioCurtain } from "./animations/PortfolioCurtain";
-
-const PLATFORM_LOGIN_HREF =
-  "https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app/login";
+import { motion } from "framer-motion";
 
 const CARD_PILLS = [
-  "🔒 Date securizate",
-  "📱 Funcționează pe telefon",
-  "🤖 AI integrat nativ",
+  "Date securizate",
+  "Funcționează pe telefon",
+  "AI integrat nativ",
 ];
 
 export function Portfolio() {
@@ -33,7 +30,13 @@ export function Portfolio() {
           Ce am <span className="section-title-accent">construit</span>
         </h2>
 
-        <PortfolioCurtain className="mt-12 md:mt-14">
+        <motion.div
+          className="mt-12 md:mt-14"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <article className="mx-auto flex max-w-2xl flex-col items-center rounded-[2rem] border border-[#0066FF] bg-[#0a0a0a] p-8 text-center transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(0,102,255,0.3)] md:p-12">
             <span className="rounded-full border border-[#0066FF]/40 bg-[#0066FF]/10 px-3 py-1 text-[11px] font-semibold tracking-[0.12em] text-[#3399FF] uppercase">
               Lansat 2026
@@ -42,11 +45,10 @@ export function Portfolio() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/firmflow-logo-new.png"
-              alt=""
+              alt="FirmFlow logo"
               loading="lazy"
               decoding="async"
               className="mt-6 h-[60px] w-auto object-contain"
-              aria-hidden="true"
             />
 
             <h3 className="mt-5 font-serif text-[36px] leading-none font-bold md:text-[48px]">
@@ -81,15 +83,13 @@ export function Portfolio() {
             </p>
 
             <a
-              href={PLATFORM_LOGIN_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/firmflow"
               className="mt-8 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0066FF] px-10 py-4 text-[18px] font-bold text-white transition-colors hover:bg-[#0052CC] sm:w-auto"
             >
               Vezi platforma →
             </a>
           </article>
-        </PortfolioCurtain>
+        </motion.div>
 
         <figure className="mx-auto mt-12 max-w-[800px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}

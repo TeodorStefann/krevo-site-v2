@@ -78,11 +78,10 @@ export function Footer() {
             <div className="flex items-center justify-center gap-2.5 sm:justify-start">
               <Image
                 src="/krevo-logo.png"
-                alt=""
+                alt="Krevo logo"
                 width={140}
                 height={40}
                 className="h-10 w-auto object-contain"
-                aria-hidden="true"
               />
               <span className="text-[18px] text-white">Krevo</span>
             </div>
@@ -164,7 +163,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 h-px w-full bg-[#0066FF]" aria-hidden="true" />
+        <div className="mt-12 h-px w-full bg-[#1a1a1a]" aria-hidden="true" />
 
         <p className="mt-6 text-center text-[11px] leading-relaxed text-krevo-silver">
           <a
@@ -184,7 +183,7 @@ export function Footer() {
           >
             Platforma SOL
           </a>
-          {" · Construit cu Next.js · Alimentat de Claude AI · Made in România"}
+          {" · Construit cu Next.js · Made in România"}
         </p>
 
         <p className="mt-2 text-center text-[11px] text-krevo-silver">

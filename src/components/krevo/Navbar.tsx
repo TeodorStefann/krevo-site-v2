@@ -24,9 +24,6 @@ type IconType = ComponentType<{
   className?: string;
 }>;
 
-const productHref =
-  "https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app/login";
-
 const saasLinks: { label: string; href: string; icon: IconType }[] = [
   { label: "FirmFlow", href: "/firmflow", icon: Building2 },
   { label: "Platforme Custom", href: "/servicii", icon: Factory },
@@ -206,14 +203,6 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <a
-            href={productHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-krevo-silver/40 bg-transparent px-4 py-2 text-[13px] text-krevo-silver transition-colors duration-200 hover:border-white hover:text-white"
-          >
-            Demo live →
-          </a>
           <Link
             href="/#contact"
             className="rounded-full bg-[#0052CC] px-4 py-2 text-[13px] font-semibold text-white transition-colors duration-200 hover:bg-[#0066FF]"
@@ -320,15 +309,6 @@ export function Navbar() {
         </nav>
 
         <div className="flex flex-col gap-3 px-8 pb-10">
-          <a
-            href={productHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={closeMobile}
-            className="flex min-h-12 items-center justify-center rounded-full border border-krevo-silver/40 px-6 py-3 text-[15px] text-krevo-silver transition-colors duration-200 hover:border-white hover:text-white"
-          >
-            Demo live →
-          </a>
           <Link
             href="/#contact"
             onClick={closeMobile}

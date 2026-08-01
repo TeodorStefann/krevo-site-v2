@@ -99,11 +99,6 @@ export function Contact() {
           <span className="section-title-accent">Contactează-ne</span>
         </h2>
 
-        <p className="mx-auto mt-5 max-w-[500px] text-center text-[15px] leading-relaxed text-krevo-silver italic">
-          Nu suntem un call center. Nu suntem o corporație. Suntem exact ce ai
-          nevoie.
-        </p>
-
         <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
           <a href="tel:+40774451822" className={linkClass}>
             <Phone size={16} strokeWidth={1.75} aria-hidden="true" />
