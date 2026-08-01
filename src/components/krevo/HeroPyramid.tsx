@@ -11,11 +11,11 @@ type HeroPyramidProps = {
 };
 
 /** Intrinsic size of piramida-blue.png. */
-const IMG_W = 1672;
-const IMG_H = 941;
+const IMG_W = 1690;
+const IMG_H = 945;
 /** Pyramid apex in normalized image coordinates. */
-const TIP_NX_IMG = 0.76;
-const TIP_NY_IMG = 0.48;
+const TIP_NX_IMG = 0.732;
+const TIP_NY_IMG = 0.444;
 
 const LASER_DELAY_MS = 1500;
 const LASER_GROW_MS = 1200;
