@@ -20,6 +20,12 @@ export function AiPower() {
       ref={sectionRef}
       id="puterea-ai"
       className="relative px-6 py-20 md:py-[120px]"
+      style={{
+        backgroundImage: "url('/fundal_nou.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
     >
       <div className="relative mx-auto max-w-5xl">
         <h2 className="text-center text-[30px] leading-tight font-bold text-white sm:text-[36px] md:text-[42px]">
