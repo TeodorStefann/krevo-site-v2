@@ -15,7 +15,7 @@ const IMG_W = 1690;
 const IMG_H = 945;
 /** Pyramid apex in normalized image coordinates. */
 const TIP_NX_IMG = 0.737;
-const TIP_NY_IMG = 0.450;
+const TIP_NY_IMG = 0.455;
 
 const LASER_DELAY_MS = 1500;
 const LASER_GROW_MS = 1200;

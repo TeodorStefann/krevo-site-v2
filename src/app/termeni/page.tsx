@@ -30,7 +30,7 @@ export default function TermeniPage() {
               </h2>
               <p>
                 Operatorul datelor și furnizorul serviciilor prezentate pe
-                krevo.ro este Krevo, firmă de servicii digitale din Craiova,
+                krevo.ro este Krevo, Persoană fizică autorizată din Craiova,
                 România. Persoana de contact: Teodor Chiurtu. Email:{" "}
                 <a
                   href="mailto:teodor@krevo.ro"
@@ -163,81 +163,7 @@ export default function TermeniPage() {
 
             <section>
               <h2 className="mb-3 text-[18px] font-bold text-white">
-                9. Date colectate
-              </h2>
-              <p className="mb-3">
-                Prin formularul de contact, chestionarul de pe site și canalele
-                afișate putem colecta:
-              </p>
-              <ul className="list-disc space-y-2 pl-5">
-                <li>Nume complet</li>
-                <li>Adresă de email</li>
-                <li>Număr de telefon (opțional)</li>
-                <li>Interesul declarat (ex. FirmFlow, site, automatizări AI)</li>
-                <li>Conținutul mesajului / descrierea firmei</li>
-                <li>Răspunsurile din chestionarul diagnostic</li>
-                <li>
-                  Date tehnice minime necesare funcționării site-ului (ex.
-                  cookies esențiale)
-                </li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="mb-3 text-[18px] font-bold text-white">
-                10. Scopul prelucrării
-              </h2>
-              <ul className="list-disc space-y-2 pl-5">
-                <li>
-                  Răspuns la solicitări, oferte și discuții precontractuale
-                </li>
-                <li>
-                  Furnizarea serviciilor digitale: platforme SaaS, automatizări
-                  AI, site-uri și consultanță
-                </li>
-                <li>
-                  Comunicare operațională legată de proiecte și suport
-                </li>
-                <li>
-                  Respectarea obligațiilor legale aplicabile în România
-                </li>
-                <li>
-                  Îmbunătățirea experienței pe site, în limitele preferințelor
-                  de cookies
-                </li>
-              </ul>
-              <p className="mt-3">
-                Temeiuri GDPR tipice: art. 6 alin. (1) lit. b) (măsuri
-                precontractuale / contract), lit. f) (interes legitim) și lit. a)
-                (consimțământ), după caz.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="mb-3 text-[18px] font-bold text-white">
-                11. Drepturile utilizatorului
-              </h2>
-              <p className="mb-3">
-                Conform GDPR, aveți dreptul la acces, rectificare, ștergere,
-                restricționare, opoziție, portabilitate și retragerea
-                consimțământului. Puteți depune plângere la ANSPDCP
-                (www.dataprotection.ro).
-              </p>
-              <p>
-                Detaliile complete privind confidențialitatea sunt în{" "}
-                <a
-                  href="/confidentialitate"
-                  className="text-[#3399FF] hover:text-white"
-                >
-                  Politica de confidențialitate
-                </a>
-                .
-              </p>
-            </section>
-
-            <section>
-              <h2 className="mb-3 text-[18px] font-bold text-white">
-                12. Contact
+                9. Contact
               </h2>
               <p>
                 Pentru întrebări despre termeni sau date personale:

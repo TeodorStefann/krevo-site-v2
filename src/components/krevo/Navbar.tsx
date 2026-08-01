@@ -26,20 +26,20 @@ type IconType = ComponentType<{
 
 const saasLinks: { label: string; href: string; icon: IconType }[] = [
   { label: "FirmFlow", href: "/firmflow", icon: Building2 },
-  { label: "Platforme Custom", href: "/servicii", icon: Factory },
-  { label: "Portal Client", href: "/servicii", icon: Users },
+  { label: "Platforme Custom", href: "/servicii#platforme-saas", icon: Factory },
+  { label: "Portal Client", href: "/servicii#platforme-saas", icon: Users },
 ];
 
 const aiLinks: { label: string; href: string; icon: IconType }[] = [
-  { label: "Oferte AI", href: "/servicii", icon: FileText },
-  { label: "Apeluri AI", href: "/servicii", icon: PhoneCall },
-  { label: "Analiză Firmă", href: "/servicii", icon: LineChart },
-  { label: "Procesare Documente", href: "/servicii", icon: Mail },
+  { label: "Oferte AI", href: "/servicii#automatizari-ai", icon: FileText },
+  { label: "Apeluri AI", href: "/servicii#automatizari-ai", icon: PhoneCall },
+  { label: "Analiză Firmă", href: "/servicii#automatizari-ai", icon: LineChart },
+  { label: "Procesare Documente", href: "/servicii#automatizari-ai", icon: Mail },
 ];
 
 const digitalLinks: { label: string; href: string; icon: IconType }[] = [
-  { label: "Site-uri Profesionale", href: "/servicii", icon: Globe },
-  { label: "Landing Pages", href: "/servicii", icon: LayoutTemplate },
+  { label: "Site-uri Profesionale", href: "/servicii#prezente-digitale", icon: Globe },
+  { label: "Landing Pages", href: "/servicii#prezente-digitale", icon: LayoutTemplate },
 ];
 
 const dropdownPanel =
@@ -126,29 +126,14 @@ export function Navbar() {
                         </span>
                       </div>
                       <p className="mt-1 text-[13px] leading-snug text-krevo-silver">
-                        Management pentru firme de construcții — proiecte, echipe,
-                        materiale și pontaj.
+                        Management complet pentru firme din România — proiecte,
+                        echipe și AI.
                       </p>
                     </div>
                   </Link>
-                  <div className="my-4 h-px bg-[#002B66]" aria-hidden="true" />
-                  <p className="px-3 text-[13px] text-krevo-silver/50">
-                    Mai multe în curând
-                  </p>
                 </div>
               </div>
             </div>
-
-            <span className="mx-4 select-none text-[#3399FF]/50" aria-hidden="true">
-              ·
-            </span>
-
-            <Link
-              href="/firmflow"
-              className="text-[14px] text-white transition-colors duration-200 hover:text-[#3399FF]"
-            >
-              FirmFlow
-            </Link>
 
             <span className="mx-4 select-none text-[#3399FF]/50" aria-hidden="true">
               ·

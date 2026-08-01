@@ -29,8 +29,8 @@ export default function ConfidentialitatePage() {
                 1. Identificarea operatorului
               </h2>
               <p>
-                Operatorul datelor cu caracter personal este Krevo, firmă de
-                servicii digitale din Craiova, România. Responsabil contact:
+                Operatorul datelor cu caracter personal este Krevo, Persoană
+                fizică autorizată din Craiova, România. Responsabil contact:
                 Teodor Chiurtu —{" "}
                 <a
                   href="mailto:teodor@krevo.ro"
@@ -78,7 +78,40 @@ export default function ConfidentialitatePage() {
 
             <section>
               <h2 className="mb-3 text-[18px] font-bold text-white">
-                4. Scopul prelucrării
+                4. Date în platforma FirmFlow
+              </h2>
+              <p className="mb-3">
+                Când folosiți FirmFlow ca client, putem prelucra date necesare
+                funcționării platformei, inclusiv:
+              </p>
+              <ul className="list-disc space-y-2 pl-5">
+                <li>
+                  Date de pontaj și locație GPS ale angajaților, pentru
+                  verificarea prezenței la locul de muncă
+                </li>
+                <li>
+                  Date despre angajați și roluri (nume, contact, atribuții,
+                  sarcini, concedii)
+                </li>
+                <li>
+                  Date operaționale despre proiecte, materiale și activități
+                </li>
+                <li>
+                  Conținut generat sau asistat de AI (oferte, recomandări,
+                  insight-uri), pe baza datelor pe care le introduceți în
+                  platformă
+                </li>
+              </ul>
+              <p className="mt-3">
+                Aceste date sunt prelucrate pentru livrarea serviciului, la
+                cererea și pe contul clientului (firma care utilizează
+                FirmFlow), conform contractului și GDPR.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-3 text-[18px] font-bold text-white">
+                5. Scopul prelucrării
               </h2>
               <ul className="list-disc space-y-2 pl-5">
                 <li>
@@ -102,7 +135,7 @@ export default function ConfidentialitatePage() {
 
             <section>
               <h2 className="mb-3 text-[18px] font-bold text-white">
-                5. Drepturile utilizatorului
+                6. Drepturile utilizatorului
               </h2>
               <p className="mb-3">
                 Aveți dreptul la: acces, rectificare, ștergere, restricționare,
@@ -118,7 +151,23 @@ export default function ConfidentialitatePage() {
 
             <section>
               <h2 className="mb-3 text-[18px] font-bold text-white">
-                6. Contact
+                7. Cookies
+              </h2>
+              <p>
+                Detaliile despre cookies și preferința de consimțământ sunt în{" "}
+                <a
+                  href="/cookie-policy"
+                  className="text-[#3399FF] hover:text-white"
+                >
+                  Politica de cookies
+                </a>
+                .
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-3 text-[18px] font-bold text-white">
+                8. Contact
               </h2>
               <p>
                 Pentru exercitarea drepturilor GDPR sau întrebări despre

@@ -351,11 +351,15 @@ export function FirmFlowProductCard({
   accessHref = "/firmflow",
   quizTheme = "gold",
   animate = true,
+  showQuiz = true,
+  showDisclaimer = true,
 }: {
   navigateOnClick?: boolean;
   accessHref?: string;
   quizTheme?: "gold" | "blue";
   animate?: boolean;
+  showQuiz?: boolean;
+  showDisclaimer?: boolean;
 }) {
   const router = useRouter();
   const cardRef = useRef<HTMLDivElement>(null);
@@ -405,7 +409,7 @@ export function FirmFlowProductCard({
               }}
               aria-hidden="true"
             >
-              <p className="font-semibold leading-tight">⚡ 30 sec</p>
+              <p className="font-semibold leading-tight">30 sec</p>
               <p className="mt-0.5 leading-tight">Generare ofertă AI</p>
             </div>
             <div
@@ -416,7 +420,7 @@ export function FirmFlowProductCard({
               }}
               aria-hidden="true"
             >
-              <p className="font-semibold leading-tight">👥 7 roluri</p>
+              <p className="font-semibold leading-tight">7 roluri</p>
               <p className="mt-0.5 leading-tight">Interfețe personalizate</p>
             </div>
             <div
@@ -427,7 +431,7 @@ export function FirmFlowProductCard({
               }}
               aria-hidden="true"
             >
-              <p className="font-semibold leading-tight">📍 GPS</p>
+              <p className="font-semibold leading-tight">GPS</p>
               <p className="mt-0.5 leading-tight">Pontaj verificat automat</p>
             </div>
             <div
@@ -451,11 +455,10 @@ export function FirmFlowProductCard({
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/firmflow-logo-new.png"
-                  alt=""
+                  alt="FirmFlow logo"
                   loading="lazy"
                   decoding="async"
                   className="mr-2 h-12 w-auto object-contain sm:mr-4 sm:h-16 md:h-24"
-                  aria-hidden="true"
                 />
                 <span className="leading-none text-white">Firm</span>
                 <span className="leading-none text-[#c9a84c]">Flow</span>
@@ -513,34 +516,35 @@ export function FirmFlowProductCard({
                 </a>
               </div>
 
-              <button
-                type="button"
-                onClick={() => setQuizOpen(true)}
-                className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-full border border-[#c9a84c]/50 bg-transparent px-7 py-3.5 text-sm font-semibold text-[#e8d5a3] transition-colors hover:border-[#c9a84c] hover:text-[#c9a84c] sm:w-auto"
-              >
-                Cât timp pierzi zilnic? →
-              </button>
+              {showQuiz ? (
+                <button
+                  type="button"
+                  onClick={() => setQuizOpen(true)}
+                  className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-full border border-[#c9a84c]/50 bg-transparent px-7 py-3.5 text-sm font-semibold text-[#e8d5a3] transition-colors hover:border-[#c9a84c] hover:text-[#c9a84c] sm:w-auto"
+                >
+                  Cât timp pierzi zilnic? →
+                </button>
+              ) : null}
 
-              <p className="mt-6 flex max-w-2xl items-start justify-center gap-2 text-center text-[12px] text-krevo-silver italic">
-                <span className="shrink-0 not-italic" aria-hidden="true">
-                  ℹ️
-                </span>
-                <span>
+              {showDisclaimer ? (
+                <p className="mt-6 max-w-2xl text-center text-[12px] text-krevo-silver italic">
                   Datele prezentate sunt fictive și au scop demonstrativ.
                   Platforma ta va fi personalizată complet după nevoile firmei
                   tale.
-                </span>
-              </p>
+                </p>
+              ) : null}
             </div>
           </div>
         </motion.article>
       </div>
 
-      <TimeLossQuizModal
-        open={quizOpen}
-        onClose={() => setQuizOpen(false)}
-        theme={quizTheme}
-      />
+      {showQuiz ? (
+        <TimeLossQuizModal
+          open={quizOpen}
+          onClose={() => setQuizOpen(false)}
+          theme={quizTheme}
+        />
+      ) : null}
     </>
   );
 }

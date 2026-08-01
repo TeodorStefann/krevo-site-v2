@@ -148,7 +148,7 @@ export default function FirmFlowPage() {
             <div className="mt-5 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5">
               <Image
                 src="/firmflow-logo-new.png"
-                alt="FirmFlow"
+                alt="FirmFlow logo"
                 width={80}
                 height={80}
                 className="h-20 w-auto object-contain"
@@ -180,8 +180,10 @@ export default function FirmFlowPage() {
           <div className="mx-auto max-w-6xl">
             <FirmFlowProductCard
               navigateOnClick={false}
-              accessHref="https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app/login"
+              accessHref="https://firmflow.ro/login"
               quizTheme="gold"
+              showQuiz={false}
+              showDisclaimer={false}
             />
           </div>
         </section>
@@ -274,12 +276,7 @@ export default function FirmFlowPage() {
 
             {/* Guarantee bar */}
             <div className="mx-auto mt-16 flex max-w-3xl flex-col items-center justify-center gap-4 sm:flex-row sm:gap-0">
-              <p className="flex items-center gap-2 px-4 text-[13px] text-white">
-                <span className="text-[#c9a84c]" aria-hidden="true">
-                  🔒
-                </span>
-                Fără card de credit
-              </p>
+              <p className="px-4 text-[13px] text-white">Fără card de credit</p>
               <span
                 className="hidden h-4 w-px bg-[#c9a84c]/50 sm:block"
                 aria-hidden="true"
@@ -294,10 +291,7 @@ export default function FirmFlowPage() {
                 className="hidden h-4 w-px bg-[#c9a84c]/50 sm:block"
                 aria-hidden="true"
               />
-              <p className="flex items-center gap-2 px-4 text-[13px] text-white">
-                <span className="text-[#c9a84c]" aria-hidden="true">
-                  📞
-                </span>
+              <p className="px-4 text-[13px] text-white">
                 Suport direct pe WhatsApp
               </p>
             </div>
@@ -348,35 +342,6 @@ export default function FirmFlowPage() {
               })}
             </div>
 
-            {/* Testimonial placeholder */}
-            <div className="relative mx-auto mt-14 max-w-xl rounded-2xl border border-dashed border-[#c9a84c]/60 bg-[#111111]/80 px-8 py-10 text-center">
-              <span
-                className="pointer-events-none absolute top-4 left-6 font-serif text-6xl leading-none text-[#c9a84c]/80"
-                aria-hidden="true"
-              >
-                „
-              </span>
-              <span
-                className="pointer-events-none absolute right-6 bottom-4 font-serif text-6xl leading-none text-[#c9a84c]/80"
-                aria-hidden="true"
-              >
-                ”
-              </span>
-              <p className="relative z-10 mt-2 text-[15px] text-[#888888] italic">
-                Primul testimonial vine curând.
-              </p>
-            </div>
-
-            <div className="mt-16 flex justify-center">
-              <a
-                href="https://buildflow-ks53-2205sm2tm-teodorstefanns-projects.vercel.app/login"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full max-w-[400px] items-center justify-center rounded-full bg-[#c9a84c] px-8 py-4 text-center text-sm font-bold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c] sm:text-base"
-              >
-                Încearcă FirmFlow — 7 zile gratuit →
-              </a>
-            </div>
           </div>
         </section>
 
@@ -404,7 +369,7 @@ export default function FirmFlowPage() {
             </p>
             <div className="mt-4 flex flex-col items-center justify-center gap-2 text-[11px] text-krevo-silver sm:flex-row sm:gap-4">
               <a
-                href="https://anpc.ro"
+                href="https://anpc.ro/ce-este-sal/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors hover:text-[#c9a84c]"
