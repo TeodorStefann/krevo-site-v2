@@ -92,7 +92,7 @@ export function Footer() {
 
             <div className="mt-4 flex items-center justify-center gap-2 sm:justify-start">
               <a
-                href="https://linkedin.com/in/teodor-chiurtu"
+                href="https://www.linkedin.com/in/teodor-chiurtu-a04b07317/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
