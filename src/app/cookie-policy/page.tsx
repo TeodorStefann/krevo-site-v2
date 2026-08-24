@@ -1,9 +1,19 @@
-"use client";
-
 import { Navbar } from "@/components/krevo/Navbar";
 import Link from "next/link";
 import { CinematicFooter } from "@/components/krevo/CinematicFooter";
 import { NoiseOverlay } from "@/components/krevo/NoiseOverlay";
+
+import type { Metadata } from "next";
+
+/* Pagină de server, ca să poată avea titlu propriu în Google.
+   Avea „use client” fără să folosească vreun hook — moștenea
+   titlul paginii principale și nu se indexa corect. */
+export const metadata: Metadata = {
+  title: "Politica de cookies — Krevo",
+  description:
+    "Ce stocăm în browserul tău și de ce. Fără urmărire, fără analytics.",
+  alternates: { canonical: "/cookie-policy" },
+};
 
 export default function CookiePolicyPage() {
   return (
@@ -27,59 +37,58 @@ export default function CookiePolicyPage() {
           <div className="mt-12 space-y-10 text-[15px] leading-relaxed text-krevo-silver">
             <section>
               <h2 className="mb-3 text-[18px] font-bold text-white">
-                1. Ce sunt cookies
+                1. Nu folosim cookies
               </h2>
               <p>
-                Cookies sunt fișiere mici stocate pe dispozitivul tău când
-                vizitezi krevo.ro. Ne ajută să facem site-ul să funcționeze
-                corect și să reținem preferințele tale legate de bannerul de
-                consimțământ. În prezent, krevo.ro nu folosește instrumente de
-                analytics (ex. Google Analytics) și nu setează cookies de
-                urmărire a traficului.
+                Simplu și verificabil: krevo.ro nu setează niciun cookie. Nu
+                avem Google Analytics, nu avem pixeli de urmărire, nu avem
+                reclame și nu urmărim vizitatorii de la o pagină la alta. Poți
+                verifica singur, în orice browser, la secțiunea de stocare a
+                site-ului.
               </p>
             </section>
 
             <section>
               <h2 className="mb-3 text-[18px] font-bold text-white">
-                2. Cookies esențiale
+                2. Ce stocăm, totuși, în browserul tău
               </h2>
-              <p>
-                Aceste cookies sunt necesare pentru funcționarea de bază a
-                site-ului (navigare, securitate, afișarea corectă a paginilor).
-                Nu pot fi dezactivate din bannerul de consimțământ, deoarece
-                fără ele site-ul nu ar funcționa corespunzător.
+              <p className="mb-3">
+                Un singur lucru, și doar în memoria browserului tău — nu ajunge
+                pe serverele noastre și nu identifică pe nimeni:
+              </p>
+              <ul className="list-disc space-y-2 pl-5">
+                <li>
+                  Un semn că ai văzut deja animația de deschidere, ca să nu ți-o
+                  arătăm din nou la fiecare pagină. Dispare când închizi
+                  browserul.
+                </li>
+              </ul>
+              <p className="mt-3">
+                Se șterge oricând din setările browserului, la secțiunea de date
+                ale site-ului.
               </p>
             </section>
 
             <section>
               <h2 className="mb-3 text-[18px] font-bold text-white">
-                3. Preferința de consimțământ
+                3. De ce nu vezi un banner de cookies
               </h2>
               <p>
-                Salvăm local în browser alegerea ta din bannerul de cookies
-                ({"„Am înțeles”"} sau {"„Doar esențiale”"}), astfel încât să nu te
-                întrebăm din nou la fiecare vizită. Această preferință este
-                stocată în localStorage, nu prin cookies de analytics.
+                Pentru că nu avem ce să-ți cerem. Legea cere consimțământ doar
+                pentru cookies care nu sunt strict necesare — analytics,
+                publicitate, urmărire. Noi nu folosim niciunul. Un banner care
+                nu blochează nimic ar fi doar o formalitate care îți fură o
+                secundă degeaba.
+              </p>
+              <p className="mt-3">
+                Dacă vom introduce vreodată astfel de instrumente, actualizăm
+                această pagină și îți cerem acordul înainte să le activăm.
               </p>
             </section>
 
             <section>
               <h2 className="mb-3 text-[18px] font-bold text-white">
-                4. Cum îți gestionezi alegerea
-              </h2>
-              <p>
-                La prima vizită apare un banner unde poți confirma preferința.
-                Poți șterge datele site-ului din setările browserului pentru a
-                reseta alegerea și a vedea din nou bannerul. Dacă pe viitor vom
-                introduce cookies non-esențiale (ex. analytics), vom actualiza
-                această politică și vom cere consimțământul înainte de a le
-                activa.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="mb-3 text-[18px] font-bold text-white">
-                5. Contact
+                4. Contact
               </h2>
               <p>
                 Pentru întrebări despre cookies sau date personale:

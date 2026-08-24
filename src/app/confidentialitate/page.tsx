@@ -1,9 +1,19 @@
-"use client";
-
 import { Navbar } from "@/components/krevo/Navbar";
 import Link from "next/link";
 import { CinematicFooter } from "@/components/krevo/CinematicFooter";
 import { NoiseOverlay } from "@/components/krevo/NoiseOverlay";
+
+import type { Metadata } from "next";
+
+/* Pagină de server, ca să poată avea titlu propriu în Google.
+   Avea „use client” fără să folosească vreun hook — moștenea
+   titlul paginii principale și nu se indexa corect. */
+export const metadata: Metadata = {
+  title: "Politică de confidențialitate — Krevo",
+  description:
+    "Cum colectăm, folosim și protejăm datele tale personale. Conform GDPR (UE 2016/679).",
+  alternates: { canonical: "/confidentialitate" },
+};
 
 export default function ConfidentialitatePage() {
   return (
@@ -57,11 +67,11 @@ export default function ConfidentialitatePage() {
                   automatizări AI etc.)
                 </li>
                 <li>
-                  Date tehnice: cookies esențiale și preferința de consimțământ
-                  salvată local în browser
+                  Date tehnice: niciunele. Nu folosim cookies, analytics sau
+                  instrumente de urmărire
                 </li>
                 <li>
-                  Nu folosim în prezent cookies de analytics sau de urmărire
+                  Nu folosim niciun instrument de analiză sau de urmărire
                 </li>
               </ul>
             </section>

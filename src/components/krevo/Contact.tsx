@@ -308,6 +308,9 @@ export function Contact() {
           phone,
           message,
           interest,
+          /* Bifa ajunge la server ca să fie salvată — până acum se
+             verifica doar în browser și nu rămânea nicio dovadă. */
+          consent: privacyAccepted,
         }),
       });
 
@@ -510,7 +513,7 @@ export function Contact() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 className={`${inputClass} resize-y`}
-                placeholder="Câți angajați aveți, cum lucrați acum (Excel, hârtie, WhatsApp?) și ce vă mănâncă cel mai mult timp."
+                placeholder="Câți angajați ai, cum lucrezi acum (Excel, hârtie, WhatsApp?) și ce îți mănâncă cel mai mult timp."
               />
             </div>
 

@@ -153,12 +153,13 @@ export function Diagnostic() {
         <p className="mx-auto mt-5 max-w-xl text-[16px] leading-relaxed text-krevo-body md:text-[17px]">
           Nimeni nu se trezește dimineața știind ce software îi trebuie. Știe
           doar ce îl enervează. Răspunde la două întrebări și îți spun exact ce
-          ți se potrivește — fără să vorbim, fără să dai vreun date de contact.
+          ți se potrivește. Fără să vorbim cu cineva, fără să lași vreo adresă
+          de email.
         </p>
       </div>
 
       {/* ── Pașii ─────────────────────────────────────────────────────── */}
-      <div className="mt-14 space-y-14 md:mt-20">
+      <div className="mt-12 space-y-12 md:mt-16">
         <Pas numar={1} intrebare="Cu ce se ocupă firma ta?">
           {DOMENII.map((d, i) => (
             <Alegere
@@ -206,7 +207,7 @@ export function Diagnostic() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.55, ease: usor }}
-              className="mt-20 border-t border-[#0F2647] pt-14 md:mt-24"
+              className="mt-14 border-t border-[#0F2647] pt-12 md:mt-16"
               aria-live="polite"
             >
               <p className={kicker}>
@@ -312,7 +313,7 @@ export function Diagnostic() {
                     muted
                     playsInline
                     preload="metadata"
-                    className="w-full"
+                    className="mx-auto block max-h-[62vh] w-full object-contain"
                   />
                   <figcaption className="border-t border-[#0F2647] px-6 py-4 text-[13px] text-krevo-silver">
                     Nu e o simulare — e chiar aplicația, filmată în timp real.

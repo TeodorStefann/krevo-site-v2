@@ -48,15 +48,38 @@ export const DOMENII: Domeniu[] = [
 
 export type Durere = {
   id: DurereId;
+  /** Cum și-o spune el, la persoana întâi — pe butoane. */
   eticheta: string;
+  /** Cum o povestim noi, în fraza de deasupra răspunsului. */
+  descriere: string;
 };
 
 export const DURERI: Durere[] = [
-  { id: "oferte", eticheta: "Ofertele îmi iau o zi întreagă" },
-  { id: "teren", eticheta: "Nu știu cine ce face pe teren" },
-  { id: "hartii", eticheta: "Pierd ore cu hârtii și documente" },
-  { id: "clienti", eticheta: "Mă sună clienții după aceleași lucruri" },
-  { id: "online", eticheta: "Nu mă găsește nimeni online" },
+  {
+    id: "oferte",
+    eticheta: "Ofertele îmi iau o zi întreagă",
+    descriere: "unde o ofertă înseamnă o zi de muncă",
+  },
+  {
+    id: "teren",
+    eticheta: "Nu știu cine ce face pe teren",
+    descriere: "care nu știe cine ce face pe teren",
+  },
+  {
+    id: "hartii",
+    eticheta: "Pierd ore cu hârtii și documente",
+    descriere: "care pierde ore întregi cu hârtii și documente",
+  },
+  {
+    id: "clienti",
+    eticheta: "Mă sună clienții după aceleași lucruri",
+    descriere: "pe care clienții o sună mereu pentru aceleași lucruri",
+  },
+  {
+    id: "online",
+    eticheta: "Nu mă găsește nimeni online",
+    descriere: "pe care nu o găsește nimeni online",
+  },
 ];
 
 export type Modul = {
@@ -192,7 +215,7 @@ export const SOLUTII: Record<DurereId, Solutie> = {
       "Și, mai important, dispare categoria de probleme „nu găsesc hârtia aia” — care costă întotdeauna mai mult decât orele.",
     pret: "Cât o zi de muncă pe lună. Recuperezi douăzeci.",
     pretDetaliu:
-      "Implementarea include configurarea pe firma ta — serii de facturare, articole, date fiscale, tot. Prețul se așază după ce văd cum lucrați acum. Un sfert de oră și îl afli exact.",
+      "Implementarea include configurarea pe firma ta — serii de facturare, articole, date fiscale, tot. Prețul se așază după ce văd cum lucrezi acum. Un sfert de oră și îl afli exact.",
     clip: "/clipuri/factura.mp4",
     exemple: {
       constructii:
@@ -263,12 +286,12 @@ export const SOLUTII: Record<DurereId, Solutie> = {
       {
         nume: "Găsit în Google, local",
         descriere:
-          "Structură tehnică curată, viteză, și paginile pe care le caută oamenii din zona ta — „firmă instalații Craiova”, nu cuvinte generale.",
+          "Structură tehnică curată, viteză și paginile pe care le caută oamenii din zona ta — „firmă instalații Craiova”, nu cuvinte generale.",
       },
       {
         nume: "Cererile ajung unde trebuie",
         descriere:
-          "Fiecare formular completat îți vine pe email și pe WhatsApp instant, și rămâne salvat. Nicio cerere pierdută pentru că n-ai văzut mesajul la timp.",
+          "Fiecare formular completat îți vine pe email și pe WhatsApp instant și rămâne salvat. Nicio cerere pierdută pentru că n-ai văzut mesajul la timp.",
       },
     ],
     castig: "3–8 cereri noi pe lună",
@@ -287,7 +310,7 @@ export const SOLUTII: Record<DurereId, Solutie> = {
       transport:
         "Formular de cerere de transport cu rută, tonaj și dată — calificat înainte să răspunzi.",
       altceva:
-        "Un site care spune clar ce faci, pentru cine, și cu ce dovezi — și care cere acțiunea.",
+        "Un site care spune clar ce faci, pentru cine și cu ce dovezi — și care cere acțiunea.",
     },
   },
 };

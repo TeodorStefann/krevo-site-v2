@@ -1,8 +1,18 @@
-"use client";
-
 import { Navbar } from "@/components/krevo/Navbar";
 import { CinematicFooter } from "@/components/krevo/CinematicFooter";
 import { NoiseOverlay } from "@/components/krevo/NoiseOverlay";
+
+import type { Metadata } from "next";
+
+/* Pagină de server, ca să poată avea titlu propriu în Google.
+   Avea „use client” fără să folosească vreun hook — moștenea
+   titlul paginii principale și nu se indexa corect. */
+export const metadata: Metadata = {
+  title: "Termeni și condiții — Krevo",
+  description:
+    "Condițiile în care poți folosi site-ul și serviciile Krevo.",
+  alternates: { canonical: "/termeni" },
+};
 
 export default function TermeniPage() {
   return (

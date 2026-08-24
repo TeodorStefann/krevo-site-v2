@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { ScrollProgressBar } from "@/components/krevo/ScrollProgressBar";
-import { CookieConsent } from "@/components/krevo/CookieConsent";
 import { SectionReveal } from "@/components/krevo/animations/SectionReveal";
 import { ScrollTop } from "@/components/krevo/ScrollTop";
 import { BaraMobil } from "@/components/krevo/BaraMobil";
@@ -67,7 +66,6 @@ export default function RootLayout({
         <ScrollTop />
         <BaraMobil />
         <ScrollProgressBar />
-        <CookieConsent />
         <SectionReveal />
         {children}
       </body>

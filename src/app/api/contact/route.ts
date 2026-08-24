@@ -19,7 +19,14 @@ type ContactPayload = {
   message?: unknown;
   /** honeypot — câmp invizibil pentru oameni; boții îl completează */
   website?: unknown;
+  /** bifa de acord cu politica de confidențialitate */
+  consent?: unknown;
 };
+
+/* Textul exact pe care omul l-a acceptat. Fără el nu poți demonstra
+   temeiul prelucrării dacă cineva întreabă. */
+const TEXT_CONSIMTAMANT =
+  "Sunt de acord cu prelucrarea datelor mele conform Politicii de Confidențialitate.";
 
 /* Limitare simplă per IP: max 3 mesaje / 10 minute. E în memorie, deci pe
    serverless se resetează la rece — dar taie 95% din spamul naiv. */
@@ -88,17 +95,17 @@ async function sendNotificationEmail(data: {
       from,
       to: ["teodor@krevo.ro"],
       reply_to: data.email,
-      subject: `Contact nou: ${data.name} — ${data.interest}`,
+      /* Numele vine de la un necunoscut. Fără curățare, cine punea un
+         rând nou în el putea insera anteturi în emailul trimis. */
+      subject: `Contact nou: ${data.name.replace(/[\r\n]+/g, " ").slice(0, 120)} — ${data.interest}`,
       text: lines.join("\n"),
     }),
   });
 
   if (!response.ok) {
-    const body = await response.text();
-    console.error("[contact] Resend email failed:", {
-      status: response.status,
-      body,
-    });
+    /* Răspunsul Resend conține adresa expeditorului. Jurnalele Vercel nu
+       sunt locul pentru date personale — păstrăm doar codul de eroare. */
+    console.error("[contact] Resend a refuzat trimiterea:", response.status);
   }
 }
 
@@ -114,7 +121,25 @@ export async function POST(request: Request) {
       );
     }
 
-    const body = (await request.json()) as ContactPayload;
+    /* Fără limită, oricine putea trimite un corp de zeci de megabytes și
+       ocupa funcția degeaba. 16 KB e de zece ori mai mult decât are
+       nevoie cel mai lung mesaj real. */
+    const marime = Number(request.headers.get("content-length") ?? 0);
+    if (marime > 16_000) {
+      return NextResponse.json({ error: "Mesaj prea lung." }, { status: 413 });
+    }
+
+    const brut = await request.text();
+    if (brut.length > 16_000) {
+      return NextResponse.json({ error: "Mesaj prea lung." }, { status: 413 });
+    }
+
+    let body: ContactPayload;
+    try {
+      body = JSON.parse(brut) as ContactPayload;
+    } catch {
+      return NextResponse.json({ error: "Date invalide." }, { status: 400 });
+    }
 
     /* honeypot: oamenii nu văd câmpul, boții îl completează */
     if (isNonEmptyString(body.website)) {
@@ -148,8 +173,16 @@ export async function POST(request: Request) {
       );
     }
 
-    if (message.length > 5000 || name.length > 200) {
-      return NextResponse.json({ error: "Mesaj prea lung." }, { status: 400 });
+    /* Toate câmpurile, nu doar două. Un email de 10.000 de caractere
+       trecea nestingherit până în baza de date. */
+    if (
+      message.length > 5000 ||
+      name.length > 200 ||
+      email.length > 254 ||
+      (phone && phone.length > 40) ||
+      interest.length > 60
+    ) {
+      return NextResponse.json({ error: "Date prea lungi." }, { status: 400 });
     }
 
     let supabase;
@@ -169,6 +202,33 @@ export async function POST(request: Request) {
       );
     }
 
+    /* Limita REALĂ, care funcționează și pe serverless.
+       Cea din memorie (mai sus) se pierde la fiecare pornire la rece și
+       fiecare cerere poate nimeri altă instanță — deci nu apăra nimic.
+       Numărăm direct în baza de date câte mesaje a trimis aceeași adresă
+       în ultimele 10 minute. Nu stocăm IP-uri, deci nici nu adăugăm date
+       personale noi doar ca să ne apărăm de spam. */
+    const acumZeceMinute = new Date(Date.now() - RATE_WINDOW_MS).toISOString();
+    const { count: recente } = await supabase
+      .from("contact_requests")
+      .select("id", { count: "exact", head: true })
+      .eq("email", email)
+      .gte("created_at", acumZeceMinute);
+
+    if ((recente ?? 0) >= RATE_MAX) {
+      return NextResponse.json(
+        { error: "Ai trimis deja câteva mesaje. Îți răspund în curând." },
+        { status: 429 },
+      );
+    }
+
+    if (body.consent !== true) {
+      return NextResponse.json(
+        { error: "Trebuie să accepți Politica de Confidențialitate." },
+        { status: 400 },
+      );
+    }
+
     const row = {
       name,
       email,
@@ -176,9 +236,26 @@ export async function POST(request: Request) {
       interest,
       message,
       read: false,
+      consent_at: new Date().toISOString(),
+      consent_text: TEXT_CONSIMTAMANT,
     };
 
-    const { error } = await supabase.from("contact_requests").insert(row);
+    let { error } = await supabase.from("contact_requests").insert(row);
+
+    /* Dacă proiectul n-are încă coloanele de consimțământ, salvăm mesajul
+       oricum — nu pierdem o cerere pentru o migrare nerulată.
+       Rulează supabase/contact-consimtamant.sql. */
+    if (error) {
+      const deBaza = {
+        name: row.name,
+        email: row.email,
+        phone: row.phone,
+        interest: row.interest,
+        message: row.message,
+        read: row.read,
+      };
+      ({ error } = await supabase.from("contact_requests").insert(deBaza));
+    }
 
     if (error) {
       console.error("[contact] Supabase insert failed:", {

@@ -5,20 +5,44 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 /* ── Pastila plutitoare cu robotelul Krevo ──────────────────────────────
    Navigația de desktop: o pastilă de sticlă centrată, cu glow albastru pe
    tabul activ și un robotel care atârnă sub el și te urmărește cu ochii
    LED. Pe mobil rămâne meniul clasic. */
 
-const PILL_ITEMS = [
-  { name: "Acasă", url: "/" },
-  { name: "FirmFlow", url: "/firmflow" },
-  { name: "Servicii", url: "/servicii" },
-  { name: "Despre", url: "/#despre" },
-  { name: "Contact", url: "/#contact" },
+type ElementMeniu = {
+  nume: string;
+  url: string;
+  /** Ancoră pe pagina principală (#despre), nu rută proprie. */
+  ancora?: string;
+};
+
+const MENIU: ElementMeniu[] = [
+  { nume: "Acasă", url: "/" },
+  { nume: "FirmFlow", url: "/firmflow" },
+  { nume: "Servicii", url: "/servicii" },
+  { nume: "Despre", url: "/#despre", ancora: "despre" },
+  { nume: "Contact", url: "/#contact", ancora: "contact" },
 ];
+
+/**
+ * Care element e activ — dedus DOAR din adresa curentă.
+ *
+ * Varianta veche ținea starea într-un `useState` schimbat la click, iar
+ * pe paginile care nu se potriveau cu nimic (de pildă /ce-ti-trebuie)
+ * rămânea aprins „Acasă” — cu robotel cu tot, sub un tab greșit.
+ */
+function elementActiv(cale: string, ancora: string): string | null {
+  if (cale === "/") {
+    const dupaAncora = MENIU.find((m) => m.ancora && m.ancora === ancora);
+    return dupaAncora ? dupaAncora.nume : "Acasă";
+  }
+  if (cale.startsWith("/firmflow")) return "FirmFlow";
+  if (cale.startsWith("/servicii")) return "Servicii";
+  return null; // /ce-ti-trebuie, paginile legale — niciun tab aprins
+}
 
 /** Robotelul Krevo — mascota care stă sub tabul activ. */
 function RobotelKrevo({ vesel }: { vesel: boolean }) {
@@ -119,17 +143,20 @@ function RobotelKrevo({ vesel }: { vesel: boolean }) {
   );
 }
 
-function PillNav() {
-  const pathname = usePathname();
-  const [activ, setActiv] = useState("Acasă");
+function PillNav({ cuRobotel }: { cuRobotel: boolean }) {
+  const cale = usePathname();
+  const [ancora, setAncora] = useState("");
   const [hover, setHover] = useState<string | null>(null);
 
+  /* Urmărim și ancora, ca „Despre” și „Contact” să se aprindă corect. */
   useEffect(() => {
-    if (pathname === "/firmflow") setActiv("FirmFlow");
-    else if (pathname === "/servicii") setActiv("Servicii");
-    else if (pathname === "/")
-      setActiv((a) => (a === "Despre" || a === "Contact" ? a : "Acasă"));
-  }, [pathname]);
+    const citeste = () => setAncora(window.location.hash.replace("#", ""));
+    citeste();
+    window.addEventListener("hashchange", citeste);
+    return () => window.removeEventListener("hashchange", citeste);
+  }, [cale]);
+
+  const activ = elementActiv(cale, ancora);
 
   return (
     <motion.div
@@ -138,17 +165,17 @@ function PillNav() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
     >
-      {PILL_ITEMS.map((item) => {
-        const esteActiv = activ === item.name;
-        const esteHover = hover === item.name;
+      {MENIU.map((item) => {
+        const esteActiv = activ === item.nume;
+        const esteHover = hover === item.nume;
         return (
           <Link
-            key={item.name}
+            key={item.nume}
             href={item.url}
-            onClick={() => setActiv(item.name)}
-            onMouseEnter={() => setHover(item.name)}
+            aria-current={esteActiv ? "page" : undefined}
+            onMouseEnter={() => setHover(item.nume)}
             onMouseLeave={() => setHover(null)}
-            className={`relative cursor-pointer rounded-full px-4 py-2 text-[13.5px] font-semibold transition-all duration-300 xl:px-5 ${
+            className={`relative cursor-pointer rounded-full px-4 py-2 text-[13.5px] font-semibold transition-colors duration-300 xl:px-5 ${
               esteActiv ? "text-white" : "text-white/65 hover:text-white"
             }`}
           >
@@ -169,7 +196,7 @@ function PillNav() {
               </motion.div>
             )}
 
-            <span className="relative z-10">{item.name}</span>
+            <span className="relative z-10">{item.nume}</span>
 
             <AnimatePresence>
               {esteHover && !esteActiv && (
@@ -182,7 +209,7 @@ function PillNav() {
               )}
             </AnimatePresence>
 
-            {esteActiv && <RobotelKrevo vesel={hover !== null} />}
+            {esteActiv && cuRobotel && <RobotelKrevo vesel={hover !== null} />}
           </Link>
         );
       })}
@@ -190,46 +217,63 @@ function PillNav() {
   );
 }
 
-/* ── Navbar-ul propriu-zis ──────────────────────────────────────────── */
+/* ── Bara propriu-zisă ──────────────────────────────────────────────── */
 
 export function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [produseOpen, setProduseOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const cale = usePathname();
+  const esteAcasa = cale === "/";
+  const esteDiagnostic = cale.startsWith("/ce-ti-trebuie");
+  const [meniuDeschis, setMeniuDeschis] = useState(false);
+  const [derulat, setDerulat] = useState(false);
 
+  /* Meniul de pe telefon blochează derularea paginii de dedesubt. */
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    document.body.style.overflow = meniuDeschis ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [menuOpen]);
+  }, [meniuDeschis]);
 
-  /* Transparent peste hero, sticlă blurată imediat ce pagina se mișcă. */
+  /* Se închide singur la schimbarea paginii — altfel rămânea deschis
+     peste conținutul nou după ce apăsai un link. */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    setMeniuDeschis(false);
+  }, [cale]);
+
+  /* Escape îl închide, ca orice panou care acoperă ecranul. */
+  useEffect(() => {
+    if (!meniuDeschis) return;
+    const laTasta = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMeniuDeschis(false);
+    };
+    window.addEventListener("keydown", laTasta);
+    return () => window.removeEventListener("keydown", laTasta);
+  }, [meniuDeschis]);
+
+  /* Transparentă peste hero, sticlă fermă imediat ce pagina se mișcă. */
+  useEffect(() => {
+    const laDerulare = () => setDerulat(window.scrollY > 24);
+    laDerulare();
+    window.addEventListener("scroll", laDerulare, { passive: true });
+    return () => window.removeEventListener("scroll", laDerulare);
   }, []);
 
-  const closeMobile = () => {
-    setMenuOpen(false);
-    setProduseOpen(false);
-  };
+  const inchide = () => setMeniuDeschis(false);
 
   return (
     <header
       className={`fixed top-0 right-0 left-0 z-[100] border-b transition-colors duration-300 ${
-        scrolled
-          ? "border-white/[0.07] bg-black/25 backdrop-blur-xl backdrop-saturate-150"
-          : "border-transparent bg-transparent backdrop-blur-sm"
+        derulat
+          ? "border-white/[0.09] bg-black/60 shadow-[0_8px_32px_rgba(0,0,0,0.45)] backdrop-blur-xl backdrop-saturate-150"
+          : "border-transparent bg-transparent"
       }`}
     >
       <div className="relative mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 sm:py-5 lg:px-12">
         <Link
           href="/"
+          aria-label="Krevo — pagina principală"
           className="relative z-[101] flex shrink-0 items-center transition-opacity hover:opacity-80"
-          onClick={closeMobile}
+          onClick={inchide}
         >
           <Image
             src="/krevo-logo.png"
@@ -241,17 +285,27 @@ export function Navbar() {
           />
         </Link>
 
-        {/* Pastila cu robotelul — centrul navbar-ului, doar pe desktop */}
+        {/* Meniul central apare pe toate paginile. Robotelul rămâne doar
+            acasă: pe paginile cu text atârnă sub bară și aterizează peste
+            rânduri, iar acasă are hero-ul dedesubt, unde e la locul lui. */}
         <div className="absolute top-1/2 left-1/2 hidden -translate-x-1/2 -translate-y-1/2 lg:block">
-          <PillNav />
+          <PillNav cuRobotel={esteAcasa} />
         </div>
 
         <div className="hidden items-center gap-5 lg:flex">
           <Link
             href="/ce-ti-trebuie"
-            className="text-[13px] font-semibold text-white/70 transition-colors duration-200 hover:text-[#3399FF]"
+            aria-current={esteDiagnostic ? "page" : undefined}
+            className={`group relative text-[13px] font-semibold transition-colors duration-200 ${
+              esteDiagnostic ? "text-white" : "text-white/75 hover:text-white"
+            }`}
           >
             Ce îți trebuie?
+            <span
+              className={`absolute -bottom-1 left-0 h-px bg-[#3399FF] transition-all duration-300 ${
+                esteDiagnostic ? "w-full" : "w-0 group-hover:w-full"
+              }`}
+            />
           </Link>
           <Link
             href="/#contact"
@@ -263,113 +317,82 @@ export function Navbar() {
 
         <button
           type="button"
-          className="relative z-[101] flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-[#0066FF]/50 bg-[#0a0a0a]/80 text-[#3399FF] lg:hidden"
-          aria-label={menuOpen ? "Închide meniul" : "Deschide meniul"}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((o) => !o)}
+          className="relative z-[101] flex h-11 w-11 items-center justify-center rounded-lg border border-[#0066FF]/50 bg-[#0a0a0a]/80 text-[#3399FF] transition-colors hover:border-[#0066FF] hover:text-white lg:hidden"
+          aria-label={meniuDeschis ? "Închide meniul" : "Deschide meniul"}
+          aria-expanded={meniuDeschis}
+          onClick={() => setMeniuDeschis((o) => !o)}
         >
-          <Menu size={28} strokeWidth={2} />
+          {meniuDeschis ? (
+            <X size={26} strokeWidth={2} />
+          ) : (
+            <Menu size={26} strokeWidth={2} />
+          )}
         </button>
       </div>
 
-      {/* Mobil — backdrop */}
+      {/* ── Telefon: fundalul ────────────────────────────────────────── */}
       <div
-        className={`fixed inset-0 z-[11000] h-[100dvh] bg-black/50 backdrop-blur-md transition-opacity duration-300 ease-out lg:hidden ${
-          menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        className={`fixed inset-0 z-[11000] h-[100dvh] bg-black/60 backdrop-blur-md transition-opacity duration-300 ease-out lg:hidden ${
+          meniuDeschis ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
-        aria-hidden={!menuOpen}
-        onClick={closeMobile}
+        aria-hidden="true"
+        onClick={inchide}
       />
 
-      {/* Mobil — panoul */}
+      {/* ── Telefon: panoul ──────────────────────────────────────────── */}
       <div
-        className={`fixed inset-y-0 right-0 z-[11001] flex h-[100dvh] w-full max-w-md flex-col overflow-y-auto bg-[#0a0a0a]/95 shadow-[-20px_0_60px_rgba(0,0,0,0.5)] transition-transform duration-300 ease-out lg:hidden ${
-          menuOpen ? "translate-x-0" : "pointer-events-none translate-x-full"
+        id="meniu-mobil"
+        className={`fixed inset-y-0 right-0 z-[11001] flex h-[100dvh] w-full max-w-md flex-col overflow-y-auto bg-[#05070C]/97 shadow-[-20px_0_60px_rgba(0,0,0,0.6)] transition-transform duration-300 ease-out lg:hidden ${
+          meniuDeschis ? "translate-x-0" : "pointer-events-none translate-x-full"
         }`}
-        aria-hidden={!menuOpen}
+        inert={!meniuDeschis}
       >
         <div className="flex items-center justify-end px-6 pt-6 pb-2">
           <button
             type="button"
             className="flex h-12 w-12 items-center justify-center text-white transition-colors hover:text-[#3399FF]"
             aria-label="Închide meniul"
-            onClick={closeMobile}
+            onClick={inchide}
           >
-            <X size={32} strokeWidth={1.75} />
+            <X size={30} strokeWidth={1.75} />
           </button>
         </div>
 
-        <nav className="flex flex-1 flex-col items-center justify-center gap-2 px-8 pb-20">
-          <Link
-            href="/servicii"
-            onClick={closeMobile}
-            className="group relative flex min-h-[56px] items-center justify-center px-4 text-[28px] font-bold text-white"
-          >
-            Servicii
-            <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#0066FF] transition-all duration-300 group-hover:w-full" />
-          </Link>
-
-          <Link
-            href="/ce-ti-trebuie"
-            onClick={closeMobile}
-            className="group relative flex min-h-[56px] items-center justify-center px-4 text-[28px] font-bold text-white"
-          >
-            Ce îți trebuie?
-            <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#0066FF] transition-all duration-300 group-hover:w-full" />
-          </Link>
-
-          <div className="flex w-full flex-col items-center">
-            <button
-              type="button"
-              onClick={() => setProduseOpen((o) => !o)}
-              className="group relative flex min-h-[56px] items-center justify-center gap-2 px-4 text-[28px] font-bold text-white"
-              aria-expanded={produseOpen}
-            >
-              Produse
-              <ChevronDown
-                size={22}
-                className={`text-[#3399FF] transition-transform duration-200 ${
-                  produseOpen ? "rotate-180" : ""
-                }`}
-              />
-              <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#0066FF] transition-all duration-300 group-hover:w-full" />
-            </button>
-            {produseOpen ? (
+        <nav className="flex flex-1 flex-col items-center justify-center gap-1 px-8 pb-16">
+          {[
+            ...MENIU.slice(0, 3),
+            { nume: "Ce îți trebuie?", url: "/ce-ti-trebuie" },
+            ...MENIU.slice(3),
+          ].map((item) => {
+            const activ =
+              item.url === cale ||
+              (item.url === "/ce-ti-trebuie" && esteDiagnostic);
+            return (
               <Link
-                href="/firmflow"
-                onClick={closeMobile}
-                className="group relative mt-1 flex min-h-[48px] items-center justify-center gap-2 px-4 text-[20px] font-semibold text-[#99C2FF]"
+                key={item.nume}
+                href={item.url}
+                onClick={inchide}
+                aria-current={activ ? "page" : undefined}
+                className={`group relative flex min-h-[58px] items-center justify-center px-4 text-[26px] font-bold transition-colors ${
+                  activ ? "text-[#3399FF]" : "text-white hover:text-[#99C2FF]"
+                }`}
               >
-                FirmFlow
-                <span className="absolute bottom-1 left-1/2 h-px w-0 -translate-x-1/2 bg-[#0066FF] transition-all duration-300 group-hover:w-full" />
+                {item.nume}
+                <span
+                  className={`absolute bottom-2 left-1/2 h-px -translate-x-1/2 bg-[#0066FF] transition-all duration-300 ${
+                    activ ? "w-2/3" : "w-0 group-hover:w-full"
+                  }`}
+                />
               </Link>
-            ) : null}
-          </div>
-
-          <Link
-            href="/#despre"
-            onClick={closeMobile}
-            className="group relative flex min-h-[56px] items-center justify-center px-4 text-[28px] font-bold text-white"
-          >
-            Despre
-            <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#0066FF] transition-all duration-300 group-hover:w-full" />
-          </Link>
-
-          <Link
-            href="/#contact"
-            onClick={closeMobile}
-            className="group relative flex min-h-[56px] items-center justify-center px-4 text-[28px] font-bold text-white"
-          >
-            Contact
-            <span className="absolute bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-[#0066FF] transition-all duration-300 group-hover:w-full" />
-          </Link>
+            );
+          })}
         </nav>
 
         <div className="flex flex-col gap-3 px-8 pb-10">
           <Link
             href="/#contact"
-            onClick={closeMobile}
-            className="flex min-h-12 items-center justify-center rounded-full bg-[#0052CC] px-6 py-3 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-[#0066FF]"
+            onClick={inchide}
+            className="flex min-h-12 items-center justify-center rounded-full bg-[#0052CC] px-6 py-3.5 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-[#0066FF]"
           >
             Hai să vorbim
           </Link>
