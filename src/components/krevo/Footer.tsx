@@ -71,7 +71,7 @@ function MailIcon() {
 
 export function Footer() {
   return (
-    <footer className="relative px-6 py-[60px]">
+    <footer className="relative px-6 py-[48px]">
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 gap-10 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-4">
           <div>
@@ -101,7 +101,7 @@ export function Footer() {
                 <LinkedInIcon />
               </a>
               <a
-                href="https://wa.me/40774451822"
+                href="https://wa.me/40774451822?text=Salut%21%20Am%20v%C4%83zut%20site-ul%20Krevo%20%C8%99i%20vreau%20s%C4%83%20programez%20discu%C8%9Bia%20de%2015%20minute%20despre%20FirmFlow%20pentru%20firma%20mea."
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
@@ -187,7 +187,7 @@ export function Footer() {
         </p>
 
         <p className="mt-2 text-center text-[11px] text-krevo-silver">
-          © 2026 Krevo · Persoană fizică autorizată
+          © 2026 Krevo
         </p>
       </div>
     </footer>

@@ -182,7 +182,7 @@ function TimeLossQuizModal({
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className={
             gold
-              ? "relative w-full max-w-lg overflow-hidden rounded-2xl border border-[#c9a84c]/40 bg-gradient-to-b from-[#0f0d00] to-[#050508] p-6 shadow-[0_0_60px_rgba(201,168,76,0.2)] md:p-8"
+              ? "relative w-full max-w-lg overflow-hidden rounded-2xl border border-[#3399FF]/40 bg-gradient-to-b from-[#001226] to-[#050508] p-6 shadow-[0_0_60px_rgba(51,153,255,0.2)] md:p-8"
               : "relative w-full max-w-lg overflow-hidden rounded-2xl border border-[#0066FF]/40 bg-gradient-to-b from-[#000D20] to-[#050508] p-6 shadow-[0_0_60px_rgba(0,102,255,0.25)] md:p-8"
           }
           onClick={(e) => e.stopPropagation()}
@@ -199,7 +199,7 @@ function TimeLossQuizModal({
           <p
             className={
               gold
-                ? "text-xs tracking-[0.2em] text-[#c9a84c] uppercase"
+                ? "text-xs tracking-[0.2em] text-[#3399FF] uppercase"
                 : "text-xs tracking-[0.2em] text-[#3399FF] uppercase"
             }
           >
@@ -225,7 +225,7 @@ function TimeLossQuizModal({
                     onClick={() => selectOption(opt)}
                     className={
                       gold
-                        ? "rounded-xl border border-[#c9a84c]/30 bg-[#0a0a0a] px-4 py-3 text-left text-sm font-medium text-white transition-colors hover:border-[#c9a84c] hover:bg-[#c9a84c]/10"
+                        ? "rounded-xl border border-[#3399FF]/30 bg-[#0a0a0a] px-4 py-3 text-left text-sm font-medium text-white transition-colors hover:border-[#3399FF] hover:bg-[#3399FF]/10"
                         : "rounded-xl border border-[#002B66] bg-[#0a0a0a] px-4 py-3 text-left text-sm font-medium text-white transition-colors hover:border-[#0066FF] hover:bg-[#0052CC]/20"
                     }
                   >
@@ -240,7 +240,7 @@ function TimeLossQuizModal({
                 <p
                   className={
                     gold
-                      ? "text-base leading-relaxed text-[#e8d5a3] md:text-lg"
+                      ? "text-base leading-relaxed text-[#99C2FF] md:text-lg"
                       : "text-base leading-relaxed text-[#99C2FF] md:text-lg"
                   }
                 >
@@ -248,7 +248,7 @@ function TimeLossQuizModal({
                   <span
                     className={
                       gold
-                        ? "font-bold text-[#c9a84c]"
+                        ? "font-bold text-[#3399FF]"
                         : "font-bold text-[#3399FF]"
                     }
                   >
@@ -265,20 +265,20 @@ function TimeLossQuizModal({
               )}
 
               {submitted ? (
-                <div className="mt-8 flex flex-col items-center rounded-xl border border-[#c9a84c]/40 bg-[#c9a84c]/10 px-4 py-6 text-center">
+                <div className="mt-8 flex flex-col items-center rounded-xl border border-[#3399FF]/40 bg-[#3399FF]/10 px-4 py-6 text-center">
                   <span
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#c9a84c] text-lg font-bold text-[#0a0a0a]"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#3399FF] text-lg font-bold text-[#0a0a0a]"
                     aria-hidden="true"
                   >
                     ✓
                   </span>
-                  <p className="mt-3 text-sm font-medium text-[#c9a84c]">
+                  <p className="mt-3 text-sm font-medium text-[#3399FF]">
                     Te contactăm în maxim 24 ore!
                   </p>
                 </div>
               ) : skipped ? (
                 <a
-                  href="https://wa.me/40774451822"
+                  href="https://wa.me/40774451822?text=Salut%21%20Am%20v%C4%83zut%20site-ul%20Krevo%20%C8%99i%20vreau%20s%C4%83%20programez%20discu%C8%9Bia%20de%2015%20minute%20despre%20FirmFlow%20pentru%20firma%20mea."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-8 inline-flex w-full items-center justify-center rounded-full border border-[#25D366] bg-transparent px-6 py-3.5 text-sm font-bold text-[#25D366] transition-colors hover:bg-[#25D366]/10"
@@ -295,14 +295,14 @@ function TimeLossQuizModal({
                     placeholder="Emailul tău pentru demo gratuit"
                     className={
                       gold
-                        ? "w-full rounded-xl border border-[#c9a84c]/30 bg-[#050508] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-krevo-silver/40 focus:border-[#c9a84c]"
-                        : "w-full rounded-xl border border-[#002B66] bg-[#050508] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-krevo-silver/40 focus:border-[#c9a84c]"
+                        ? "w-full rounded-xl border border-[#3399FF]/30 bg-[#050508] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-krevo-silver/40 focus:border-[#3399FF]"
+                        : "w-full rounded-xl border border-[#002B66] bg-[#050508] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-krevo-silver/40 focus:border-[#3399FF]"
                     }
                   />
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="inline-flex w-full items-center justify-center rounded-full bg-[#c9a84c] px-6 py-3.5 text-sm font-bold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c] disabled:opacity-60"
+                    className="inline-flex w-full items-center justify-center rounded-full bg-[#3399FF] px-6 py-3.5 text-sm font-bold text-[#0a0a0a] transition-colors hover:bg-[#55aaff] disabled:opacity-60"
                   >
                     {submitting
                       ? "Se trimite..."
@@ -349,7 +349,7 @@ function TimeLossQuizModal({
 export function FirmFlowProductCard({
   navigateOnClick = true,
   accessHref = "/firmflow",
-  quizTheme = "gold",
+  quizTheme = "blue",
   animate = true,
   showQuiz = true,
   showDisclaimer = true,
@@ -396,41 +396,41 @@ export function FirmFlowProductCard({
                 }
               : undefined
           }
-          className={`firmflow-moon-card group relative w-full overflow-hidden rounded-[2rem] border border-[#c9a84c]/30 p-[4px] shadow-none transition-[box-shadow] duration-300 hover:shadow-[0_0_30px_rgba(201,168,76,0.3)] ${
+          className={`firmflow-moon-card group relative w-full overflow-hidden rounded-[2rem] border border-[#3399FF]/30 p-[4px] shadow-none transition-[box-shadow] duration-300 hover:shadow-[0_0_30px_rgba(51,153,255,0.3)] ${
             navigateOnClick ? "cursor-pointer" : ""
           }`}
         >
-          <div className="relative overflow-hidden rounded-[calc(2rem-5px)] border border-[#c9a84c]/80 bg-gradient-to-br from-[#0a0a0a] to-[#0f0d00] p-5 sm:p-8 md:p-10">
+          <div className="relative overflow-hidden rounded-[calc(2rem-5px)] border border-[#3399FF]/80 bg-gradient-to-br from-[#0a0a0a] to-[#001226] p-5 sm:p-8 md:p-10">
             <div
-              className="pointer-events-none absolute -top-16 -left-16 h-48 w-48 rounded-full bg-[#c9a84c]/20 blur-3xl"
+              className="pointer-events-none absolute -top-16 -left-16 h-48 w-48 rounded-full bg-[#3399FF]/20 blur-3xl"
               aria-hidden="true"
             />
             <div
-              className="pointer-events-none absolute -top-24 right-[-10%] h-72 w-72 rounded-full bg-[#c9a84c]/15 blur-3xl"
+              className="pointer-events-none absolute -top-24 right-[-10%] h-72 w-72 rounded-full bg-[#3399FF]/15 blur-3xl"
               aria-hidden="true"
             />
             <div
-              className="pointer-events-none absolute -bottom-20 left-[-5%] h-56 w-56 rounded-full bg-[#c9a84c]/10 blur-3xl"
+              className="pointer-events-none absolute -bottom-20 left-[-5%] h-56 w-56 rounded-full bg-[#3399FF]/10 blur-3xl"
               aria-hidden="true"
             />
 
             <div className="relative z-10 max-w-3xl">
-              <span className="mb-4 inline-block rounded-full bg-[#c9a84c] px-3 py-1 text-xs font-semibold tracking-[0.12em] text-[#0a0a0a] uppercase">
+              <span className="mb-4 inline-block rounded-full bg-[#3399FF] px-3 py-1 text-xs font-semibold tracking-[0.12em] text-[#0a0a0a] uppercase">
                 Disponibil acum
               </span>
               <h3 className="mt-4 flex flex-wrap items-center font-serif text-3xl font-bold sm:text-4xl md:text-6xl lg:text-7xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/firmflow-logo-new.png"
+                  src="/firmflow-logo.png"
                   alt="FirmFlow logo"
                   loading="lazy"
                   decoding="async"
                   className="mr-2 h-12 w-auto object-contain sm:mr-4 sm:h-16 md:h-24"
                 />
                 <span className="leading-none text-white">Firm</span>
-                <span className="leading-none text-[#c9a84c]">Flow</span>
+                <span className="leading-none text-[#3399FF]">Flow</span>
               </h3>
-              <p className="mt-4 font-serif text-lg text-[#e8d5a3] italic sm:mt-5 sm:text-xl md:text-2xl">
+              <p className="mt-4 font-serif text-lg text-[#99C2FF] italic sm:mt-5 sm:text-xl md:text-2xl">
                 Tot ce mișcă în firma ta — într-un singur loc
               </p>
               <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-krevo-silver sm:mt-6 sm:text-base md:text-lg">
@@ -439,7 +439,7 @@ export function FirmFlowProductCard({
               </p>
 
               <div
-                className="mt-8 h-px w-full max-w-2xl bg-[#c9a84c]/50"
+                className="mt-8 h-px w-full max-w-2xl bg-[#3399FF]/50"
                 aria-hidden="true"
               />
 
@@ -449,7 +449,7 @@ export function FirmFlowProductCard({
                   {...(accessHref.startsWith("http")
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
-                  className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#c9a84c] px-7 py-3.5 text-sm font-bold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c] sm:w-auto"
+                  className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#3399FF] px-7 py-3.5 text-sm font-bold text-[#0a0a0a] transition-colors hover:bg-[#55aaff] sm:w-auto"
                 >
                   Accesează platforma
                 </a>
@@ -457,7 +457,7 @@ export function FirmFlowProductCard({
                   href={PDF_HREF}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-[#c9a84c] bg-transparent px-7 py-3.5 text-sm font-semibold text-[#c9a84c] transition-colors hover:bg-[#c9a84c]/10 sm:w-auto"
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-[#3399FF] bg-transparent px-7 py-3.5 text-sm font-semibold text-[#3399FF] transition-colors hover:bg-[#3399FF]/10 sm:w-auto"
                 >
                   <Download size={16} strokeWidth={2} aria-hidden="true" />
                   Descarcă Ghidul PDF
@@ -468,7 +468,7 @@ export function FirmFlowProductCard({
                 <button
                   type="button"
                   onClick={() => setQuizOpen(true)}
-                  className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-full border border-[#c9a84c]/50 bg-transparent px-7 py-3.5 text-sm font-semibold text-[#e8d5a3] transition-colors hover:border-[#c9a84c] hover:text-[#c9a84c] sm:w-auto"
+                  className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-full border border-[#3399FF]/50 bg-transparent px-7 py-3.5 text-sm font-semibold text-[#99C2FF] transition-colors hover:border-[#3399FF] hover:text-[#3399FF] sm:w-auto"
                 >
                   Cât timp pierzi zilnic? →
                 </button>

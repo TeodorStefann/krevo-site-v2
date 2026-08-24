@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useInView } from "framer-motion";
 import { Clock, Eye, Smartphone } from "lucide-react";
 import { Counter } from "./Counter";
+import { TitleReveal } from "./animations/TitleReveal";
 
 const stats = [
   { icon: Clock, count: 30, suffix: " sec", label: "Generare ofertă" },
@@ -19,26 +20,23 @@ export function AiPower() {
     <section
       ref={sectionRef}
       id="puterea-ai"
-      className="relative overflow-hidden px-6 py-20 md:py-[120px]"
+      data-reveal
+      className="relative overflow-hidden px-6 py-16 md:py-[72px]"
     >
       <div
         className="pointer-events-none absolute inset-0 z-0"
         style={{
-          backgroundImage: "url('/bg-aipower.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "scroll",
-          opacity: 1,
+          background:
+            "linear-gradient(180deg, #000 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, #000 100%), url('/bg-s-aipower.jpg') center / cover no-repeat #000",
         }}
         aria-hidden="true"
       />
       <div className="relative z-10 mx-auto max-w-5xl">
         <h2 className="text-center text-[30px] leading-tight font-bold text-white sm:text-[36px] md:text-[42px]">
-          De la 4 ore la 30 de{" "}
-          <span className="section-title-accent">secunde</span>
+          <TitleReveal text="De la 4 ore la 30 de secunde" accentLast />
         </h2>
 
-        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-8">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-8">
           {stats.map((stat) => {
             const Icon = stat.icon;
             return (
@@ -59,7 +57,7 @@ export function AiPower() {
           })}
         </div>
 
-        <p className="mx-auto mt-12 max-w-[700px] text-center text-[15px] leading-relaxed text-krevo-silver italic">
+        <p className="mx-auto mt-8 max-w-[700px] text-center text-[15px] leading-relaxed text-krevo-silver">
           Nu îți vindem un dashboard frumos. Îți dăm un sistem care gândește
           pentru tine — generează oferte, analizează performanța echipei și îți
           spune dimineața ce trebuie să faci azi.

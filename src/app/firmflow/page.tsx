@@ -3,16 +3,22 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Navbar } from "@/components/krevo/Navbar";
 import { HowWeWork } from "@/components/krevo/HowWeWork";
 import { NumbersSpeak } from "@/components/krevo/NumbersSpeak";
-import { Footer } from "@/components/krevo/Footer";
+import { CinematicFooter } from "@/components/krevo/CinematicFooter";
 import { NoiseOverlay } from "@/components/krevo/NoiseOverlay";
-import { FirmFlowProductCard } from "@/components/krevo/FirmFlowProductCard";
+import { TitleReveal } from "@/components/krevo/animations/TitleReveal";
+import { MotionButton } from "@/components/ui/MotionButton";
+import { RezervaCall } from "@/components/krevo/RezervaCall";
 
-const GOLD = "#c9a84c";
+const GOLD = "#3399FF";
+const APP_URL = "https://firmflow.ro";
 
+/* ————————————————————————————————————————————————————————————————
+   Reveal simplu, o singură dată — aceeași mișcare calmă ca pe homepage.
+   ———————————————————————————————————————————————————————————————— */
 function FadeInOnScroll({
   children,
   delay = 0,
@@ -33,7 +39,7 @@ function FadeInOnScroll({
           io.disconnect();
         }
       },
-      { threshold: 0.1 },
+      { threshold: 0.12 },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -42,10 +48,10 @@ function FadeInOnScroll({
   return (
     <div
       ref={ref}
-      className="transition-[opacity,transform] duration-[600ms] ease-out"
+      className="transition-[opacity,transform] duration-[650ms] ease-out"
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(30px)",
+        transform: visible ? "translateY(0)" : "translateY(26px)",
         transitionDelay: visible ? `${delay}s` : "0s",
       }}
     >
@@ -54,92 +60,143 @@ function FadeInOnScroll({
   );
 }
 
-const PRODUCT_FAQS = [
+/* ————————————————————————————————————————————————————————————————
+   Rama de browser — produsul viu, la fel ca în panoul de pe homepage.
+   ———————————————————————————————————————————————————————————————— */
+function DemoVideo({
+  src,
+  alt,
+  legenda,
+}: {
+  src: string;
+  alt: string;
+  legenda?: string;
+}) {
+  return (
+    <div
+      className="w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0d1117] transition-all duration-300 hover:border-[#3399FF]/40"
+      style={{ boxShadow: "0 25px 80px rgba(0,102,255,0.14)" }}
+    >
+      <div className="flex items-center gap-2 border-b border-white/10 bg-[#111111] px-4 py-2.5">
+        <span className="h-2.5 w-2.5 rounded-full bg-white/15" aria-hidden="true" />
+        <span className="h-2.5 w-2.5 rounded-full bg-white/15" aria-hidden="true" />
+        <span className="h-2.5 w-2.5 rounded-full bg-white/15" aria-hidden="true" />
+        <span className="ml-3 rounded-md bg-black/60 px-3 py-0.5 text-[10.5px] tracking-wide text-white/40">
+          firmflow.ro
+        </span>
+      </div>
+      <div className="relative">
+        <video
+          src={src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label={alt}
+          className="block h-auto w-full"
+        />
+        {legenda && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-4 pt-8 pb-2.5">
+            <p className="text-[12px] font-medium text-white/85">{legenda}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ————————————————————————————————————————————————————————————————
+   Funcțiile, în ordinea în care conving: întâi cele pe care nu le are
+   nimeni, apoi controlul zilnic.
+   ———————————————————————————————————————————————————————————————— */
+const DEMO_ROWS = [
   {
-    question: "Cât durează configurarea?",
-    answer: "30 de minute. Ne ocupăm noi de tot.",
+    src: "/clipuri/oferta-ai.mp4",
+    alt: "Ofertă tehnică generată cu AI în FirmFlow",
+    legenda: "Ofertă tehnică completă, cu deviz estimativ și etape.",
+    badge: "Generată cu AI",
+    title: "De la o zi de lucru, la o cafea.",
+    description:
+      "Completezi datele lucrării și ale clientului — FirmFlow scrie oferta tehnică întreagă: obiectul lucrării, specificații, etape de execuție, deviz estimativ, condiții și garanții. O verifici, o exporți în PDF, o trimiți.",
+    checks: [
+      "Deviz estimativ calculat automat",
+      "Export PDF cu identitatea firmei tale",
+      "Salvată în istoricul firmei, cu tot cu PDF",
+    ],
   },
   {
-    question: "Funcționează pe orice telefon?",
-    answer: "Da. Inclusiv pe telefoane mai vechi.",
+    src: "/clipuri/factura.mp4",
+    alt: "Factură emisă direct din deviz în FirmFlow",
+    legenda: "Un click — factura preia liniile devizului.",
+    badge: "Zero muncă dublă",
+    title: "Factura se face singură, din deviz.",
+    description:
+      "Nu mai copiezi linii dintr-un document în altul. Alegi devizul, FirmFlow preia pozițiile, cantitățile și prețurile, iar factura iese numerotată automat, cu datele firmei, gata de trimis.",
+    checks: [
+      "Liniile preluate automat din deviz",
+      "Numerotare automată, după regimul tău",
+      "PDF profesional, gata de trimis",
+    ],
   },
   {
-    question: "Ce se întâmplă cu datele dacă renunț?",
-    answer: "Datele rămân ale tale. Le poți exporta oricând.",
+    src: "/clipuri/dashboard.mp4",
+    alt: "Dashboardul patronului în FirmFlow",
+    legenda: "Situația firmei, în fiecare dimineață.",
+    badge: "Live, în timp real",
+    title: "Tot ce mișcă în firmă — dintr-o privire.",
+    description:
+      "Dimineața deschizi FirmFlow și știi instant: câți oameni sunt prezenți, ce proiecte sunt active, ce e urgent și unde pierzi bani. Fără apeluri, fără grupuri de WhatsApp, fără haos.",
+    checks: [
+      "Prezența și proiectele, live",
+      "Alertele urgente, sus, unde le vezi",
+      "Acțiuni rapide dintr-un singur click",
+    ],
+  },
+  {
+    src: "/clipuri/pontaj-muncitor.mp4",
+    alt: "Pontajul muncitorului în FirmFlow — un singur buton",
+    legenda: "Ce vede muncitorul: un buton. Apasă, GPS-ul confirmă, gata.",
+    badge: "Cu dovadă GPS",
+    title: "Știi cine e pe teren. Cu dovadă.",
+    description:
+      "Muncitorul are un singur buton pe telefon: AM VENIT. GPS-ul confirmă că e la locație, iar tu vezi în timp real cine e prezent, cine lipsește și cum arată ultimele 7 zile — om cu om. Foaia de prezență se exportă cu un click.",
+    checks: [
+      "Verificare GPS la fiecare pontare",
+      "Istoric pe 7 zile, pentru fiecare om",
+      "Foaie colectivă de prezență, exportabilă",
+    ],
   },
 ] as const;
 
-function DemoGif({ src, alt }: { src: string; alt: string }) {
-  return (
-    <div
-      className="w-full overflow-hidden rounded-2xl border border-[#c9a84c] transition-transform duration-300 hover:scale-[1.02]"
-      style={{ boxShadow: "0 25px 80px rgba(201,168,76,0.2)" }}
-    >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt={alt}
-        loading="lazy"
-        decoding="async"
-        className="block h-auto w-full rounded-2xl"
-      />
-    </div>
-  );
-}
-
-function DemoText({
-  badge,
-  title,
-  description,
-  checks,
-}: {
-  badge: string;
-  title: string;
-  description: string;
-  checks: string[];
-}) {
-  return (
-    <div className="flex flex-col justify-center">
-      <span className="inline-flex w-fit items-center rounded-full border border-[#c9a84c]/40 bg-[#c9a84c]/10 px-3 py-1 text-[12px] font-semibold text-[#c9a84c]">
-        {badge}
-      </span>
-      <h3 className="mt-4 text-[28px] leading-tight font-bold text-white md:text-[32px]">
-        {title}
-      </h3>
-      <p className="mt-4 text-[15px] leading-relaxed text-krevo-silver">
-        {description}
-      </p>
-      <ul className="mt-6 space-y-2.5">
-        {checks.map((item) => (
-          <li
-            key={item}
-            className="flex items-start gap-2 text-[14px] font-medium text-white"
-          >
-            <span
-              className="text-[16px] font-bold leading-none text-[#c9a84c]"
-              aria-hidden="true"
-            >
-              ✓
-            </span>
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+const PRODUCT_FAQS = [
+  {
+    question: "Cât durează până îl folosim?",
+    answer:
+      "Din prima zi. Începem cu o probă de 5 zile configurată împreună, pe datele firmei tale — iar instruirea echipei durează 30 de minute.",
+  },
+  {
+    question: "Funcționează pe orice telefon?",
+    answer:
+      "Da, inclusiv pe telefoane mai vechi. Se instalează ca aplicație, iar pentru muncitori accesul se trimite direct pe WhatsApp.",
+  },
+  {
+    question: "Ce se întâmplă cu datele dacă renunț?",
+    answer:
+      "Datele rămân ale tale, punct. Contul se îngheață — nu se șterge — și poți exporta oricând tot ce ai introdus.",
+  },
+] as const;
 
 export default function FirmFlowPage() {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
-    <div className="relative min-h-screen text-krevo-body selection:bg-[#c9a84c]/30 selection:text-white">
+    <div className="relative min-h-screen text-krevo-body selection:bg-[#3399FF]/30 selection:text-white">
       <div
         className="pointer-events-none fixed inset-0 z-0"
         style={{
-          backgroundImage: "url('/bg-firmflow-page.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.8) 100%), url('/bg-firmflow-page.png') center / cover no-repeat #000",
         }}
         aria-hidden="true"
       />
@@ -147,242 +204,302 @@ export default function FirmFlowPage() {
         <NoiseOverlay />
         <Navbar />
         <main className="pt-24">
-        <section className="px-6 py-20 md:py-[120px]">
-          <div className="mx-auto max-w-6xl text-center">
-            <p
-              className="text-xs font-medium tracking-[0.3em] uppercase"
-              style={{ color: GOLD }}
-            >
-              Produs
-            </p>
-            <div className="mt-5 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5">
-              <Image
-                src="/firmflow-logo-new.png"
-                alt="FirmFlow logo"
-                width={80}
-                height={80}
-                className="h-20 w-auto object-contain"
-                priority
-              />
-              <h1 className="font-serif text-5xl font-bold md:text-6xl">
-                <span className="text-white">Firm</span>
-                <span style={{ color: GOLD }}>Flow</span>
-              </h1>
-            </div>
-          </div>
-        </section>
-
-        <section className="px-6 pb-8 md:pb-12">
-          <div className="mx-auto max-w-6xl">
-            <FirmFlowProductCard
-              navigateOnClick={false}
-              accessHref="https://firmflow.ro/login"
-              quizTheme="gold"
-              showQuiz={false}
-              showDisclaimer={false}
-            />
-          </div>
-        </section>
-
-        <section className="px-6 py-20 md:py-[120px]">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="text-center text-[28px] font-bold text-white">
-              Vezi platforma în{" "}
-              <span style={{ color: GOLD }}>acțiune</span>
-            </h2>
+          {/* ── Hero: promisiunea + produsul viu, imediat ──────────────── */}
+          <section className="relative px-6 pt-16 pb-10 md:pt-24">
             <div
-              className="mx-auto mt-3 h-px w-[60px]"
-              style={{ background: GOLD }}
+              className="pointer-events-none absolute inset-0 z-0"
+              style={{
+                background:
+                  "radial-gradient(760px 420px at 50% 0%, rgba(0,102,255,0.10), transparent 65%)",
+              }}
               aria-hidden="true"
             />
-
-            <div className="mt-16 flex flex-col gap-20 md:gap-[100px]">
-              {/* ROW 1 — media left */}
-              <FadeInOnScroll delay={0}>
-                <div className="flex flex-col items-center gap-10 md:flex-row md:gap-12">
-                  <div className="w-full md:w-[55%]">
-                    <DemoGif
-                      src="/gif-oferta.gif"
-                      alt="Generare ofertă tehnică în FirmFlow"
-                    />
-                  </div>
-                  <div className="w-full md:w-[45%]">
-                    <DemoText
-                      badge="Funcție reală ✓"
-                      title="De la 4 ore la 30 de secunde."
-                      description="Inginerul tău nu mai pierde jumătate din zi cu oferte în Word. Completezi 5 câmpuri — FirmFlow generează oferta tehnică completă cu deviz, etape și garanții. Gata de trimis."
-                      checks={[
-                        "Deviz automat calculat",
-                        "Export PDF profesional",
-                        "Salvat în istoricul firmei",
-                      ]}
-                    />
-                  </div>
-                </div>
-              </FadeInOnScroll>
-
-              {/* ROW 2 — media right */}
-              <FadeInOnScroll delay={0.1}>
-                <div className="flex flex-col items-center gap-10 md:flex-row-reverse md:gap-12">
-                  <div className="w-full md:w-[55%]">
-                    <DemoGif
-                      src="/gif-dashboard.gif"
-                      alt="Dashboard live FirmFlow"
-                    />
-                  </div>
-                  <div className="w-full md:w-[45%]">
-                    <DemoText
-                      badge="Live în timp real ✓"
-                      title="Tot ce mișcă în firmă — dintr-o privire."
-                      description="Dimineața deschizi FirmFlow și știi instant: câți oameni sunt prezenți, ce proiecte sunt active, ce sarcini sunt urgente și ce îți recomandă AI-ul pentru ziua de azi. Fără apeluri. Fără WhatsApp. Fără haos."
-                      checks={[
-                        "Statistici live actualizate",
-                        "AI insight zilnic personalizat",
-                        "Acțiuni rapide cu un click",
-                      ]}
-                    />
-                  </div>
-                </div>
-              </FadeInOnScroll>
-
-              {/* ROW 3 — media left */}
-              <FadeInOnScroll delay={0.2}>
-                <div className="flex flex-col items-center gap-10 md:flex-row md:gap-12">
-                  <div className="w-full md:w-[55%]">
-                    <DemoGif
-                      src="/gif-muncitor.gif"
-                      alt="Interfață muncitor FirmFlow pe telefon"
-                    />
-                  </div>
-                  <div className="w-full md:w-[45%]">
-                    <DemoText
-                      badge="Zero training necesar ✓"
-                      title="Angajatul tău învață în 5 minute."
-                      description="Muncitorul deschide telefonul și vede 3 butoane mari. Apasă AM VENIT, vede sarcinile lui, cere concediu. Atât. Nu contează dacă are 25 sau 60 de ani — toți se descurcă din prima zi."
-                      checks={[
-                        "Interfață simplă pe orice telefon",
-                        "GPS verifică prezența automat",
-                        "Notificări instant pentru sarcini noi",
-                      ]}
-                    />
-                  </div>
-                </div>
-              </FadeInOnScroll>
-            </div>
-
-            {/* Guarantee bar */}
-            <div className="mx-auto mt-16 flex max-w-3xl flex-col items-center justify-center gap-4 sm:flex-row sm:gap-0">
-              <p className="px-4 text-[13px] text-white">Fără card de credit</p>
-              <span
-                className="hidden h-4 w-px bg-[#c9a84c]/50 sm:block"
-                aria-hidden="true"
-              />
-              <p className="px-4 text-[13px] text-white">7 zile complet gratuit</p>
-              <span
-                className="hidden h-4 w-px bg-[#c9a84c]/50 sm:block"
-                aria-hidden="true"
-              />
-              <p className="px-4 text-[13px] text-white">
-                Suport direct pe WhatsApp
+            <div className="relative z-10 mx-auto max-w-4xl text-center">
+              <p className="mb-4 text-[11.5px] font-semibold tracking-[0.24em] text-[#3399FF]/70 uppercase">
+                Produsul Krevo
+              </p>
+              <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+                <Image
+                  src="/firmflow-logo.png"
+                  alt="FirmFlow logo"
+                  width={64}
+                  height={64}
+                  className="h-14 w-auto object-contain md:h-16"
+                  priority
+                />
+                <h1 className="font-serif text-5xl font-bold md:text-6xl">
+                  <span className="text-white">Firm</span>
+                  <span style={{ color: GOLD }}>Flow</span>
+                </h1>
+              </div>
+              <h2 className="mx-auto mt-6 max-w-2xl text-[24px] leading-tight font-bold text-white md:text-[32px]">
+                <TitleReveal
+                  text="Sistemul de operare al firmei tale."
+                  accentLast
+                />
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-[15.5px] leading-relaxed text-krevo-silver">
+                Pontaj cu GPS, deviz din poze, oferte și facturi generate cu AI
+                — totul într-un singur loc, pe telefon și pe laptop. Pentru
+                firme de construcții, instalații și inginerie care au depășit
+                Excel-ul, dar nu au buget de SAP.
+              </p>
+              <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <MotionButton label="Intră în FirmFlow" href={APP_URL} extern />
+                <RezervaCall context="De pe pagina FirmFlow" />
+              </div>
+              <p className="mt-6 text-[12.5px] text-krevo-silver/80">
+                Probă de 5 zile pe datele firmei tale · Fără card
               </p>
             </div>
 
-            {/* Mini FAQ */}
-            <div className="mx-auto mt-14 max-w-2xl space-y-3">
-              {PRODUCT_FAQS.map((item, index) => {
-                const isOpen = openFaq === index;
-                return (
-                  <div
-                    key={item.question}
-                    className="overflow-hidden rounded-xl border border-[#c9a84c]/35 bg-[#111111]"
-                  >
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setOpenFaq((current) =>
-                          current === index ? null : index,
-                        )
-                      }
-                      aria-expanded={isOpen}
-                      className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+            {/* Dovada, imediat sub promisiune: funcția unică, în mișcare */}
+            <FadeInOnScroll delay={0.1}>
+              <div className="relative z-10 mx-auto mt-12 max-w-6xl">
+                <div className="mb-4 flex flex-col items-center gap-2 text-center">
+                  <span className="inline-flex items-center rounded-full border border-[#3399FF]/40 bg-[#3399FF]/10 px-3 py-1 text-[12px] font-semibold text-[#3399FF]">
+                    Unic pe piață
+                  </span>
+                  <p className="text-[20px] font-bold text-white md:text-[24px]">
+                    Trimiți 3 poze de pe teren. Primești devizul complet.
+                  </p>
+                </div>
+                <DemoVideo
+                  src="/clipuri/deviz-poze.mp4"
+                  alt="Deviz generat cu AI din fotografii de șantier, în FirmFlow"
+                  legenda="Din 3 poze — deviz complet, cu totaluri cu TVA, în sub un minut. Filmare reală din aplicație."
+                />
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
+                  {[
+                    "Cantități estimate direct din imagini",
+                    "Totaluri cu TVA gata calculate",
+                    "Editezi orice linie înainte de trimitere",
+                  ].map((c) => (
+                    <p
+                      key={c}
+                      className="flex items-center gap-2 text-[13.5px] font-medium text-white/85"
                     >
-                      <span className="text-[14px] font-semibold text-white">
-                        {item.question}
-                      </span>
-                      <ChevronDown
-                        size={18}
-                        className={`shrink-0 text-[#c9a84c] transition-transform duration-300 ${
-                          isOpen ? "rotate-180" : "rotate-0"
-                        }`}
+                      <span
+                        className="font-bold text-[#3399FF]"
                         aria-hidden="true"
+                      >
+                        ✓
+                      </span>
+                      {c}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </FadeInOnScroll>
+          </section>
+
+          {/* ── Funcțiile, una câte una ─────────────────────────────────── */}
+          <section className="px-6 py-20 md:py-[110px]">
+            <div className="mx-auto max-w-7xl">
+              <p className="mb-3 text-center text-[11.5px] font-semibold tracking-[0.24em] text-[#3399FF]/70 uppercase">
+                Funcțiile
+              </p>
+              <h2 className="text-center text-[28px] leading-tight font-bold text-white sm:text-[34px]">
+                <TitleReveal text="Vezi platforma în acțiune." accentLast />
+              </h2>
+              <p className="mx-auto mt-3 max-w-md text-center text-[14.5px] text-krevo-silver">
+                Toate filmările de mai jos sunt din aplicația reală — nu
+                machete, nu montaje de prezentare.
+              </p>
+
+              <div className="mt-16 flex flex-col gap-20 md:gap-[110px]">
+                {DEMO_ROWS.map((row) => (
+                  <FadeInOnScroll key={row.title} delay={0.05}>
+                    <div className="mx-auto max-w-5xl">
+                      {/* textul sus, clipul mare dedesubt — scrisul din
+                          aplicație rămâne la dimensiune aproape naturală */}
+                      <div className="mb-6 flex flex-col items-start gap-4 md:flex-row md:items-end md:justify-between">
+                        <div className="max-w-2xl">
+                          <span className="inline-flex items-center rounded-full border border-[#3399FF]/40 bg-[#3399FF]/10 px-3 py-1 text-[12px] font-semibold text-[#3399FF]">
+                            {row.badge}
+                          </span>
+                          <h3 className="mt-3 text-[24px] leading-tight font-bold text-white md:text-[29px]">
+                            {row.title}
+                          </h3>
+                          <p className="mt-3 text-[14.5px] leading-relaxed text-krevo-silver">
+                            {row.description}
+                          </p>
+                        </div>
+                        <ul className="shrink-0 space-y-2">
+                          {row.checks.map((item) => (
+                            <li
+                              key={item}
+                              className="flex items-start gap-2 text-[13.5px] font-medium text-white"
+                            >
+                              <span
+                                className="text-[15px] leading-none font-bold text-[#3399FF]"
+                                aria-hidden="true"
+                              >
+                                ✓
+                              </span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <DemoVideo
+                        src={row.src}
+                        alt={row.alt}
+                        legenda={row.legenda}
                       />
-                    </button>
+                    </div>
+                  </FadeInOnScroll>
+                ))}
+              </div>
+
+              {/* Linia de garanții */}
+              <div className="mx-auto mt-16 flex max-w-3xl flex-col items-center justify-center gap-4 sm:flex-row sm:gap-0">
+                <p className="px-4 text-[13px] text-white">
+                  Probă de 5 zile, pe datele tale
+                </p>
+                <span
+                  className="hidden h-4 w-px bg-[#3399FF]/50 sm:block"
+                  aria-hidden="true"
+                />
+                <p className="px-4 text-[13px] text-white">Fără card de credit</p>
+                <span
+                  className="hidden h-4 w-px bg-[#3399FF]/50 sm:block"
+                  aria-hidden="true"
+                />
+                <p className="px-4 text-[13px] text-white">
+                  Suport direct pe WhatsApp
+                </p>
+              </div>
+
+              {/* Mini FAQ */}
+              <div className="mx-auto mt-14 max-w-2xl space-y-3">
+                {PRODUCT_FAQS.map((item, index) => {
+                  const isOpen = openFaq === index;
+                  return (
                     <div
-                      className={`grid transition-[grid-template-rows] duration-300 ease-out ${
-                        isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                      key={item.question}
+                      className={`overflow-hidden rounded-xl border transition-colors duration-300 ${
+                        isOpen
+                          ? "border-[#3399FF]/35 bg-white/[0.045]"
+                          : "border-white/10 bg-white/[0.025] hover:border-white/20"
                       }`}
                     >
-                      <div className="min-h-0 overflow-hidden">
-                        <p className="border-t border-[#c9a84c]/20 px-5 pb-4 pt-3 text-[14px] leading-relaxed text-krevo-silver">
-                          {item.answer}
-                        </p>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setOpenFaq((current) =>
+                            current === index ? null : index,
+                          )
+                        }
+                        aria-expanded={isOpen}
+                        className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                      >
+                        <span className="text-[14.5px] font-semibold text-white">
+                          {item.question}
+                        </span>
+                        <Plus
+                          size={18}
+                          className={`shrink-0 text-[#3399FF] transition-transform duration-300 ${
+                            isOpen ? "rotate-45" : "rotate-0"
+                          }`}
+                          aria-hidden="true"
+                        />
+                      </button>
+                      <div
+                        className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+                          isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                        }`}
+                      >
+                        <div className="min-h-0 overflow-hidden">
+                          <p className="px-5 pt-0 pb-4 text-[14px] leading-relaxed text-krevo-silver">
+                            {item.answer}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
+          </section>
 
-          </div>
-        </section>
+          <HowWeWork theme="blue" />
+          <NumbersSpeak theme="blue" />
 
-        <HowWeWork theme="gold" />
-        <NumbersSpeak theme="gold" />
-
-        {/* Legal compliance strip */}
-        <section className="border-t border-[#c9a84c]/20 px-6 py-10">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-[12px] leading-relaxed text-krevo-silver italic">
-              Datele prezentate sunt fictive și au scop exclusiv demonstrativ.{" "}
-              <Link
-                href="/termeni"
-                className="text-[#c9a84c] underline-offset-2 transition-colors hover:text-white hover:underline"
-              >
-                Termeni și condiții
-              </Link>
-              {" · "}
-              <Link
-                href="/confidentialitate"
-                className="text-[#c9a84c] underline-offset-2 transition-colors hover:text-white hover:underline"
-              >
-                Politică de confidențialitate
-              </Link>
-            </p>
-            <div className="mt-4 flex flex-col items-center justify-center gap-2 text-[11px] text-krevo-silver sm:flex-row sm:gap-4">
-              <a
-                href="https://anpc.ro/ce-este-sal/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors hover:text-[#c9a84c]"
-              >
-                Soluționarea online a litigiilor — ANPC
-              </a>
-              <span className="hidden text-[#c9a84c]/40 sm:inline" aria-hidden="true">
-                ·
-              </span>
-              <a
-                href="https://ec.europa.eu/consumers/odr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors hover:text-[#c9a84c]"
-              >
-                Platforma ODR UE
-              </a>
+          {/* ── Invitația finală ────────────────────────────────────────── */}
+          <section className="px-6 pt-4 pb-20 md:pt-6 md:pb-[110px]">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-[30px] leading-tight font-bold text-white sm:text-[40px]">
+                <TitleReveal text="Hai să-l vezi pe firma ta." accentLast />
+              </h2>
+              <p className="mx-auto mt-4 max-w-lg text-[15px] leading-relaxed text-krevo-silver">
+                O discuție de 15 minute, apoi 5 zile de probă cu proiectele,
+                oamenii și devizele tale reale. Decizi cu aplicația în mână.
+              </p>
+              <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <RezervaCall
+                  context="Finalul paginii FirmFlow"
+                  varianta="principal"
+                />
+                <MotionButton
+                  label="Scrie-mi un mesaj"
+                  href="/#contact"
+                  varianta="secundar"
+                />
+              </div>
+              <p className="mt-6 text-[12.5px] text-krevo-silver/70">
+                Online, fără deplasare. Îți spun dacă merită sau nu în firma ta.
+              </p>
             </div>
-          </div>
-        </section>
+          </section>
+
+          {/* Legal compliance strip */}
+          <section className="border-t border-[#3399FF]/20 px-6 py-10">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-[12px] leading-relaxed text-krevo-silver italic">
+                Datele prezentate sunt fictive și au scop exclusiv demonstrativ.{" "}
+                <Link
+                  href="/termeni"
+                  className="text-[#3399FF] underline-offset-2 transition-colors hover:text-white hover:underline"
+                >
+                  Termeni și condiții
+                </Link>
+                {" · "}
+                <Link
+                  href="/confidentialitate"
+                  className="text-[#3399FF] underline-offset-2 transition-colors hover:text-white hover:underline"
+                >
+                  Politică de confidențialitate
+                </Link>
+              </p>
+              <div className="mt-4 flex flex-col items-center justify-center gap-2 text-[11px] text-krevo-silver sm:flex-row sm:gap-4">
+                <a
+                  href="https://anpc.ro/ce-este-sal/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-[#3399FF]"
+                >
+                  SAL — Soluționarea alternativă a litigiilor (ANPC)
+                </a>
+                <span
+                  className="hidden text-[#3399FF]/40 sm:inline"
+                  aria-hidden="true"
+                >
+                  ·
+                </span>
+                <a
+                  href="https://ec.europa.eu/consumers/odr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-[#3399FF]"
+                >
+                  Platforma ODR UE
+                </a>
+              </div>
+            </div>
+          </section>
         </main>
-        <Footer />
+        <CinematicFooter />
       </div>
     </div>
   );

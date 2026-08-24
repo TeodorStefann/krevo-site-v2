@@ -17,7 +17,28 @@ type ContactPayload = {
   phone?: unknown;
   interest?: unknown;
   message?: unknown;
+  /** honeypot — câmp invizibil pentru oameni; boții îl completează */
+  website?: unknown;
 };
+
+/* Limitare simplă per IP: max 3 mesaje / 10 minute. E în memorie, deci pe
+   serverless se resetează la rece — dar taie 95% din spamul naiv. */
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const RATE_MAX = 3;
+const rateMap = new Map<string, number[]>();
+
+function rateLimited(ip: string): boolean {
+  const now = Date.now();
+  const hits = (rateMap.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+  if (hits.length >= RATE_MAX) {
+    rateMap.set(ip, hits);
+    return true;
+  }
+  hits.push(now);
+  rateMap.set(ip, hits);
+  if (rateMap.size > 5000) rateMap.clear();
+  return false;
+}
 
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
@@ -83,7 +104,22 @@ async function sendNotificationEmail(data: {
 
 export async function POST(request: Request) {
   try {
+    const ip =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      "necunoscut";
+    if (rateLimited(ip)) {
+      return NextResponse.json(
+        { error: "Prea multe mesaje. Încearcă din nou în câteva minute." },
+        { status: 429 },
+      );
+    }
+
     const body = (await request.json()) as ContactPayload;
+
+    /* honeypot: oamenii nu văd câmpul, boții îl completează */
+    if (isNonEmptyString(body.website)) {
+      return NextResponse.json({ ok: true });
+    }
 
     const name = isNonEmptyString(body.name) ? body.name.trim() : "";
     const email = isNonEmptyString(body.email) ? body.email.trim() : "";

@@ -15,10 +15,10 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
     const lineTimer = setTimeout(() => setLineExpanded(true), 500);
     // Phase 3 — tagline fade-in (1.1 → 1.5s)
     const taglineTimer = setTimeout(() => setTaglineVisible(true), 1100);
-    // Phase 4 — hold (1.5 → 1.9s)
-    // Phase 5 — fade-out (1.9 → 2.2s)
-    const fadeTimer = setTimeout(() => setFadingOut(true), 1900);
-    const doneTimer = setTimeout(() => onComplete(), 2200);
+    // Phase 4 — hold (1.5 → 1.6s)
+    // Phase 5 — fade-out (1.6 → 1.9s)
+    const fadeTimer = setTimeout(() => setFadingOut(true), 1600);
+    const doneTimer = setTimeout(() => onComplete(), 1900);
 
     return () => {
       clearTimeout(brandTimer);
@@ -51,7 +51,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
             alt="Krevo"
             style={{ height: 44, width: "auto", display: "block" }}
           />
-          <span className="font-serif text-[32px] font-bold text-[#0066FF]">
+          <span className="font-serif text-[32px] font-bold text-[#3399FF]">
             KREVO
           </span>
         </div>
@@ -68,7 +68,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
         </div>
 
         <p
-          className="mt-4 text-center text-[12px] tracking-wide italic text-[#a0a0a0]"
+          className="mt-4 text-center text-[12px] tracking-wide text-[#a0a0a0]"
           style={{
             opacity: taglineVisible ? 1 : 0,
             transition: "opacity 0.4s ease",

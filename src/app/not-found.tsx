@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { MotionButton } from "@/components/ui/MotionButton";
 
 export default function NotFound() {
   return (
@@ -11,12 +11,9 @@ export default function NotFound() {
         <p className="mt-4 text-[16px] text-krevo-silver">
           Pagina pe care o cauți nu a fost găsită.
         </p>
-        <Link
-          href="/"
-          className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full bg-[#0052CC] px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#0066FF]"
-        >
-          Înapoi la homepage
-        </Link>
+        <div className="mt-8 flex justify-center">
+          <MotionButton label="Înapoi la homepage" href="/" />
+        </div>
       </div>
     </div>
   );

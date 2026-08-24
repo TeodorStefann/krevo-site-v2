@@ -11,13 +11,13 @@ export function Testimonials() {
             className="pointer-events-none absolute top-3 left-5 font-serif text-6xl leading-none text-[#0066FF]"
             aria-hidden="true"
           >
-            „
+            {"„"}
           </span>
           <span
             className="pointer-events-none absolute right-5 bottom-3 font-serif text-6xl leading-none text-[#0066FF]"
             aria-hidden="true"
           >
-            ”
+            {"”"}
           </span>
 
           <blockquote className="relative z-10 text-[15px] leading-relaxed text-krevo-silver italic">

@@ -1,7 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/krevo/Navbar";
-import { Footer } from "@/components/krevo/Footer";
+import { CinematicFooter } from "@/components/krevo/CinematicFooter";
 import { NoiseOverlay } from "@/components/krevo/NoiseOverlay";
 
 export default function TermeniPage() {
@@ -108,7 +108,7 @@ export default function TermeniPage() {
                 5. Limitarea răspunderii
               </h2>
               <p>
-                Site-ul și materialele demonstrative sunt oferite „ca atare”.
+                Site-ul și materialele demonstrative sunt oferite {"„ca atare”"}.
                 Krevo nu garantează rezultate comerciale specifice și nu
                 răspunde pentru daune indirecte, pierderi de profit, întreruperi
                 de activitate sau pierderi de date rezultate din utilizarea
@@ -173,7 +173,7 @@ export default function TermeniPage() {
           </div>
         </article>
       </main>
-      <Footer />
+      <CinematicFooter />
     </div>
   );
 }

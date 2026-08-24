@@ -11,42 +11,61 @@
   --color-krevo-white: #ffffff;
   --color-krevo-body: #d0d0d0;
   --font-family-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
-  --font-family-serif: var(--font-serif), Georgia, "Times New Roman", serif;
+  /* "serif" e acum fontul de display (Space Grotesk) — clasa font-serif
+     rămâne validă în componente, dar nu mai există niciun serif pe site. */
+  --font-family-serif: var(--font-display), var(--font-sans), system-ui, sans-serif;
 }
 
 * {
   box-sizing: border-box;
-  cursor: default !important;
+}
+
+/* Tot ce e apăsabil primește mânuța — site-ul trebuie să se simtă viu. */
+a,
+button:not(:disabled),
+[role="button"],
+label:has(> input[type="checkbox"]),
+input[type="checkbox"],
+input[type="range"],
+summary {
+  cursor: pointer;
+}
+
+/* Titlurile vorbesc cu fontul de display. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+  letter-spacing: -0.01em;
 }
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  /* `clip` (not `hidden`) — hidden turns html/body into a scroll container,
+     which silently disables `position: sticky` anywhere on the page. */
+  overflow-x: clip;
   background-color: #000000;
 }
 
 body {
   background-color: #000000;
   color: #d0d0d0;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.hero-typing-cursor {
-  display: inline-block;
-  margin-left: 1px;
-  animation: hero-typing-cursor-blink 0.5s step-end infinite;
-}
-
-@keyframes hero-typing-cursor-blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
+/* „Excel." — gradient clipuit pe text; poziția fundalului e animată de
+   framer-motion o singură dată, ca o trecere de lumină prin litere.
+   Marginile gradientului sunt albastrul de accent, deci în repaus textul
+   e pur și simplu albastru. */
+.hero-accent-sheen {
+  background-image: linear-gradient(110deg, #3399ff 35%, #cfe6ff 50%, #3399ff 65%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 .contact-submit-spinner {
@@ -106,9 +125,8 @@ body {
 }
 
 .krevo-heading {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-display), var(--font-sans), sans-serif;
   font-weight: 700;
-  font-style: italic;
   color: #ffffff;
   letter-spacing: -0.02em;
 }
@@ -464,17 +482,199 @@ button.rounded-full {
   }
 }
 
+/* Section reveal — intrare lină, delicată, FĂRĂ salt.
+   Rulează o singură dată per secțiune; scrollul nu o mai rejoacă. */
 .reveal-section {
   opacity: 0;
-  transform: translateY(30px);
-  transition:
-    opacity 0.6s ease-out,
-    transform 0.6s ease-out;
+  transform: translateY(26px);
+  will-change: transform, opacity;
+}
+
+/* Sections already on screen at first paint appear instantly — no bounce,
+   no flicker (matches the original no-flash behaviour). */
+.reveal-section.reveal-static {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  animation: none;
+  will-change: auto;
 }
 
 .reveal-section.is-revealed {
+  animation: krevo-reveal-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes krevo-reveal-up {
+  0% {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Spotlight: un halou discret de lumină urmărește cursorul pe carduri. */
+.spotlight-card {
+  position: relative;
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(51, 153, 255, 0.13),
+    transparent 65%
+  );
+}
+
+.spotlight-card:hover::before {
   opacity: 1;
-  transform: none;
+}
+
+/* ── Footer cinematic (cortina) ─────────────────────────────────────── */
+
+@keyframes krevo-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.krevo-marquee {
+  animation: krevo-marquee 38s linear infinite;
+}
+
+@keyframes krevo-heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  15%,
+  45% {
+    transform: scale(1.2);
+  }
+  30% {
+    transform: scale(1);
+  }
+}
+
+.krevo-heartbeat {
+  display: inline-block;
+  animation: krevo-heartbeat 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+@keyframes krevo-breathe {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 0.9;
+  }
+}
+
+.krevo-breathe {
+  animation: krevo-breathe 8s ease-in-out infinite alternate;
+}
+
+.krevo-footer-aurora {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(0, 102, 255, 0.16) 0%,
+    rgba(51, 153, 255, 0.07) 40%,
+    transparent 70%
+  );
+}
+
+.krevo-footer-grid {
+  background-size: 60px 60px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+}
+
+.krevo-giant-text {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-size: 24vw;
+  line-height: 0.75;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(51, 153, 255, 0.1);
+  background: linear-gradient(180deg, rgba(51, 153, 255, 0.13) 0%, transparent 60%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.krevo-metal-text {
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.4) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(51, 153, 255, 0.15));
+}
+
+.krevo-glass-pill {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 10px 30px -10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.krevo-glass-pill:hover {
+  border-color: rgba(51, 153, 255, 0.5);
+  background: linear-gradient(145deg, rgba(0, 102, 255, 0.14), rgba(0, 102, 255, 0.03));
+  box-shadow:
+    0 20px 40px -10px rgba(0, 102, 255, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+/* Strălucirea care trece prin tabul activ din pastila de navigație. */
+@keyframes krevo-shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Legenda caruselului — fade scurt la schimbarea slide-ului. */
+@keyframes krevo-cap-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.krevo-cap-fade {
+  animation: krevo-cap-fade 0.3s ease both;
 }
 
 .noise-overlay {
@@ -485,8 +685,10 @@ button.rounded-full {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .krevo-marquee,
+  .krevo-heartbeat,
+  .krevo-breathe,
   .firmflow-float-card,
-  .hero-typing-cursor,
   .shimmer-text,
   .premium-glow-card,
   .final-cta-glow,
@@ -504,9 +706,12 @@ button.rounded-full {
     transform: none;
   }
 
-  .reveal-section {
+  .reveal-section,
+  .reveal-section.is-revealed {
     opacity: 1;
     transform: none;
+    filter: none;
+    animation: none;
     transition: none;
   }
 }
@@ -515,4 +720,162 @@ button.rounded-full {
   .firmflow-float-card {
     animation: none !important;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PEARL BUTTON — butonul-monument, folosit o singură dată pe pagină
+   (CTA-ul final, înainte de footer). Adaptat pe paleta Krevo: negrul cu
+   reflex albastru în loc de reflexul roz din varianta originală.
+   ═══════════════════════════════════════════════════════════════════════ */
+.pearl-button {
+  --pearl-lumina: #d8e9ff;
+  --pearl-fund: #05070c;
+  --pearl-albastru: rgba(0, 102, 255, 0.45);
+  position: relative;
+  display: inline-block;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  border-radius: 100px;
+  background-color: var(--pearl-fund);
+  transition: all 0.25s ease;
+  box-shadow:
+    inset 0 0.3rem 0.9rem rgba(120, 180, 255, 0.28),
+    inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.75),
+    inset 0 -0.4rem 0.9rem var(--pearl-albastru),
+    0 2.5rem 3rem rgba(0, 0, 0, 0.45),
+    0 1rem 1rem -0.6rem rgba(0, 0, 0, 0.8);
+}
+
+.pearl-button .wrap {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: inherit;
+  padding: 26px 44px;
+}
+
+@media (min-width: 768px) {
+  .pearl-button .wrap {
+    padding: 30px 52px;
+  }
+}
+
+.pearl-button .pearl-line {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: var(--pearl-lumina);
+  transition: transform 0.25s ease;
+  transform: translateY(2%);
+  -webkit-mask-image: linear-gradient(to bottom, white 55%, rgba(255, 255, 255, 0.55));
+  mask-image: linear-gradient(to bottom, white 55%, rgba(255, 255, 255, 0.55));
+}
+
+@media (min-width: 768px) {
+  .pearl-button .pearl-line {
+    font-size: 22px;
+  }
+}
+
+.pearl-button .pearl-sclipici {
+  color: #3399ff;
+  transition: transform 0.4s ease;
+}
+
+.pearl-button .wrap::before,
+.pearl-button .wrap::after {
+  content: "";
+  position: absolute;
+  transition: all 0.35s ease;
+}
+
+/* halo-ul de sus, care dă senzația de perlă */
+.pearl-button .wrap::before {
+  left: -15%;
+  right: -15%;
+  bottom: 25%;
+  top: -100%;
+  border-radius: 50%;
+  background-color: rgba(120, 180, 255, 0.14);
+}
+
+/* reflexia de sticlă */
+.pearl-button .wrap::after {
+  left: 6%;
+  right: 6%;
+  top: 12%;
+  bottom: 40%;
+  border-radius: 22px 22px 0 0;
+  box-shadow: inset 0 10px 8px -10px rgba(200, 225, 255, 0.85);
+  background: linear-gradient(
+    180deg,
+    rgba(200, 225, 255, 0.26) 0%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.pearl-button:hover {
+  box-shadow:
+    inset 0 0.3rem 0.5rem rgba(140, 195, 255, 0.4),
+    inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.75),
+    inset 0 -0.4rem 0.9rem rgba(0, 102, 255, 0.65),
+    0 2.5rem 3rem rgba(0, 0, 0, 0.45),
+    0 1rem 1rem -0.6rem rgba(0, 0, 0, 0.8);
+}
+
+.pearl-button:hover .wrap::before {
+  transform: translateY(-5%);
+}
+
+.pearl-button:hover .wrap::after {
+  opacity: 0.4;
+  transform: translateY(5%);
+}
+
+.pearl-button:hover .pearl-line {
+  transform: translateY(-4%);
+}
+
+.pearl-button:hover .pearl-sclipici {
+  transform: rotate(90deg) scale(1.15);
+}
+
+.pearl-button:active {
+  transform: translateY(4px);
+}
+
+.pearl-button:focus-visible {
+  outline: 2px solid #3399ff;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pearl-button,
+  .pearl-button .wrap::before,
+  .pearl-button .wrap::after,
+  .pearl-button .pearl-line,
+  .pearl-button .pearl-sclipici {
+    transition: none;
+  }
+}
+
+.pearl-button--inactiv {
+  cursor: not-allowed;
+  opacity: 0.55;
+  filter: saturate(0.6);
+}
+
+.pearl-button--inactiv:hover .wrap::before,
+.pearl-button--inactiv:hover .pearl-line {
+  transform: none;
 }

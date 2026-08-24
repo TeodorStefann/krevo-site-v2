@@ -1,6 +1,17 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import Link from "next/link";
+import { MotionButton } from "@/components/ui/MotionButton";
+import { AnimatePresence, motion } from "framer-motion";
+import { TitleReveal } from "./animations/TitleReveal";
+
+/** Haloul care urmărește cursorul pe card. */
+function urmaresteCursorul(e: React.MouseEvent<HTMLElement>) {
+  const r = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+  e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+}
 
 const CARD_PILLS = [
   "Date securizate",
@@ -8,102 +19,270 @@ const CARD_PILLS = [
   "AI integrat nativ",
 ];
 
+/** Aplicația live — de aici intră direct în FirmFlow. */
+const APP_URL = "https://firmflow.ro";
+
+/* Comutatorul de funcții: fiecare tab schimbă produsul viu din ramă.
+   Când vin înregistrările noi, doar înlocuiește fișierele din /public. */
+const TABURI = [
+  {
+    id: "deviz-poze",
+    eticheta: "Deviz din poze",
+    src: "/clipuri/deviz-poze.mp4",
+    video: true,
+    alt: "Deviz generat cu AI din fotografii de șantier, în FirmFlow",
+    legenda: "Din 3 poze de pe șantier — deviz complet, cu totaluri, în sub un minut.",
+    fit: "cover" as const,
+  },
+  {
+    id: "oferta",
+    eticheta: "Ofertă AI",
+    src: "/clipuri/oferta-ai.mp4",
+    video: true,
+    alt: "Ofertă tehnică generată cu AI în FirmFlow",
+    legenda:
+      "Din brief-ul lucrării — ofertă tehnică completă, cu deviz și etape, cât îți torni cafeaua.",
+    fit: "cover" as const,
+  },
+  {
+    id: "factura",
+    eticheta: "Facturi",
+    src: "/clipuri/factura.mp4",
+    video: true,
+    alt: "Factură emisă direct din deviz în FirmFlow",
+    legenda:
+      "Factura se emite direct din deviz — un click, PDF gata de trimis.",
+    fit: "cover" as const,
+  },
+  {
+    id: "dashboard",
+    eticheta: "Dashboard",
+    src: "/clipuri/dashboard.mp4",
+    video: true,
+    alt: "Dashboardul patronului în FirmFlow",
+    legenda: "Situația firmei, în fiecare dimineață — pe un singur ecran.",
+    fit: "cover" as const,
+  },
+  {
+    id: "pontaj",
+    eticheta: "Pontaj — patron",
+    src: "/clipuri/pontaj.mp4",
+    video: true,
+    alt: "Pontaj cu verificare GPS în FirmFlow",
+    legenda:
+      "Toată echipa, pe hartă: cine e la șantier, cine lipsește, ultimele 7 zile.",
+    fit: "cover" as const,
+  },
+  {
+    id: "pontaj-muncitor",
+    eticheta: "Pontaj — muncitor",
+    src: "/clipuri/pontaj-muncitor.mp4",
+    video: true,
+    alt: "Pontajul muncitorului în FirmFlow — un singur buton",
+    legenda:
+      "Ce vede muncitorul: un singur buton. GPS-ul confirmă locația, prezența e marcată.",
+    fit: "cover" as const,
+  },
+];
+
+/**
+ * Vitrina produsului: panou split, nu carte poștală. Stânga — identitatea
+ * și butoanele. Dreapta — PRODUSUL însuși, viu, umplând cardul până la
+ * margini, cu bara de browser deasupra.
+ */
 export function Portfolio() {
+  const [activ, setActiv] = useState(0);
+  const tab = TABURI[activ];
+
   return (
     <section
       id="portofoliu"
-      className="relative overflow-hidden px-6 py-20 md:py-[120px]"
+      data-reveal
+      className="relative overflow-hidden px-6 py-16 md:py-[92px]"
     >
       <div
         className="pointer-events-none absolute inset-0 z-0"
         style={{
-          backgroundImage: "url('/bg-firmflow.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "scroll",
-          opacity: 1,
+          background:
+            "linear-gradient(180deg, #000 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, #000 100%), url('/bg-s-portfolio.jpg') center / cover no-repeat #000",
         }}
         aria-hidden="true"
       />
-      <div className="relative z-10 mx-auto max-w-6xl">
-        <h2 className="text-center font-serif text-[28px] font-bold text-white italic sm:text-4xl md:text-[3.25rem]">
-          Ce am <span className="section-title-accent">construit</span>
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <p className="mb-3 text-center text-[11.5px] font-semibold tracking-[0.24em] text-[#3399FF]/70 uppercase">Produsul</p>
+        <h2 className="text-center font-serif text-[28px] font-bold text-white sm:text-4xl md:text-[3.25rem]">
+          <TitleReveal text="Ce am construit" accentLast />
         </h2>
 
         <motion.div
-          className="mt-12 md:mt-14"
-          initial={{ opacity: 0, y: 16 }}
+          className="mt-10"
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <article className="mx-auto flex max-w-2xl flex-col items-center rounded-[2rem] border border-[#0066FF] bg-[#0a0a0a] p-8 text-center transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(0,102,255,0.3)] md:p-12">
-            <span className="rounded-full border border-[#0066FF]/40 bg-[#0066FF]/10 px-3 py-1 text-[11px] font-semibold tracking-[0.12em] text-[#3399FF] uppercase">
-              Lansat 2026
-            </span>
+          <article
+            onMouseMove={urmaresteCursorul}
+            className="spotlight-card flex flex-col overflow-hidden rounded-[24px] border border-white/10 bg-[#0a0a0a] transition-colors duration-300 hover:border-[#3399FF]/40"
+          >
+            {/* ── Sus: identitatea și acțiunile — trei rânduri ordonate ── */}
+            <div className="flex flex-col gap-5 p-7 md:p-8">
+              {/* rândul 1: cine e produsul (stânga) + acțiunile (dreapta) */}
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="flex flex-wrap items-center gap-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/firmflow-logo.png"
+                    alt="FirmFlow logo"
+                    loading="lazy"
+                    decoding="async"
+                    className="h-10 w-auto object-contain"
+                  />
+                  <h3 className="text-[30px] leading-none font-bold md:text-[34px]">
+                    <span className="text-white">Firm</span>
+                    <span className="text-[#3399FF]">Flow</span>
+                  </h3>
+                  <span className="ml-1 rounded-full border border-[#0066FF]/40 bg-[#0066FF]/10 px-2.5 py-1 text-[10.5px] font-semibold tracking-[0.12em] text-[#3399FF] uppercase">
+                    Lansat 2026
+                  </span>
+                </div>
+                <div className="flex flex-col gap-4 sm:flex-row">
+                  <MotionButton label="Intră în FirmFlow" href={APP_URL} extern />
+                  <MotionButton
+                    label="Vezi prezentarea"
+                    href="/firmflow"
+                    varianta="secundar"
+                  />
+                </div>
+              </div>
 
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/firmflow-logo-new.png"
-              alt="FirmFlow logo"
-              loading="lazy"
-              decoding="async"
-              className="mt-6 h-[60px] w-auto object-contain"
-            />
+              {/* rândul 2: ce face, într-o singură frază lată */}
+              <p className="max-w-3xl text-[15px] leading-relaxed text-white/90">
+                Sistemul de operare al firmei tale: pontaj cu GPS, deviz din
+                poze, oferte și facturi generate cu AI — totul într-un singur
+                loc. Pentru firmele care au depășit Excel-ul, dar nu au buget de
+                SAP.
+              </p>
 
-            <h3 className="mt-5 font-serif text-[36px] leading-none font-bold md:text-[48px]">
-              <span className="text-white">Firm</span>
-              <span className="text-[#0066FF]">Flow</span>
-            </h3>
+              {/* rândul 3: garanțiile (stânga) + tehnologia (dreapta) */}
+              <div className="flex flex-col gap-3 border-t border-white/[0.06] pt-4 sm:flex-row sm:items-center sm:justify-between">
+                <ul className="flex flex-wrap gap-2">
+                  {CARD_PILLS.map((pill) => (
+                    <li
+                      key={pill}
+                      className="rounded-full border border-white/15 px-3 py-1 text-[12px] text-krevo-silver"
+                    >
+                      {pill}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-[12px] text-krevo-silver/80 sm:text-right">
+                  Construit cu tehnologia folosită de Google și Anthropic.
+                </p>
+              </div>
+            </div>
 
-            <p className="mt-5 text-[15px] leading-relaxed text-white">
-              FirmFlow este sistemul de operare al firmei tale. Pontaj cu GPS,
-              proiecte cu faze, sarcini cu confirmare, oferte generate cu AI în
-              30 de secunde — totul într-un singur loc.
-            </p>
+            {/* ── Jos: produsul viu, pe toată lățimea — scris clar ─────── */}
+            <div className="group/pin relative flex flex-col border-t border-white/10 bg-[#0d1117]">
+              <div className="flex items-center gap-2 border-b border-white/10 bg-[#111111] px-4 py-3">
+                <span className="h-2.5 w-2.5 rounded-full bg-white/15" aria-hidden="true" />
+                <span className="h-2.5 w-2.5 rounded-full bg-white/15" aria-hidden="true" />
+                <span className="h-2.5 w-2.5 rounded-full bg-white/15" aria-hidden="true" />
+                <span className="ml-3 rounded-md bg-black/60 px-3 py-1 text-[11px] tracking-wide text-white/40">
+                  firmflow.ro
+                </span>
+              </div>
+              {/* comutatorul — rândul lui propriu, nu înghesuit în bara de browser */}
+              <div className="flex gap-1.5 overflow-x-auto border-b border-white/10 bg-[#0d1117] px-3 py-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {TABURI.map((t, i) => (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => setActiv(i)}
+                    aria-pressed={activ === i}
+                    className={`shrink-0 rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold whitespace-nowrap transition-colors ${
+                      activ === i
+                        ? "bg-[#0066FF]/20 text-[#3399FF] ring-1 ring-[#0066FF]/50"
+                        : "text-white/45 hover:bg-white/5 hover:text-white/80"
+                    }`}
+                  >
+                    {t.eticheta}
+                  </button>
+                ))}
+              </div>
+              <div
+                className="relative aspect-[1635/954] w-full overflow-hidden"
+               
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  {"video" in tab && tab.video ? (
+                    <motion.video
+                      key={tab.id}
+                      src={tab.src}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className={`absolute inset-0 h-full w-full ${
+                        tab.fit === "cover"
+                          ? "object-cover object-top"
+                          : "object-contain p-3"
+                      }`}
+                    />
+                  ) : (
+                    <motion.img
+                      key={tab.id}
+                      src={tab.src}
+                      alt={tab.alt}
+                      loading="lazy"
+                      decoding="async"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className={`absolute inset-0 h-full w-full ${
+                        tab.fit === "cover"
+                          ? "object-cover object-top"
+                          : "object-contain p-3"
+                      }`}
+                    />
+                  )}
+                </AnimatePresence>
 
-            <p className="mt-4 text-[14px] leading-relaxed text-krevo-silver italic">
-              Pentru firmele din România care au depășit Excel-ul — dar nu au
-              buget de SAP.
-            </p>
+                {/* La hover apare doar invitația spre pagina produsului —
+                    fără inele, fascicule sau alte efecte peste demo. */}
+                <div className="pointer-events-none absolute inset-x-0 top-5 z-20 flex justify-center opacity-0 transition duration-500 group-hover/pin:opacity-100">
+                  <Link
+                    href="/firmflow"
+                    className="pointer-events-auto relative z-10 flex items-center space-x-2 rounded-full bg-zinc-950 px-4 py-0.5 ring-1 ring-white/10 transition-all hover:ring-[#3399FF]/60"
+                  >
+                    <span className="relative z-20 inline-block py-0.5 text-xs font-bold text-white">
+                      Vezi FirmFlow →
+                    </span>
+                    <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-[#3399FF]/0 via-[#3399FF]/90 to-[#3399FF]/0" />
+                  </Link>
+                </div>
 
-            <ul className="mt-6 flex flex-wrap justify-center gap-2">
-              {CARD_PILLS.map((pill) => (
-                <li
-                  key={pill}
-                  className="rounded-full border border-[#0066FF] px-3 py-1 text-[12px] text-krevo-silver"
-                >
-                  {pill}
-                </li>
-              ))}
-            </ul>
-
-            <p className="mt-4 text-center text-[12px] leading-relaxed text-krevo-silver italic">
-              Construit cu tehnologia folosită de Google și Anthropic.
-            </p>
-
-            <a
-              href="/firmflow"
-              className="mt-8 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0066FF] px-10 py-4 text-[18px] font-bold text-white transition-colors hover:bg-[#0052CC] sm:w-auto"
-            >
-              Vezi platforma →
-            </a>
+                {/* legenda produsului, pe imagine */}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-5 pt-10 pb-3">
+                  <p className="text-[12.5px] font-medium text-white/85">
+                    {tab.legenda}
+                  </p>
+                </div>
+              </div>
+            </div>
           </article>
         </motion.div>
 
-        <figure className="mx-auto mt-12 max-w-[800px]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/gif-oferta.gif"
-            alt="Generare ofertă tehnică în FirmFlow"
-            loading="lazy"
-            decoding="async"
-            className="w-full rounded-[16px] border border-[#0066FF]"
-          />
-          <figcaption className="mt-4 text-center text-[14px] text-krevo-silver italic">
-            Ofertă tehnică completă — generată cu AI în 30 de secunde.
-          </figcaption>
-        </figure>
+        <p className="mx-auto mt-10 max-w-[680px] text-center text-[15px] leading-relaxed text-krevo-silver">
+          Nu îți vând un dashboard frumos. Îți dau un sistem care gândește
+          pentru tine — generează oferte, analizează performanța echipei și îți
+          spune dimineața ce trebuie să faci azi.
+        </p>
       </div>
     </section>
   );

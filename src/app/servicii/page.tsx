@@ -2,7 +2,7 @@
 
 import { Navbar } from "@/components/krevo/Navbar";
 import { Services } from "@/components/krevo/Services";
-import { Footer } from "@/components/krevo/Footer";
+import { CinematicFooter } from "@/components/krevo/CinematicFooter";
 import { NoiseOverlay } from "@/components/krevo/NoiseOverlay";
 
 export default function ServiciiPage() {
@@ -23,7 +23,7 @@ export default function ServiciiPage() {
         <main className="pt-24">
           <Services />
         </main>
-        <Footer />
+        <CinematicFooter />
       </div>
     </div>
   );

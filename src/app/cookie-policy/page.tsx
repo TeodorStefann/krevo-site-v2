@@ -1,7 +1,8 @@
 "use client";
 
 import { Navbar } from "@/components/krevo/Navbar";
-import { Footer } from "@/components/krevo/Footer";
+import Link from "next/link";
+import { CinematicFooter } from "@/components/krevo/CinematicFooter";
 import { NoiseOverlay } from "@/components/krevo/NoiseOverlay";
 
 export default function CookiePolicyPage() {
@@ -56,7 +57,7 @@ export default function CookiePolicyPage() {
               </h2>
               <p>
                 Salvăm local în browser alegerea ta din bannerul de cookies
-                („Am înțeles” sau „Doar esențiale”), astfel încât să nu te
+                ({"„Am înțeles”"} sau {"„Doar esențiale”"}), astfel încât să nu te
                 întrebăm din nou la fiecare vizită. Această preferință este
                 stocată în localStorage, nu prin cookies de analytics.
               </p>
@@ -83,23 +84,23 @@ export default function CookiePolicyPage() {
               <p>
                 Pentru întrebări despre cookies sau date personale:
                 teodor@krevo.ro · 0774451822 · Craiova, România. Vezi și{" "}
-                <a
+                <Link
                   href="/confidentialitate"
                   className="text-[#3399FF] hover:text-white"
                 >
                   Politica de confidențialitate
-                </a>{" "}
+                </Link>{" "}
                 și{" "}
-                <a href="/termeni" className="text-[#3399FF] hover:text-white">
+                <Link href="/termeni" className="text-[#3399FF] hover:text-white">
                   Termenii și condițiile
-                </a>
+                </Link>
                 .
               </p>
             </section>
           </div>
         </article>
       </main>
-      <Footer />
+      <CinematicFooter />
     </div>
   );
 }

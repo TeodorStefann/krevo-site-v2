@@ -1,9 +1,19 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { CheckCircle2, Mail, Phone } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Calendar, CheckCircle2, Mail, Phone } from "lucide-react";
+import { FloatingPaths } from "./animations/FloatingPaths";
+import { PearlButton } from "@/components/ui/PearlButton";
 
-const INTEREST_VALUE = "Contact general";
+/* Trebuie să corespundă exact cu INTEREST_OPTIONS din /api/contact/route.ts */
+const INTERESE = [
+  { valoare: "FirmFlow", eticheta: "FirmFlow", ajutor: "Platforma completă pentru firmă" },
+  { valoare: "Site web profesional", eticheta: "Site web", ajutor: "Prezentare, magazin, landing" },
+  { valoare: "Automatizări AI", eticheta: "Automatizări AI", ajutor: "Oferte, documente, răspunsuri" },
+  { valoare: "Altceva", eticheta: "Nu știu încă", ajutor: "Îți spun eu ce ți se potrivește" },
+] as const;
+const WHATSAPP_HREF = "https://wa.me/40774451822?text=Salut%21%20Am%20v%C4%83zut%20site-ul%20Krevo%20%C8%99i%20vreau%20s%C4%83%20programez%20discu%C8%9Bia%20de%2015%20minute%20despre%20FirmFlow%20pentru%20firma%20mea.";
 
 const inputClass =
   "w-full rounded-xl border border-[#002B66] bg-[#050508] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-krevo-silver/40 focus:border-[#0066FF]";
@@ -19,9 +29,255 @@ function WhatsAppIcon() {
   );
 }
 
+/**
+ * Invitația interactivă: titlul uriaș „Hai să lucrăm / împreună." cu
+ * săgeata în cerc. La click, se transformă elegant în „Perfect — Hai să
+ * vorbim" cu butonul de 15 minute pe WhatsApp. Formularul de sub el
+ * rămâne mereu vizibil — teatrul nu blochează conversia.
+ */
+function InvitatieInteractiva() {
+  const [hover, setHover] = useState(false);
+  const [apasat, setApasat] = useState(false);
+  const [succes, setSucces] = useState(false);
+  const [hoverBtn, setHoverBtn] = useState(false);
+
+  function laClick() {
+    if (apasat) return;
+    setApasat(true);
+    window.setTimeout(() => setSucces(true), 450);
+  }
+
+  return (
+    <div className="relative flex flex-col items-center gap-10 py-6">
+      {/* ── Starea „Perfect — Hai să vorbim" ─────────────────────────── */}
+      <div
+        className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-7 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        style={{
+          opacity: succes ? 1 : 0,
+          transform: succes ? "translateY(0) scale(1)" : "translateY(20px) scale(0.95)",
+          pointerEvents: succes ? "auto" : "none",
+        }}
+      >
+        <div className="flex flex-col items-center gap-2">
+          <span
+            className="text-xs font-medium tracking-[0.3em] text-krevo-silver uppercase transition-all duration-500"
+            style={{
+              transform: succes ? "translateY(0)" : "translateY(10px)",
+              opacity: succes ? 1 : 0,
+              transitionDelay: "100ms",
+            }}
+          >
+            Perfect
+          </span>
+          <h3
+            className="text-3xl font-light tracking-tight text-white transition-all duration-500 sm:text-4xl"
+            style={{
+              transform: succes ? "translateY(0)" : "translateY(10px)",
+              opacity: succes ? 1 : 0,
+              transitionDelay: "200ms",
+            }}
+          >
+            Hai să vorbim.
+          </h3>
+        </div>
+
+        <a
+          href={WHATSAPP_HREF}
+          target="_blank"
+          rel="noopener noreferrer"
+          onMouseEnter={() => setHoverBtn(true)}
+          onMouseLeave={() => setHoverBtn(false)}
+          className="group relative flex cursor-pointer items-center gap-4 transition-all duration-500"
+          style={{
+            transform: succes
+              ? hoverBtn
+                ? "translateY(0) scale(1.02)"
+                : "translateY(0) scale(1)"
+              : "translateY(15px) scale(1)",
+            opacity: succes ? 1 : 0,
+            transitionDelay: "150ms",
+          }}
+        >
+          <div
+            className="h-px w-8 bg-white/20 transition-all duration-500 sm:w-12"
+            style={{
+              transform: hoverBtn ? "scaleX(0)" : "scaleX(1)",
+              opacity: hoverBtn ? 0 : 0.6,
+            }}
+          />
+          <div
+            className="relative flex items-center gap-3 overflow-hidden rounded-full border px-6 py-3 transition-all duration-500 sm:px-8 sm:py-4"
+            style={{
+              borderColor: hoverBtn ? "#3399FF" : "rgba(255,255,255,0.2)",
+              backgroundColor: hoverBtn ? "#0066FF" : "transparent",
+              boxShadow: hoverBtn
+                ? "0 0 30px rgba(0,102,255,0.35), 0 10px 40px rgba(0,102,255,0.2)"
+                : "none",
+            }}
+          >
+            <Calendar
+              className="size-4 text-white transition-all duration-500 sm:size-5"
+              strokeWidth={1.5}
+            />
+            <span className="text-sm font-medium tracking-wide text-white transition-all duration-500 sm:text-base">
+              Programează 15 minute
+            </span>
+            <ArrowUpRight
+              className="size-4 text-white transition-all duration-500 sm:size-5"
+              strokeWidth={1.5}
+              style={{
+                transform: hoverBtn
+                  ? "translate(3px, -3px) scale(1.1)"
+                  : "translate(0, 0) scale(1)",
+              }}
+            />
+          </div>
+          <div
+            className="h-px w-8 bg-white/20 transition-all duration-500 sm:w-12"
+            style={{
+              transform: hoverBtn ? "scaleX(0)" : "scaleX(1)",
+              opacity: hoverBtn ? 0 : 0.6,
+            }}
+          />
+        </a>
+
+        <span
+          className="text-xs tracking-widest text-krevo-silver/60 uppercase transition-all duration-500"
+          style={{
+            transform: succes ? "translateY(0)" : "translateY(10px)",
+            opacity: succes ? 1 : 0,
+            transitionDelay: "450ms",
+          }}
+        >
+          Fără obligații — răspund personal
+        </span>
+      </div>
+
+      {/* ── Disponibilitatea ─────────────────────────────────────────── */}
+      <div
+        className="flex items-center gap-3 transition-all duration-500"
+        style={{
+          opacity: apasat ? 0 : 1,
+          transform: apasat ? "translateY(-20px)" : "translateY(0)",
+          pointerEvents: apasat ? "none" : "auto",
+        }}
+      >
+        <span className="relative flex size-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+          <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+        </span>
+        <span className="text-center text-[12px] font-medium tracking-widest text-krevo-silver uppercase sm:text-sm">
+          Disponibil — 3 locuri de fondator · răspund în aceeași zi
+        </span>
+      </div>
+
+      {/* ── Titlul uriaș, interactiv ─────────────────────────────────── */}
+      <div
+        className="group relative cursor-pointer"
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        onClick={laClick}
+        style={{ pointerEvents: apasat ? "none" : "auto" }}
+      >
+        <div className="flex flex-col items-center gap-6">
+          <h2
+            className="relative text-center text-5xl font-light tracking-tight text-white transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] sm:text-6xl md:text-7xl"
+            style={{
+              opacity: apasat ? 0 : 1,
+              transform: apasat ? "translateY(-40px) scale(0.95)" : "translateY(0) scale(1)",
+            }}
+          >
+            <span className="block overflow-hidden">
+              <span
+                className="block transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                style={{
+                  transform: hover && !apasat ? "translateY(-8%)" : "translateY(0)",
+                }}
+              >
+                Hai să lucrăm
+              </span>
+            </span>
+            <span className="block overflow-hidden">
+              <span
+                className="block transition-transform delay-75 duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                style={{
+                  transform: hover && !apasat ? "translateY(-8%)" : "translateY(0)",
+                }}
+              >
+                <span className="text-white/50">împreună.</span>
+              </span>
+            </span>
+          </h2>
+
+          <div className="relative mt-2 flex size-16 items-center justify-center sm:size-20">
+            <div
+              className="pointer-events-none absolute inset-0 rounded-full border transition-all ease-out"
+              style={{
+                borderColor: apasat
+                  ? "#3399FF"
+                  : hover
+                    ? "#3399FF"
+                    : "rgba(255,255,255,0.2)",
+                backgroundColor: apasat ? "transparent" : hover ? "#0066FF" : "transparent",
+                transform: apasat ? "scale(3)" : hover ? "scale(1.1)" : "scale(1)",
+                opacity: apasat ? 0 : 1,
+                transitionDuration: apasat ? "700ms" : "500ms",
+              }}
+            />
+            <ArrowUpRight
+              className="size-6 transition-all ease-[cubic-bezier(0.16,1,0.3,1)] sm:size-7"
+              style={{
+                transform: apasat
+                  ? "translate(100px, -100px) scale(0.5)"
+                  : hover
+                    ? "translate(2px, -2px)"
+                    : "translate(0, 0)",
+                opacity: apasat ? 0 : 1,
+                color: "#ffffff",
+                transitionDuration: apasat ? "600ms" : "500ms",
+              }}
+            />
+          </div>
+        </div>
+
+        {/* liniile laterale */}
+        <div className="absolute top-1/2 -left-8 -translate-y-1/2 sm:-left-16">
+          <div
+            className="h-px w-8 bg-white/20 transition-all duration-500 sm:w-12"
+            style={{
+              transform: apasat
+                ? "scaleX(0) translateX(-20px)"
+                : hover
+                  ? "scaleX(1.5)"
+                  : "scaleX(1)",
+              opacity: apasat ? 0 : hover ? 1 : 0.5,
+            }}
+          />
+        </div>
+        <div className="absolute top-1/2 -right-8 -translate-y-1/2 sm:-right-16">
+          <div
+            className="h-px w-8 bg-white/20 transition-all duration-500 sm:w-12"
+            style={{
+              transform: apasat
+                ? "scaleX(0) translateX(20px)"
+                : hover
+                  ? "scaleX(1.5)"
+                  : "scaleX(1)",
+              opacity: apasat ? 0 : hover ? 1 : 0.5,
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Contact() {
   const [name, setName] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [interest, setInterest] = useState<string>("FirmFlow");
   const [message, setMessage] = useState("");
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -46,10 +302,12 @@ export function Contact() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          website: honeypot,
           name,
           email,
+          phone,
           message,
-          interest: INTEREST_VALUE,
+          interest,
         }),
       });
 
@@ -67,6 +325,8 @@ export function Contact() {
       setSuccess(true);
       setName("");
       setEmail("");
+      setPhone("");
+      setInterest("FirmFlow");
       setMessage("");
       setPrivacyAccepted(false);
     } catch {
@@ -81,25 +341,24 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden px-6 py-20 md:py-[120px]"
+      data-reveal
+      className="relative overflow-hidden px-6 py-16 md:py-[80px]"
     >
       <div
         className="pointer-events-none absolute inset-0 z-0"
         style={{
-          backgroundImage: "url('/bg-contact.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "scroll",
-          opacity: 1,
+          background:
+            "linear-gradient(180deg, #000 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, #000 100%), url('/bg-s-contact.jpg') center / cover no-repeat #000",
         }}
         aria-hidden="true"
       />
+      {/* Traseele curgătoare — fluxul care se adună spre decizie */}
+      <FloatingPaths />
       <div className="relative z-10 mx-auto max-w-xl">
-        <h2 className="text-center text-[32px] font-bold text-white">
-          <span className="section-title-accent">Contactează-ne</span>
-        </h2>
+        {/* Invitația spectaculoasă */}
+        <InvitatieInteractiva />
 
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
           <a href="tel:+40774451822" className={linkClass}>
             <Phone size={16} strokeWidth={1.75} aria-hidden="true" />
             0774451822
@@ -109,7 +368,7 @@ export function Contact() {
             teodor@krevo.ro
           </a>
           <a
-            href="https://wa.me/40774451822"
+            href={WHATSAPP_HREF}
             target="_blank"
             rel="noopener noreferrer"
             className={linkClass}
@@ -118,12 +377,6 @@ export function Contact() {
             WhatsApp
           </a>
         </div>
-
-        <p className="mx-auto mt-8 max-w-[600px] text-center text-[15px] leading-relaxed text-krevo-silver italic">
-          Hai să vorbim 15 minute despre firma ta. Fără obligații, fără pitch de
-          vânzare — doar o conversație sinceră despre cum poți simplifica ce
-          faci zilnic.
-        </p>
 
         {success ? (
           <div className="mt-10 flex flex-col items-center rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-6 py-10 text-center">
@@ -137,8 +390,49 @@ export function Contact() {
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="mt-10 space-y-4" noValidate>
-            <input type="hidden" name="interest" value={INTEREST_VALUE} />
+          <form onSubmit={handleSubmit} className="mt-8 space-y-4" noValidate>
+            {/* honeypot anti-spam: invizibil pentru oameni */}
+            <input
+              type="text"
+              name="website"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="absolute -left-[9999px] h-0 w-0 opacity-0"
+            />
+
+            {/* Ce te interesează — răspunsul dă direcție discuției */}
+            <fieldset>
+              <legend className="mb-2.5 block text-xs tracking-wide text-krevo-silver">
+                Cu ce te pot ajuta?
+              </legend>
+              <div className="flex flex-wrap gap-2">
+                {INTERESE.map((optiune) => {
+                  const activ = interest === optiune.valoare;
+                  return (
+                    <button
+                      key={optiune.valoare}
+                      type="button"
+                      onClick={() => setInterest(optiune.valoare)}
+                      aria-pressed={activ}
+                      title={optiune.ajutor}
+                      className={`min-h-11 rounded-full border px-4 py-2.5 text-[13px] font-medium transition-all duration-200 ${
+                        activ
+                          ? "border-[#0066FF] bg-[#0066FF] text-white shadow-[0_0_20px_rgba(0,102,255,0.35)]"
+                          : "border-[#002B66] bg-[#050508] text-krevo-silver hover:border-[#0066FF]/60 hover:text-white"
+                      }`}
+                    >
+                      {optiune.eticheta}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="mt-2 text-[12px] text-krevo-silver/60">
+                {INTERESE.find((o) => o.valoare === interest)?.ajutor}
+              </p>
+            </fieldset>
 
             <div>
               <label
@@ -182,10 +476,31 @@ export function Contact() {
 
             <div>
               <label
+                htmlFor="contact-phone"
+                className="mb-1.5 block text-xs tracking-wide text-krevo-silver"
+              >
+                Telefon{" "}
+                <span className="text-krevo-silver/50">(opțional — sună mai repede decât scrie)</span>
+              </label>
+              <input
+                id="contact-phone"
+                name="phone"
+                type="tel"
+                autoComplete="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className={inputClass}
+                placeholder="07xx xxx xxx"
+              />
+            </div>
+
+            <div>
+              <label
                 htmlFor="contact-message"
                 className="mb-1.5 block text-xs tracking-wide text-krevo-silver"
               >
-                Mesaj
+                Spune-mi pe scurt situația{" "}
+                <span className="text-krevo-silver/50">(cu cât mai concret, cu atât răspund mai util)</span>
               </label>
               <textarea
                 id="contact-message"
@@ -195,7 +510,7 @@ export function Contact() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 className={`${inputClass} resize-y`}
-                placeholder="Ce construiești, ce ai nevoie, context scurt..."
+                placeholder="Câți angajați aveți, cum lucrați acum (Excel, hârtie, WhatsApp?) și ce vă mănâncă cel mai mult timp."
               />
             </div>
 
@@ -209,14 +524,14 @@ export function Contact() {
               />
               <span>
                 Sunt de acord cu prelucrarea datelor mele conform{" "}
-                <a
+                <Link
                   href="/confidentialitate"
                   className="text-[#3399FF] underline-offset-2 hover:text-white hover:underline"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   Politicii de Confidențialitate
-                </a>
+                </Link>
               </span>
             </label>
 
@@ -226,20 +541,16 @@ export function Contact() {
               </p>
             )}
 
-            <button
-              type="submit"
-              disabled={loading || !privacyAccepted}
-              className="inline-flex min-h-11 w-full items-center justify-center gap-2.5 rounded-full bg-[#0066FF] px-6 py-3.5 text-[16px] font-bold text-white transition-colors hover:bg-[#0052CC] disabled:cursor-not-allowed disabled:opacity-70"
-            >
-              {loading ? (
-                <>
-                  <span className="contact-submit-spinner" aria-hidden="true" />
-                  Se trimite...
-                </>
-              ) : (
-                "Trimite"
-              )}
-            </button>
+            {/* Butonul-monument. Apare O SINGURĂ DATĂ pe tot site-ul —
+                exact în momentul deciziei. */}
+            <div className="pt-4">
+              <PearlButton
+                type="submit"
+                disabled={loading || !privacyAccepted}
+                label={loading ? "Se trimite..." : "Trimite mesajul"}
+                className="w-full"
+              />
+            </div>
           </form>
         )}
       </div>

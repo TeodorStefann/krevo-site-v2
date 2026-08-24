@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import { ScrollProgressBar } from "@/components/krevo/ScrollProgressBar";
 import { CookieConsent } from "@/components/krevo/CookieConsent";
 import { SectionReveal } from "@/components/krevo/animations/SectionReveal";
+import { ScrollTop } from "@/components/krevo/ScrollTop";
+import { BaraMobil } from "@/components/krevo/BaraMobil";
 import "./globals.css";
 
 const inter = Inter({
@@ -10,9 +12,11 @@ const inter = Inter({
   variable: "--font-sans",
 });
 
-const playfair = Playfair_Display({
+/* Display font — titlurile. Geometric, tech, cu personalitate.
+   Corpul rămâne pe Inter. */
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-serif",
+  variable: "--font-display",
 });
 
 export const metadata: Metadata = {
@@ -32,10 +36,10 @@ export const metadata: Metadata = {
     siteName: "Krevo",
     images: [
       {
-        url: "/krevo-logo.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Krevo",
+        alt: "Krevo — Firmele mari au sisteme. Tu ai Excel. Până acum.",
       },
     ],
     locale: "ro_RO",
@@ -46,7 +50,7 @@ export const metadata: Metadata = {
     title: "Krevo — Construim fundația digitală a firmei tale",
     description:
       "Platforme SaaS cu AI integrat pentru firme din România. FirmFlow — tot ce mișcă în firma ta într-un singur loc.",
-    images: ["/krevo-logo.png"],
+    images: ["/og-image.png"],
   },
 };
 
@@ -58,8 +62,10 @@ export default function RootLayout({
   return (
     <html lang="ro" className="dark">
       <body
-        className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
+        className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}
       >
+        <ScrollTop />
+        <BaraMobil />
         <ScrollProgressBar />
         <CookieConsent />
         <SectionReveal />

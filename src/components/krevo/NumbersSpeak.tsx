@@ -1,38 +1,40 @@
 "use client";
 
 import { useRef } from "react";
-import Link from "next/link";
 import { useInView } from "framer-motion";
 import { Counter } from "./Counter";
 
+/* Numerele care conving — dimensionate să nu se calce niciodată între ele:
+   cifra mare + sufixul mic pe aceeași linie de bază, eticheta dedesubt. */
+
 type Stat = {
   target: number;
-  suffix: string;
-  label: string;
+  sufix: string;
+  eticheta: string;
 };
 
 type Theme = "blue" | "gold";
 
-const stats: Stat[] = [
+const STATS: Stat[] = [
   {
-    target: 30,
-    suffix: " secunde",
-    label: "pentru o ofertă tehnică completă cu AI",
+    target: 60,
+    sufix: "sec",
+    eticheta: "de la 3 poze de pe teren la un deviz complet, cu totaluri",
   },
   {
     target: 0,
-    suffix: " hârtie",
-    label: "foi de pontaj. Zero. Niciodată din nou.",
+    sufix: "hârtii",
+    eticheta: "foi de pontaj sau devize scrise de mână. Niciodată din nou.",
   },
   {
     target: 100,
-    suffix: "%",
-    label: "vizibilitate în timp real asupra firmei tale",
+    sufix: "%",
+    eticheta: "vizibilitate în timp real asupra firmei tale",
   },
   {
-    target: 7,
-    suffix: " zile",
-    label: "și platforma ta e live și funcțională",
+    target: 5,
+    sufix: "zile",
+    eticheta: "de probă, pe datele firmei tale — fără card",
   },
 ];
 
@@ -48,28 +50,28 @@ function StatCard({
   theme: Theme;
 }) {
   const isGold = theme === "gold";
+  const gradient = isGold
+    ? "bg-gradient-to-b from-[#e8d5a3] to-[#c9a84c]"
+    : "bg-gradient-to-b from-[#3399FF] to-[#0066FF]";
 
   return (
-    <div className="flex flex-col items-center px-4 py-6 text-center">
-      <p
-        className={
-          isGold
-            ? "bg-gradient-to-b from-[#e8d5a3] to-[#c9a84c] bg-clip-text text-[52px] leading-none font-bold text-transparent"
-            : "bg-gradient-to-b from-[#3399FF] to-[#0066FF] bg-clip-text text-[72px] leading-none font-bold text-transparent"
-        }
-        style={{ WebkitBackgroundClip: "text" }}
-      >
-        {active ? (
-          <>
-            <Counter key={`${index}-on`} value={stat.target} />
-            {stat.suffix}
-          </>
-        ) : (
-          <>0{stat.suffix}</>
-        )}
+    <div className="flex flex-col items-center px-2 py-6 text-center">
+      <p className="flex items-baseline justify-center gap-1.5 whitespace-nowrap">
+        <span
+          className={`${gradient} bg-clip-text text-[54px] leading-none font-bold tracking-tight text-transparent tabular-nums md:text-[60px]`}
+          style={{ WebkitBackgroundClip: "text" }}
+        >
+          {active ? <Counter key={`${index}-on`} value={stat.target} /> : 0}
+        </span>
+        <span
+          className={`${gradient} bg-clip-text text-[20px] leading-none font-bold text-transparent md:text-[23px]`}
+          style={{ WebkitBackgroundClip: "text" }}
+        >
+          {stat.sufix}
+        </span>
       </p>
-      <p className="mt-4 max-w-xs text-[14px] leading-snug text-krevo-silver">
-        {stat.label}
+      <p className="mt-3.5 max-w-[220px] text-[13.5px] leading-snug text-krevo-silver">
+        {stat.eticheta}
       </p>
     </div>
   );
@@ -84,10 +86,13 @@ export function NumbersSpeak({ theme = "blue" }: { theme?: Theme }) {
     <section
       ref={ref}
       id="numere"
-      className="relative overflow-hidden px-6 py-20 md:py-[120px]"
+      className="relative overflow-hidden px-6 py-16 md:py-[92px]"
     >
       <div className="relative z-10 mx-auto max-w-5xl">
-        <h2 className="mb-14 text-center text-[32px] font-bold text-white md:mb-16 md:text-[36px]">
+        <p className="mb-3 text-center text-[11.5px] font-semibold tracking-[0.24em] text-[#3399FF]/70 uppercase">
+          Rezultatele
+        </p>
+        <h2 className="mb-10 text-center text-[28px] font-bold text-white md:mb-12 md:text-[34px]">
           Numere care{" "}
           {isGold ? (
             <span className="text-[#c9a84c]">vorbesc</span>
@@ -96,10 +101,10 @@ export function NumbersSpeak({ theme = "blue" }: { theme?: Theme }) {
           )}
         </h2>
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
-          {stats.map((stat, i) => (
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
+          {STATS.map((stat, i) => (
             <StatCard
-              key={stat.label}
+              key={stat.eticheta}
               stat={stat}
               active={inView}
               index={i}
@@ -108,18 +113,6 @@ export function NumbersSpeak({ theme = "blue" }: { theme?: Theme }) {
           ))}
         </div>
 
-        <div className="mt-14 flex justify-center md:mt-16">
-          <Link
-            href="/#contact"
-            className={
-              isGold
-                ? "inline-flex max-w-xl items-center justify-center rounded-full bg-[#c9a84c] px-8 py-4 text-center text-sm font-bold text-[#0a0a0a] transition-colors hover:bg-[#d4b85c] hover:shadow-[0_0_28px_rgba(201,168,76,0.4)] sm:px-10 sm:text-base"
-                : "inline-flex max-w-xl items-center justify-center rounded-full bg-[#0052CC] px-8 py-4 text-center text-sm font-bold text-white transition-colors hover:bg-[#0066FF] hover:shadow-[0_0_28px_rgba(0,102,255,0.4)] sm:px-10 sm:text-base"
-            }
-          >
-            Hai să vorbim →
-          </Link>
-        </div>
       </div>
     </section>
   );

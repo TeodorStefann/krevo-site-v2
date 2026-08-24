@@ -12,10 +12,13 @@ export function CookieConsent() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) setVisible(true);
+      if (saved) return;
     } catch {
-      setVisible(true);
+      /* localStorage indisponibil — afișăm bannerul, tot cu întârziere */
     }
+    /* Prima impresie aparține hero-ului, nu bannerului. */
+    const timer = window.setTimeout(() => setVisible(true), 5000);
+    return () => window.clearTimeout(timer);
   }, []);
 
   function accept(value: "all" | "essential") {

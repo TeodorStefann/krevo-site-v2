@@ -1,7 +1,8 @@
 "use client";
 
 import { Navbar } from "@/components/krevo/Navbar";
-import { Footer } from "@/components/krevo/Footer";
+import Link from "next/link";
+import { CinematicFooter } from "@/components/krevo/CinematicFooter";
 import { NoiseOverlay } from "@/components/krevo/NoiseOverlay";
 
 export default function ConfidentialitatePage() {
@@ -67,13 +68,30 @@ export default function ConfidentialitatePage() {
 
             <section>
               <h2 className="mb-3 text-[18px] font-bold text-white">
-                3. Date din chestionar (quiz)
+                3. Temeiul juridic al prelucrării
               </h2>
-              <p>
-                Când completați chestionarul de pe site colectăm răspunsurile și
-                adresa de email pentru a vă contacta cu informații despre
-                FirmFlow.
+              <p className="mb-3">
+                Conform art. 6 din GDPR, prelucrăm datele pe următoarele
+                temeiuri, în funcție de scop:
               </p>
+              <ul className="list-disc space-y-2 pl-5">
+                <li>
+                  Formularul de contact — demersuri precontractuale la cererea
+                  dumneavoastră (art. 6 alin. 1 lit. b)
+                </li>
+                <li>
+                  Livrarea serviciilor contractate — executarea contractului
+                  (art. 6 alin. 1 lit. b)
+                </li>
+                <li>
+                  Facturare și evidențe fiscale — obligație legală (art. 6
+                  alin. 1 lit. c)
+                </li>
+                <li>
+                  Securitatea site-ului și prevenirea abuzurilor — interes
+                  legitim (art. 6 alin. 1 lit. f)
+                </li>
+              </ul>
             </section>
 
             <section>
@@ -127,9 +145,14 @@ export default function ConfidentialitatePage() {
                 </li>
               </ul>
               <p className="mt-3">
-                Datele din formular pot fi stocate în infrastructură cloud
-                securizată și/sau transmise pe email către teodor@krevo.ro.
-                Nu vindem date personale către terți.
+                Pentru funcționarea serviciilor folosim următorii furnizori, în
+                calitate de persoane împuternicite: Supabase (stocarea
+                datelor, infrastructură în Uniunea Europeană), Resend (transmiterea
+                notificărilor pe email, SUA — transfer în afara SEE pe baza
+                clauzelor contractuale standard aprobate de Comisia Europeană)
+                și Anthropic (procesarea cererilor către asistentul AI din
+                FirmFlow, SUA — același mecanism de transfer). Nu vindem date
+                personale către terți.
               </p>
             </section>
 
@@ -155,12 +178,12 @@ export default function ConfidentialitatePage() {
               </h2>
               <p>
                 Detaliile despre cookies și preferința de consimțământ sunt în{" "}
-                <a
+                <Link
                   href="/cookie-policy"
                   className="text-[#3399FF] hover:text-white"
                 >
                   Politica de cookies
-                </a>
+                </Link>
                 .
               </p>
             </section>
@@ -173,16 +196,16 @@ export default function ConfidentialitatePage() {
                 Pentru exercitarea drepturilor GDPR sau întrebări despre
                 confidențialitate: teodor@krevo.ro · 0774451822 · Craiova,
                 România. Vezi și{" "}
-                <a href="/termeni" className="text-[#3399FF] hover:text-white">
+                <Link href="/termeni" className="text-[#3399FF] hover:text-white">
                   Termenii și condițiile
-                </a>
+                </Link>
                 .
               </p>
             </section>
           </div>
         </article>
       </main>
-      <Footer />
+      <CinematicFooter />
     </div>
   );
 }

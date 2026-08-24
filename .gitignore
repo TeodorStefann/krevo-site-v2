@@ -38,3 +38,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# filmari brute — nu ajung pe GitHub/Vercel
+/clipuri-brut
+/krevo-site-v2
