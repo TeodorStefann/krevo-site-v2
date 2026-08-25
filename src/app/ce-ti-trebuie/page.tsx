@@ -1,3 +1,4 @@
+import { DateStructurate } from "@/components/krevo/DateStructurate";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/krevo/Navbar";
 import { NoiseOverlay } from "@/components/krevo/NoiseOverlay";
@@ -5,12 +6,12 @@ import { CinematicFooter } from "@/components/krevo/CinematicFooter";
 import { Diagnostic } from "@/components/krevo/Diagnostic";
 
 export const metadata: Metadata = {
-  title: "Ce îți trebuie, de fapt — Krevo",
+  title: "Ce îți trebuie, de fapt",
+  alternates: { canonical: "/ce-ti-trebuie" },
   description:
     "Două întrebări și îți spun exact ce sistem i se potrivește firmei tale: ce module, câte ore recuperezi pe lună și cât costă. Fără vânzări, fără date de contact.",
-  alternates: { canonical: "/ce-ti-trebuie" },
   openGraph: {
-    title: "Ce îți trebuie, de fapt — Krevo",
+    title: "Ce îți trebuie, de fapt | Krevo",
     description:
       "Nu știi de unde să începi? Normal. Răspunde la două întrebări și îți spun ce ți se potrivește.",
     url: "https://krevo.ro/ce-ti-trebuie",
@@ -51,6 +52,9 @@ export default function CeItiTrebuiePage() {
       <div className="relative z-10">
       <NoiseOverlay />
       <Navbar />
+      <DateStructurate
+        firimituri={[{ nume: "Ce îți trebuie", cale: "/ce-ti-trebuie" }]}
+      />
       <main className="pb-[100px]">
         <Diagnostic />
       </main>
