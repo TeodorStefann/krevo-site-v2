@@ -10,6 +10,7 @@ import {
   TELEFON_HREF,
   WHATSAPP_HREF,
 } from "@/lib/krevo/linkuri";
+import { fundalSectiune } from "@/lib/krevo/fundal";
 
 
 /**
@@ -27,10 +28,7 @@ export function Founder() {
     >
       <div
         className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background:
-            "linear-gradient(180deg, #000 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, #000 100%), url('/bg-s-founder.jpg') center / cover no-repeat #000",
-        }}
+        style={fundalSectiune("/bg-s-founder.jpg")}
         aria-hidden="true"
       />
 

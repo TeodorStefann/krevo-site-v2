@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MotionButton } from "@/components/ui/MotionButton";
 import { AnimatePresence, motion } from "framer-motion";
 import { TitleReveal } from "./animations/TitleReveal";
+import { fundalSectiune } from "@/lib/krevo/fundal";
 
 /** Haloul care urmărește cursorul pe card. */
 function urmaresteCursorul(e: React.MouseEvent<HTMLElement>) {
@@ -102,10 +103,7 @@ export function Portfolio() {
     >
       <div
         className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background:
-            "linear-gradient(180deg, #000 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, #000 100%), url('/bg-s-portfolio.jpg') center / cover no-repeat #000",
-        }}
+        style={fundalSectiune("/bg-s-portfolio.jpg")}
         aria-hidden="true"
       />
       <div className="relative z-10 mx-auto max-w-7xl">

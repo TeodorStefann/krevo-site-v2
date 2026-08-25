@@ -1,3 +1,4 @@
+import { anuntaMesajNou } from "@/lib/krevo/telegram";
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
@@ -271,7 +272,19 @@ export async function POST(request: Request) {
       );
     }
 
-    await sendNotificationEmail({ name, email, phone, interest, message });
+    /* Două canale, în paralel: emailul pentru urmă scrisă, Telegram
+       pentru sunetul pe telefon. Dacă unul cade, celălalt merge — și
+       niciunul nu poate bloca răspunsul către om. */
+    await Promise.allSettled([
+      sendNotificationEmail({ name, email, phone, interest, message }),
+      anuntaMesajNou({
+        nume: name,
+        email,
+        telefon: phone,
+        interes: interest,
+        mesaj: message,
+      }),
+    ]);
 
     return NextResponse.json({ ok: true });
   } catch (err) {

@@ -1,9 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { TitleReveal } from "./animations/TitleReveal";
 import { RezervaCall } from "./RezervaCall";
+import {
+  fundalSectiune,
+  SUPRAFATA_CARD,
+  TEXT_PESTE_IMAGINE,
+} from "@/lib/krevo/fundal";
 
 /** Haloul care urmărește cursorul pe carduri. */
 function urmaresteCursorul(e: React.MouseEvent<HTMLElement>) {
@@ -128,9 +133,76 @@ function AnimatedNumber({
   return <>{display.toLocaleString("ro-RO")}</>;
 }
 
+/** Curba noastră de „așezare” — pornește repede, frânează lung. */
+const ASEZARE = [0.22, 1, 0.36, 1] as const;
+
+/** Bifa desenată de mână: cutia se umple, semnul se trasează, unda se stinge.
+    Checkbox-ul nativ rămâne dedesubt pentru tastatură și cititoare de ecran. */
+function Bifa({ activ }: { activ: boolean }) {
+  const fataMiscare = useReducedMotion();
+
+  return (
+    <span className="relative mt-[1px] grid h-[22px] w-[22px] shrink-0 place-items-center rounded-[7px] peer-focus-visible:ring-2 peer-focus-visible:ring-[#3399FF] peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-black">
+      {/* Unda care pleacă din bifă în momentul apăsării. */}
+      <AnimatePresence>
+        {activ && !fataMiscare && (
+          <motion.span
+            key="unda"
+            aria-hidden="true"
+            initial={{ scale: 0.75, opacity: 0.5 }}
+            animate={{ scale: 2.2, opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="absolute inset-0 rounded-[7px] bg-[#0066FF]"
+          />
+        )}
+      </AnimatePresence>
+
+      <motion.span
+        aria-hidden="true"
+        animate={
+          fataMiscare ? { scale: 1 } : { scale: activ ? [1, 0.82, 1.09, 1] : 1 }
+        }
+        transition={{ duration: 0.44, times: [0, 0.26, 0.62, 1], ease: ASEZARE }}
+        className={`relative grid h-[22px] w-[22px] place-items-center rounded-[7px] border-2 transition-[background-color,border-color,box-shadow] duration-200 ${
+          activ
+            ? "border-[#0066FF] bg-[#0066FF] shadow-[0_0_14px_rgba(0,102,255,0.55)]"
+            : "border-white/25 bg-white/[0.04]"
+        }`}
+      >
+        <svg viewBox="0 0 24 24" className="h-[14px] w-[14px]" fill="none">
+          <motion.path
+            d="M4.6 12.7 9.5 17.6 19.4 7.1"
+            stroke="#ffffff"
+            strokeWidth={3.2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={false}
+            animate={{ pathLength: activ ? 1 : 0, opacity: activ ? 1 : 0 }}
+            transition={
+              fataMiscare
+                ? { duration: 0 }
+                : activ
+                  ? {
+                      pathLength: { duration: 0.3, delay: 0.07, ease: [0.65, 0, 0.35, 1] },
+                      opacity: { duration: 0.05, delay: 0.07 },
+                    }
+                  : {
+                      pathLength: { duration: 0.16, ease: "easeIn" },
+                      opacity: { duration: 0.12 },
+                    }
+            }
+          />
+        </svg>
+      </motion.span>
+    </span>
+  );
+}
+
 export function PainCalculator() {
   const [employees, setEmployees] = useState("");
   const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const fataMiscare = useReducedMotion();
 
   /* Numărul tastat se limitează la maximul slider-ului și în CALCUL,
      nu doar vizual — altfel „5000 de angajați" dădea pierderi SF. */
@@ -182,10 +254,7 @@ export function PainCalculator() {
     >
       <div
         className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background:
-            "linear-gradient(180deg, #000 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, #000 100%), url('/bg-s-calculator.jpg') center / cover no-repeat #000",
-        }}
+        style={fundalSectiune("/bg-s-calculator.jpg")}
         aria-hidden="true"
       />
       <div className="relative z-10 mx-auto max-w-2xl">
@@ -232,13 +301,15 @@ export function PainCalculator() {
           {PAIN_ITEMS.map((item) => {
             const isChecked = Boolean(checked[item.id]);
             return (
-              <div
+              <motion.div
                 key={item.id}
                 onMouseMove={urmaresteCursorul}
-                className={`spotlight-card rounded-[12px] border bg-[#111111] p-4 transition-all duration-200 ${
+                animate={fataMiscare ? {} : { y: isChecked ? -2 : 0 }}
+                transition={{ duration: 0.35, ease: ASEZARE }}
+                className={`spotlight-card rounded-[12px] border p-4 transition-[border-color,background-color,box-shadow] duration-300 ${
                   isChecked
-                    ? "border-[#0066FF] shadow-[0_0_20px_rgba(0,102,255,0.18)]"
-                    : "border-white/10"
+                    ? "border-[#0066FF]/70 bg-[#0b1220] shadow-[0_0_28px_rgba(0,102,255,0.20)]"
+                    : "border-white/10 bg-[#111111] shadow-none"
                 }`}
               >
                 <label className="flex cursor-pointer items-start gap-3">
@@ -246,50 +317,73 @@ export function PainCalculator() {
                     type="checkbox"
                     checked={isChecked}
                     onChange={() => toggle(item.id)}
-                    className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-[#0066FF] [color-scheme:dark]"
+                    className="peer sr-only"
                   />
-                  <span className="text-[15px] leading-snug text-white">
+                  <Bifa activ={isChecked} />
+                  <span
+                    className={`text-[15px] leading-snug transition-colors duration-300 ${
+                      isChecked ? "text-white" : "text-white/85"
+                    }`}
+                  >
                     {item.label}
                   </span>
                 </label>
 
                 <AnimatePresence initial={false}>
                   {isChecked && (
-                    <motion.p
+                    <motion.div
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.25, ease: "easeOut" }}
-                      className="overflow-hidden pl-8 text-[13px] text-[#3399FF]"
+                      transition={{
+                        height: { duration: 0.34, ease: ASEZARE },
+                        opacity: { duration: 0.3, delay: 0.06 },
+                      }}
+                      className="overflow-hidden"
                     >
-                      <span className="mt-2 block">{item.hint}</span>
-                    </motion.p>
+                      <motion.p
+                        initial={{ x: -6 }}
+                        animate={{ x: 0 }}
+                        transition={{ duration: 0.4, delay: 0.06, ease: ASEZARE }}
+                        className="mt-2 pl-[34px] text-[13px] text-[#3399FF]"
+                      >
+                        {item.hint}
+                      </motion.p>
+                    </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             );
           })}
         </div>
 
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {hasResult && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="relative mt-8"
+              key="rezultat"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={
+                fataMiscare
+                  ? { duration: 0 }
+                  : {
+                      height: { duration: 0.62, ease: ASEZARE },
+                      opacity: { duration: 0.3, ease: "easeOut" },
+                    }
+              }
+              className="relative overflow-hidden"
             >
-              <div className="relative text-center" aria-hidden="true">
+              <div className="relative mt-8 px-1 pb-2 text-center" aria-hidden="true">
                 <motion.p
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    duration: 0.5,
-                    delay: 0,
+                    duration: 0.45,
+                    delay: 0.06,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="text-[26px] leading-tight font-bold text-[#3399FF] sm:text-[30px] md:text-[34px]"
+                  className={`text-[26px] leading-tight font-bold text-[#3399FF] sm:text-[30px] md:text-[34px] ${TEXT_PESTE_IMAGINE}`}
                 >
                   Firma ta pierde aproximativ{" "}
                   <AnimatedNumber value={monthlyLoss} /> RON pe lună
@@ -299,11 +393,11 @@ export function PainCalculator() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    duration: 0.5,
-                    delay: 0.25,
+                    duration: 0.45,
+                    delay: 0.17,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="mt-2.5 text-[15px] font-semibold text-krevo-silver"
+                  className={`mt-2.5 text-[15px] font-semibold text-krevo-silver ${TEXT_PESTE_IMAGINE}`}
                 >
                   <span className="text-[#ef4444]">
                     {yearlyLoss.toLocaleString("ro-RO")} RON pe an
@@ -316,26 +410,38 @@ export function PainCalculator() {
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    duration: 0.5,
-                    delay: 0.45,
+                    duration: 0.45,
+                    delay: 0.29,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="mx-auto mt-5 max-w-md rounded-2xl border border-white/10 bg-[#0a0a0a]/70 px-5 py-4 text-left"
+                  className={`mx-auto mt-5 max-w-md rounded-2xl border border-white/12 ${SUPRAFATA_CARD} px-5 py-4 text-left`}
                 >
-                  {checkedItems.map((item) => (
-                    <div
-                      key={item.id}
-                      className="flex items-baseline justify-between gap-4 border-b border-white/[0.06] py-1.5 last:border-0"
-                    >
-                      <span className="text-[13px] text-krevo-silver">
-                        {item.label}
-                      </span>
-                      <span className="shrink-0 text-[13.5px] font-bold text-white tabular-nums">
-                        {item.monthlyCost(employeeCount).toLocaleString("ro-RO")}{" "}
-                        RON
-                      </span>
-                    </div>
-                  ))}
+                  <AnimatePresence initial={false}>
+                    {checkedItems.map((item) => (
+                      <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={
+                          fataMiscare
+                            ? { duration: 0 }
+                            : { duration: 0.32, ease: ASEZARE }
+                        }
+                        className="overflow-hidden last:[&>div]:border-b-0"
+                      >
+                        <div className="flex items-baseline justify-between gap-4 border-b border-white/[0.06] py-1.5">
+                          <span className="text-[13px] text-krevo-silver">
+                            {item.label}
+                          </span>
+                          <span className="shrink-0 text-[13.5px] font-bold text-white tabular-nums">
+                            {item.monthlyCost(employeeCount).toLocaleString("ro-RO")}{" "}
+                            RON
+                          </span>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
                   <p className="mt-2.5 text-center text-[11.5px] text-krevo-silver/70">
                     Estimare prudentă, pe costuri salariale medii. Și e doar
                     ce se poate măsura.
@@ -347,11 +453,11 @@ export function PainCalculator() {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    duration: 0.55,
-                    delay: 0.7,
+                    duration: 0.5,
+                    delay: 0.42,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="mt-5 rounded-2xl border border-emerald-500/35 bg-emerald-500/[0.07] px-6 py-5 shadow-[0_0_40px_rgba(16,185,129,0.08)]"
+                  className="mt-5 rounded-2xl border border-emerald-500/35 bg-[#04100B]/85 px-6 py-5 shadow-[0_0_40px_rgba(16,185,129,0.10)] backdrop-blur-[3px]"
                 >
                   <p className="text-[12px] font-semibold tracking-[0.18em] text-emerald-300/80 uppercase">
                     Cu FirmFlow

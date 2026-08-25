@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 /* ── Pastila plutitoare cu robotelul Krevo ──────────────────────────────
@@ -44,106 +44,7 @@ function elementActiv(cale: string, ancora: string): string | null {
   return null; // /ce-ti-trebuie, paginile legale — niciun tab aprins
 }
 
-/** Robotelul Krevo — mascota care stă sub tabul activ. */
-function RobotelKrevo({ vesel }: { vesel: boolean }) {
-  return (
-    <motion.div
-      layoutId="krevo-robotel"
-      className="pointer-events-none absolute top-full left-1/2 z-20 -translate-x-1/2"
-      initial={false}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-    >
-      <div className="relative h-14 w-12">
-        {/* vârful care arată spre tab */}
-        <motion.div
-          className="absolute top-0 left-1/2 h-3 w-3 -translate-x-1/2"
-          animate={
-            vesel
-              ? { y: [0, -3, 0], transition: { duration: 0.3, repeat: Infinity, repeatType: "reverse" } }
-              : { y: [0, 2, 0], transition: { duration: 1.6, repeat: Infinity, ease: "easeInOut" } }
-          }
-        >
-          <div className="h-full w-full rotate-45 bg-white" />
-        </motion.div>
-
-        {/* capul robotelului */}
-        <motion.div
-          className="absolute top-[9px] left-1/2 h-9 w-10 -translate-x-1/2 rounded-[10px] bg-gradient-to-b from-white to-[#cfe0ff] shadow-[0_6px_18px_rgba(0,102,255,0.4)]"
-          animate={
-            vesel
-              ? {
-                  scale: [1, 1.08, 1],
-                  rotate: [0, -4, 4, 0],
-                  transition: { duration: 0.5, ease: "easeInOut" },
-                }
-              : {
-                  y: [0, -3, 0],
-                  transition: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-                }
-          }
-        >
-          {/* antena */}
-          <div className="absolute -top-2 left-1/2 h-2 w-[2px] -translate-x-1/2 bg-white" />
-          <span className="absolute -top-[13px] left-1/2 h-1.5 w-1.5 -translate-x-1/2 animate-pulse rounded-full bg-[#3399FF] shadow-[0_0_6px_#3399FF]" />
-
-          {/* ochii LED */}
-          <motion.div
-            className="absolute h-2 w-2 rounded-[3px] bg-[#0066FF] shadow-[0_0_6px_rgba(51,153,255,0.9)]"
-            style={{ left: "22%", top: "34%" }}
-            animate={
-              vesel
-                ? { scaleY: [1, 0.15, 1], transition: { duration: 0.25, times: [0, 0.5, 1] } }
-                : {}
-            }
-          />
-          <motion.div
-            className="absolute h-2 w-2 rounded-[3px] bg-[#0066FF] shadow-[0_0_6px_rgba(51,153,255,0.9)]"
-            style={{ right: "22%", top: "34%" }}
-            animate={
-              vesel
-                ? { scaleY: [1, 0.15, 1], transition: { duration: 0.25, times: [0, 0.5, 1] } }
-                : {}
-            }
-          />
-
-          {/* gura-LED — zâmbește când treci peste meniu */}
-          <motion.div
-            className="absolute left-1/2 h-[3px] w-4 -translate-x-1/2 rounded-full bg-[#0066FF]/80"
-            style={{ top: "66%" }}
-            animate={vesel ? { scaleX: 1.35, scaleY: 1.6 } : { scaleX: 1, scaleY: 1 }}
-          />
-
-          {/* scântei la hover */}
-          <AnimatePresence>
-            {vesel && (
-              <>
-                <motion.span
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0 }}
-                  className="absolute -top-1 -right-2 text-[10px] text-[#3399FF]"
-                >
-                  ✦
-                </motion.span>
-                <motion.span
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0 }}
-                  transition={{ delay: 0.1 }}
-                  className="absolute -top-2 -left-2 text-[9px] text-[#3399FF]"
-                >
-                  ✦
-                </motion.span>
-              </>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-}
-
-function PillNav({ cuRobotel }: { cuRobotel: boolean }) {
+function PillNav() {
   const cale = usePathname();
   const [ancora, setAncora] = useState("");
   const [hover, setHover] = useState<string | null>(null);
@@ -157,63 +58,72 @@ function PillNav({ cuRobotel }: { cuRobotel: boolean }) {
   }, [cale]);
 
   const activ = elementActiv(cale, ancora);
+  /* Evidențiem ce e sub cursor; când mouse-ul pleacă, revine la pagina
+     curentă. Un singur indicator care alunecă — nu două suprapuse. */
+  const evidentiat = hover ?? activ;
 
   return (
-    <motion.div
-      className="relative flex items-center gap-1 rounded-full border border-white/10 bg-black/50 px-2 py-1.5 shadow-lg backdrop-blur-lg"
-      initial={{ y: -20, opacity: 0 }}
+    <motion.nav
+      aria-label="Navigație principală"
+      className="relative flex items-center gap-0.5 rounded-full border border-white/[0.08] bg-black/40 p-1 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl"
+      initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 260, damping: 20 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      onMouseLeave={() => setHover(null)}
     >
       {MENIU.map((item) => {
         const esteActiv = activ === item.nume;
-        const esteHover = hover === item.nume;
+        const esteEvidentiat = evidentiat === item.nume;
         return (
           <Link
             key={item.nume}
             href={item.url}
             aria-current={esteActiv ? "page" : undefined}
             onMouseEnter={() => setHover(item.nume)}
-            onMouseLeave={() => setHover(null)}
-            className={`relative cursor-pointer rounded-full px-4 py-2 text-[13.5px] font-semibold transition-colors duration-300 xl:px-5 ${
-              esteActiv ? "text-white" : "text-white/65 hover:text-white"
+            className={`relative rounded-full px-4 py-2 text-[13.5px] font-semibold transition-colors duration-200 xl:px-[18px] ${
+              esteActiv
+                ? "text-white"
+                : esteEvidentiat
+                  ? "text-white"
+                  : "text-white/60"
             }`}
           >
+            {/* Indicatorul: UN singur element care alunecă de la un tab la
+                altul. Framer face tranziția de poziție și lățime singur,
+                prin layoutId — de aici senzația de mecanism precis. */}
+            {esteEvidentiat && (
+              <motion.span
+                layoutId="krevo-indicator"
+                aria-hidden="true"
+                className="absolute inset-0 -z-10 rounded-full"
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(0,102,255,0.32), rgba(0,102,255,0.16))",
+                  boxShadow:
+                    "inset 0 1px 0 rgba(255,255,255,0.16), 0 0 22px rgba(0,102,255,0.28)",
+                }}
+                transition={{ type: "spring", stiffness: 420, damping: 34 }}
+              />
+            )}
+
+            {/* Firul de lumină de sub pagina curentă — rămâne pe loc chiar
+                dacă plimbi cursorul peste celelalte, ca să nu pierzi
+                niciodată reperul unde te afli. */}
             {esteActiv && (
-              <motion.div
-                className="absolute inset-0 -z-10 overflow-hidden rounded-full"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0.35, 0.55, 0.35], scale: [1, 1.03, 1] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <div className="absolute inset-0 rounded-full bg-[#0066FF]/25 blur-md" />
-                <div className="absolute inset-[-4px] rounded-full bg-[#0066FF]/20 blur-xl" />
-                <div className="absolute inset-[-8px] rounded-full bg-[#0066FF]/10 blur-2xl" />
-                <div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-[#3399FF]/25 to-transparent"
-                  style={{ animation: "krevo-shine 3s ease-in-out infinite" }}
-                />
-              </motion.div>
+              <motion.span
+                layoutId="krevo-pagina-curenta"
+                aria-hidden="true"
+                className="absolute -bottom-[3px] left-1/2 h-[2px] w-5 -translate-x-1/2 rounded-full bg-[#3399FF]"
+                style={{ boxShadow: "0 0 10px rgba(51,153,255,0.9)" }}
+                transition={{ type: "spring", stiffness: 420, damping: 34 }}
+              />
             )}
 
             <span className="relative z-10">{item.nume}</span>
-
-            <AnimatePresence>
-              {esteHover && !esteActiv && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  className="absolute inset-0 -z-10 rounded-full bg-white/10"
-                />
-              )}
-            </AnimatePresence>
-
-            {esteActiv && cuRobotel && <RobotelKrevo vesel={hover !== null} />}
           </Link>
         );
       })}
-    </motion.div>
+    </motion.nav>
   );
 }
 
@@ -221,7 +131,6 @@ function PillNav({ cuRobotel }: { cuRobotel: boolean }) {
 
 export function Navbar() {
   const cale = usePathname();
-  const esteAcasa = cale === "/";
   const esteDiagnostic = cale.startsWith("/ce-ti-trebuie");
   const [meniuDeschis, setMeniuDeschis] = useState(false);
   const [derulat, setDerulat] = useState(false);
@@ -285,11 +194,9 @@ export function Navbar() {
           />
         </Link>
 
-        {/* Meniul central apare pe toate paginile. Robotelul rămâne doar
-            acasă: pe paginile cu text atârnă sub bară și aterizează peste
-            rânduri, iar acasă are hero-ul dedesubt, unde e la locul lui. */}
+        {/* Meniul central — pe toate paginile, identic. */}
         <div className="absolute top-1/2 left-1/2 hidden -translate-x-1/2 -translate-y-1/2 lg:block">
-          <PillNav cuRobotel={esteAcasa} />
+          <PillNav />
         </div>
 
         <div className="hidden items-center gap-5 lg:flex">

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUp, Linkedin } from "lucide-react";
 import { LINKEDIN_HREF, WHATSAPP_HREF } from "@/lib/krevo/linkuri";
+import { identificareFurnizor } from "@/lib/krevo/furnizor";
 
 /**
  * Footerul-cortină: stă FIX în spatele paginii, iar pagina se ridică la
@@ -201,7 +202,13 @@ export function CinematicFooter() {
 
         {/* Bara de jos */}
         <div className="relative z-20 flex w-full flex-col items-center justify-between gap-5 px-6 pb-7 md:flex-row md:px-12">
-          <div className="order-2 text-[10px] font-semibold tracking-widest text-white/40 uppercase md:order-1 md:text-xs">
+          <div className="order-2 flex flex-col gap-1.5 text-[10px] font-semibold tracking-widest text-white/40 uppercase md:order-1 md:text-xs">
+            {/* Datele de identificare a comerciantului — cerute de Legea
+                365/2002 ca fiind permanent și direct accesibile. */}
+            <span className="max-w-md leading-relaxed normal-case tracking-normal text-white/35">
+              {identificareFurnizor()}
+            </span>
+            <span>
             © 2026 Krevo{" · "}
             <a
               href="https://anpc.ro/ce-este-sal/"
@@ -220,6 +227,7 @@ export function CinematicFooter() {
             >
               SOL
             </a>
+            </span>
           </div>
 
           <div className="krevo-glass-pill order-1 flex cursor-default items-center gap-2.5 rounded-full px-6 py-3 md:order-2">

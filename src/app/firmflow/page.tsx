@@ -196,7 +196,7 @@ export default function FirmFlowPage() {
         className="pointer-events-none fixed inset-0 z-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.8) 100%), url('/bg-firmflow-page.png') center / cover no-repeat #000",
+            "radial-gradient(ellipse 62% 76% at 50% 46%, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.52) 44%, rgba(0,0,0,0.10) 80%, rgba(0,0,0,0) 100%), linear-gradient(180deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.70) 100%), url('/bg-firmflow-page.jpg') center / cover no-repeat #000",
         }}
         aria-hidden="true"
       />

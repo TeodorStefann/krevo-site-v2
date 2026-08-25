@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Clock, RotateCcw, Sparkles, Tag } from "lucide-react";
 import { MotionButton } from "@/components/ui/MotionButton";
@@ -350,6 +351,20 @@ export function Diagnostic() {
                 <p className="mt-8 text-[13px] text-krevo-silver/60">
                   Discuția pleacă deja cu contextul tău:{" "}
                   <span className="text-krevo-silver">{contextProgramare}</span>
+                </p>
+
+                {/* Ieșirea pentru cine a ajuns până aici și tot nu se
+                    regăsește. Fără ea, singura variantă rămasă era să
+                    închidă pagina. */}
+                <p className="mt-4 text-[13.5px] text-krevo-silver">
+                  Nu seamănă cu situația ta?{" "}
+                  <Link
+                    href="/#contact"
+                    className="font-semibold text-[#3399FF] underline-offset-4 transition-colors hover:text-white hover:underline"
+                  >
+                    Scrie-mi direct ce te doare
+                  </Link>{" "}
+                  — răspund eu, nu un formular.
                 </p>
               </div>
 

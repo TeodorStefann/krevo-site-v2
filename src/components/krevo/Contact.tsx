@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight, Calendar, CheckCircle2, Mail, Phone } from "lucide-react";
 import { FloatingPaths } from "./animations/FloatingPaths";
 import { PearlButton } from "@/components/ui/PearlButton";
+import { fundalSectiune } from "@/lib/krevo/fundal";
 
 /* Trebuie să corespundă exact cu INTEREST_OPTIONS din /api/contact/route.ts */
 const INTERESE = [
@@ -349,10 +350,7 @@ export function Contact() {
     >
       <div
         className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background:
-            "linear-gradient(180deg, #000 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, #000 100%), url('/bg-s-contact.jpg') center / cover no-repeat #000",
-        }}
+        style={fundalSectiune("/bg-s-contact.jpg")}
         aria-hidden="true"
       />
       {/* Traseele curgătoare — fluxul care se adună spre decizie */}

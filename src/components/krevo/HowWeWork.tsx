@@ -4,6 +4,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { TitleReveal } from "./animations/TitleReveal";
 import { RezervaCall } from "./RezervaCall";
+import { fundalSectiune, SUPRAFATA_CARD } from "@/lib/krevo/fundal";
 
 /** Haloul care urmărește cursorul pe carduri. */
 function urmaresteCursorul(e: React.MouseEvent<HTMLElement>) {
@@ -70,12 +71,17 @@ function StepCard({
   return (
     <div
       onMouseMove={urmaresteCursorul}
-      className={`spotlight-card relative flex-1 rounded-2xl border p-7 transition-all duration-500 ${
+      className={`spotlight-card relative flex-1 rounded-2xl border p-7 ${SUPRAFATA_CARD} transition-[border-color,box-shadow] duration-500 ${
         activat
-          ? "border-[#3399FF]/35 bg-[#0066FF]/[0.04] opacity-100"
-          : "border-white/[0.07] bg-white/[0.02] opacity-50"
+          ? "border-[#3399FF]/35 shadow-[0_0_30px_rgba(0,102,255,0.12)]"
+          : "border-white/[0.09] shadow-none"
       }`}
     >
+      {/* Se estompează conținutul, nu cardul: fundalul rămâne opac, deci textul
+          rămâne lizibil peste imagine chiar și înainte să se aprindă pasul. */}
+      <div
+        className={`transition-opacity duration-500 ${activat ? "opacity-100" : "opacity-45"}`}
+      >
       <motion.span
         animate={activat ? { scale: [1, 1.18, 1] } : { scale: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -94,6 +100,7 @@ function StepCard({
       <p className="mt-3 text-[14.5px] leading-relaxed text-krevo-silver">
         {step.description}
       </p>
+      </div>
     </div>
   );
 }
@@ -124,10 +131,7 @@ export function HowWeWork({ theme = "blue" }: { theme?: Theme }) {
     >
       <div
         className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background:
-            "linear-gradient(180deg, #000 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, #000 100%), url('/bg-s-howwework.jpg') center / cover no-repeat #000",
-        }}
+        style={fundalSectiune("/bg-s-howwework.jpg")}
         aria-hidden="true"
       />
       <div className="relative z-10 mx-auto max-w-5xl">

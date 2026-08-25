@@ -19,6 +19,7 @@ import { SlideReveal } from "./animations/SlideReveal";
 import { TitleReveal } from "./animations/TitleReveal";
 import { MotionButton } from "@/components/ui/MotionButton";
 import { RezervaCall } from "./RezervaCall";
+import { SUPRAFATA_CARD } from "@/lib/krevo/fundal";
 
 /** Haloul care urmărește cursorul pe card — același limbaj ca pe homepage. */
 function urmaresteCursorul(e: React.MouseEvent<HTMLElement>) {
@@ -150,7 +151,7 @@ function Card({ card }: { card: ServiceCard }) {
     <Link
       href={href}
       onMouseMove={urmaresteCursorul}
-      className="spotlight-card group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.025] p-6 transition-all duration-300 hover:border-[#3399FF]/45 hover:shadow-[0_0_34px_rgba(0,102,255,0.16)]"
+      className={`spotlight-card group flex h-full flex-col rounded-2xl border border-white/12 ${SUPRAFATA_CARD} p-6 transition-all duration-300 hover:border-[#3399FF]/45 hover:shadow-[0_0_34px_rgba(0,102,255,0.16)]`}
     >
       <div className="mb-4 flex items-center justify-between">
         <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#0066FF]/25 bg-[#0066FF]/10 text-[#3399FF] transition-colors group-hover:text-[#66B2FF]">
@@ -259,7 +260,7 @@ export function Services() {
         </div>
 
         {/* Invitația — nu doar un buton aruncat, o propunere clară */}
-        <div className="mx-auto mt-16 max-w-2xl rounded-[24px] border border-white/10 bg-white/[0.03] p-8 text-center md:mt-20 md:p-10">
+        <div className={`mx-auto mt-16 max-w-2xl rounded-[24px] border border-white/12 ${SUPRAFATA_CARD} p-8 text-center md:mt-20 md:p-10`}>
           <h2 className="text-[24px] leading-tight font-bold text-white md:text-[28px]">
             Nu știi de unde să începi?
           </h2>

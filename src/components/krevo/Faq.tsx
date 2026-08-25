@@ -48,7 +48,7 @@ const INTREBARI: Record<CategorieId, { q: string; a: string }[]> = {
     },
     {
       q: "Există costuri ascunse?",
-      a: "Nu. Abonamentul include tot: găzduirea, actualizările, generările cu AI și suportul. Singura extindere e la echipele mari: primii 10 utilizatori sunt incluși, apoi se adaugă un cost fix pe fiecare om în plus — pe care îl știi dinainte, de la prima discuție. Nimic nu apare pe factură fără să fi fost spus.",
+      a: "Nu, dar îți spun exact ce intră. Abonamentul include găzduirea, actualizările, suportul și un pachet lunar de generări cu AI: 30 de oferte, 20 de devize citite din poze, 15 analize și 150 de mesaje către asistent. Pentru o firmă care lucrează normal, e mai mult decât folosește într-o lună — dar dacă ajungi la capăt, îți spun și poți urca pachetul, nu ți se taie nimic pe neașteptate. A doua extindere e la echipele mari: primii 10 utilizatori sunt incluși, apoi un cost fix pe fiecare om în plus, știut de la prima discuție. Nimic nu apare pe factură fără să fi fost spus.",
     },
     {
       q: "Pot renunța oricând?",
@@ -76,7 +76,7 @@ const INTREBARI: Record<CategorieId, { q: string; a: string }[]> = {
   date: [
     {
       q: "Datele firmei mele sunt în siguranță?",
-      a: "Da. Fiecare firmă are datele complet separate, criptate, pe servere din Uniunea Europeană, cu copii de siguranță automate. Nicio altă firmă nu poate vedea nimic din ce e al tău.",
+      a: "Da. Datele firmei tale stau pe servere din Uniunea Europeană, separate complet de ale altor firme, criptate, cu copii de siguranță automate. Două lucruri pleacă în afara UE și e corect să le știi: funcțiile de inteligență artificială trimit datele necesare către Anthropic, în Statele Unite, iar emailurile automate pleacă prin Resend, tot din Statele Unite. Ambele pe clauzele contractuale standard aprobate de Comisia Europeană, iar datele tale nu sunt folosite ca să antreneze niciun model. Dacă nu vrei funcțiile de AI, se opresc — restul aplicației merge la fel.",
     },
     {
       q: "Vede altcineva cifrele mele?",
@@ -84,7 +84,7 @@ const INTREBARI: Record<CategorieId, { q: string; a: string }[]> = {
     },
     {
       q: "Ce se întâmplă cu datele mele dacă renunț?",
-      a: "Datele rămân ale tale, punct. La finalul colaborării contul se îngheață — nu se șterge — și poți exporta oricând tot ce ai introdus: devize, oferte, pontaje, facturi.",
+      a: "Datele rămân ale tale, punct. La finalul colaborării exporți tot ce ai introdus — devize, oferte, pontaje, facturi — în formate pe care le deschizi oriunde. Contul rămâne dezactivat 90 de zile, ca să te poți răzgândi fără să pierzi nimic. Dacă ceri ștergerea, o facem: complet, mai puțin ce ne obligă legea să păstrăm (documentele fiscale, de exemplu, au termenele lor).",
     },
   ],
 };
