@@ -4,9 +4,10 @@ import { CoverflowCarousel, type CoverflowSlide } from "./CoverflowCarousel";
 import { TitleReveal } from "./animations/TitleReveal";
 import { MotionButton } from "@/components/ui/MotionButton";
 
-/* Carduri de serviciu desenate pe identitatea Krevo (în /public/ce-fac).
-   Când ai capturi reale din produse, înlocuiește fișierele cu același
-   nume și apar singure — cel mai credibil portofoliu e produsul însuși. */
+/* Nu fotografii de stoc — CADRE REALE din produsele construite (extrase
+   din filmările aplicației, în /public/ce-fac): dashboardul FirmFlow,
+   AI-ul care citește poze, aplicația muncitorului, site-ul Krevo.
+   Cel mai credibil portofoliu e produsul însuși. */
 const SLIDES: CoverflowSlide[] = [
   {
     src: "/ce-fac/saas.jpg",
