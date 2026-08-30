@@ -4,43 +4,43 @@ import { CoverflowCarousel, type CoverflowSlide } from "./CoverflowCarousel";
 import { TitleReveal } from "./animations/TitleReveal";
 import { MotionButton } from "@/components/ui/MotionButton";
 
-/* Nu fotografii de stoc — CADRE REALE din produsele construite (extrase
-   din filmările aplicației, în /public/ce-fac): dashboardul FirmFlow,
-   AI-ul care citește poze, aplicația muncitorului, site-ul Krevo.
-   Cel mai credibil portofoliu e produsul însuși. */
+/* Ilustrațiile de brand generate cu AI (KlingAI), în /public/ce-fac —
+   câte una pe serviciu. `?v=2` sparge cache-ul browserului: numele
+   fișierelor au rămas aceleași când s-au schimbat imaginile; dacă le
+   înlocuiești vreodată, crește versiunea. */
 const SLIDES: CoverflowSlide[] = [
   {
-    src: "/ce-fac/saas.jpg",
+    src: "/ce-fac/saas.jpg?v=2",
     alt: "Dashboardul FirmFlow — situația firmei în timp real",
     title: "Platforme SaaS custom",
     subtitle: "Sisteme care conduc firme întregi — ca FirmFlow",
   },
   {
-    src: "/ce-fac/ai.jpg",
+    src: "/ce-fac/ai.jpg?v=2",
     alt: "AI-ul FirmFlow generând un deviz din fotografii de șantier",
     title: "Automatizări cu AI",
     subtitle: "Oferte, devize și documente generate în minute",
   },
   {
-    src: "/ce-fac/site.jpg",
+    src: "/ce-fac/site.jpg?v=2",
     alt: "Arta vizuală a site-ului Krevo",
     title: "Site-uri de prezentare",
     subtitle: "Design UI/UX care vinde, nu doar arată bine",
   },
   {
-    src: "/ce-fac/telefon.jpg",
+    src: "/ce-fac/telefon.jpg?v=2",
     alt: "Aplicația de telefon a muncitorului — un singur buton de pontaj",
     title: "Aplicații de telefon",
     subtitle: "Firma ta, în buzunarul întregii echipe",
   },
   {
-    src: "/ce-fac/rapoarte.jpg",
+    src: "/ce-fac/rapoarte.jpg?v=2",
     alt: "Istoricul de prezență pe 7 zile din FirmFlow",
     title: "Dashboarduri & rapoarte",
     subtitle: "Cifrele firmei, pe un singur ecran",
   },
   {
-    src: "/ce-fac/teren.jpg",
+    src: "/ce-fac/teren.jpg?v=2",
     alt: "Verificarea GPS a echipei de teren în FirmFlow",
     title: "Digitalizare pentru firme de teren",
     subtitle: "Construcții, instalații, inginerie — fără hârtii",
