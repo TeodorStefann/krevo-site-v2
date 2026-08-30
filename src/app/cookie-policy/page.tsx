@@ -9,7 +9,7 @@ import type { Metadata } from "next";
    Avea „use client” fără să folosească vreun hook — moștenea
    titlul paginii principale și nu se indexa corect. */
 export const metadata: Metadata = {
-  title: "Politica de cookies — Krevo",
+  title: "Politica de cookies",
   description:
     "Ce stocăm în browserul tău și de ce. Fără urmărire, fără analytics.",
   alternates: { canonical: "/cookie-policy" },
@@ -92,7 +92,7 @@ export default function CookiePolicyPage() {
               </h2>
               <p>
                 Pentru întrebări despre cookies sau date personale:
-                teodor@krevo.ro · 0774451822 · Craiova, România. Vezi și{" "}
+                teodor@krevo.ro · 0774 451 822 · Craiova, România. Vezi și{" "}
                 <Link
                   href="/confidentialitate"
                   className="text-[#3399FF] hover:text-white"

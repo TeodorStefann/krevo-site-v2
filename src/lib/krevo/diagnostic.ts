@@ -315,7 +315,9 @@ export const SOLUTII: Record<DurereId, Solutie> = {
   },
 };
 
-/** Fraza de deasupra răspunsului: „Pentru o firmă de instalații care…” */
+/** Fraza de deasupra răspunsului: „Pentru o firmă de instalații care…” —
+    folosim `descriere` (persoana a III-a), nu `eticheta` (persoana I),
+    altfel ieșea „o firmă unde «nu știu cine ce face»" — dezacord. */
 export function compuneIntro(domeniu: Domeniu, durere: Durere): string {
-  return `Pentru o ${domeniu.substantiv} unde „${durere.eticheta.toLowerCase()}”`;
+  return `Pentru o ${domeniu.substantiv} ${durere.descriere}`;
 }

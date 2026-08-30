@@ -110,7 +110,19 @@ function DemoVideo({
    Funcțiile, în ordinea în care conving: întâi cele pe care nu le are
    nimeni, apoi controlul zilnic.
    ———————————————————————————————————————————————————————————————— */
-const DEMO_ROWS = [
+/* REGULA: `src` se pune DOAR când clipul chiar există în /public/clipuri.
+   Un rând fără clip primește panoul de prezentare (aceeași ramă de browser),
+   nu un player negru gol. Când filmezi un clip: pui fișierul și adaugi
+   `src` + `legenda` la rândul lui. */
+const DEMO_ROWS: Array<{
+  src?: string;
+  alt: string;
+  legenda?: string;
+  badge: string;
+  title: string;
+  description: string;
+  checks: readonly string[];
+}> = [
   {
     src: "/clipuri/oferta-ai.mp4",
     alt: "Ofertă tehnică generată cu AI în FirmFlow",
@@ -167,7 +179,53 @@ const DEMO_ROWS = [
       "Foaie colectivă de prezență, exportabilă",
     ],
   },
-] as const;
+];
+
+/* Rândurile fără filmare încă: aceeași ramă de browser, dar cu funcția
+   prezentată — nu un player negru gol. */
+function DemoPanou({ mesaj }: { mesaj: string }) {
+  return (
+    <div
+      className="w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0d1117] transition-all duration-300 hover:border-[#3399FF]/40"
+      style={{ boxShadow: "0 25px 80px rgba(0,102,255,0.14)" }}
+    >
+      <div className="flex items-center gap-2 border-b border-white/10 bg-[#111111] px-4 py-2.5">
+        <span className="h-2.5 w-2.5 rounded-full bg-white/15" aria-hidden="true" />
+        <span className="h-2.5 w-2.5 rounded-full bg-white/15" aria-hidden="true" />
+        <span className="h-2.5 w-2.5 rounded-full bg-white/15" aria-hidden="true" />
+        <span className="ml-3 rounded-md bg-black/60 px-3 py-0.5 text-[10.5px] tracking-wide text-white/40">
+          firmflow.ro
+        </span>
+      </div>
+      <div
+        className="relative flex min-h-[280px] items-center justify-center px-6 py-14 md:min-h-[340px]"
+        style={{
+          background:
+            "radial-gradient(60% 70% at 50% 38%, rgba(0,102,255,0.12), transparent 70%), linear-gradient(180deg, #0d1117 0%, #080b12 100%)",
+        }}
+      >
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.35]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px)",
+            backgroundSize: "44px 44px",
+          }}
+          aria-hidden="true"
+        />
+        <div className="relative max-w-lg text-center">
+          <p className="text-[24px] leading-snug font-bold text-white md:text-[30px]">
+            {mesaj}
+          </p>
+          <p className="mt-4 text-[13px] text-white/45">
+            Filmarea din aplicație vine în curând — până atunci vezi funcția
+            live, în proba gratuită de 5 zile.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const PRODUCT_FAQS = [
   {
@@ -183,7 +241,7 @@ const PRODUCT_FAQS = [
   {
     question: "Ce se întâmplă cu datele dacă renunț?",
     answer:
-      "Datele rămân ale tale, punct. Contul se îngheață — nu se șterge — și poți exporta oricând tot ce ai introdus.",
+      "Datele rămân ale tale, punct. Contul rămâne dezactivat 90 de zile — nu se șterge — și poți exporta oricând tot ce ai introdus.",
   },
 ] as const;
 
@@ -342,11 +400,15 @@ export default function FirmFlowPage() {
                           ))}
                         </ul>
                       </div>
-                      <DemoVideo
-                        src={row.src}
-                        alt={row.alt}
-                        legenda={row.legenda}
-                      />
+                      {row.src ? (
+                        <DemoVideo
+                          src={row.src}
+                          alt={row.alt}
+                          legenda={row.legenda}
+                        />
+                      ) : (
+                        <DemoPanou mesaj={row.legenda ?? row.title} />
+                      )}
                     </div>
                   </FadeInOnScroll>
                 ))}
@@ -430,7 +492,7 @@ export default function FirmFlowPage() {
           <section className="px-6 pt-4 pb-20 md:pt-6 md:pb-[110px]">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-[30px] leading-tight font-bold text-white sm:text-[40px]">
-                <TitleReveal text="Hai să-l vezi pe firma ta." accentLast />
+                <TitleReveal text="Hai să-l vezi mergând în firma ta." accentLast />
               </h2>
               <p className="mx-auto mt-4 max-w-lg text-[15px] leading-relaxed text-krevo-silver">
                 O discuție de 15 minute, apoi 5 zile de probă cu proiectele,
@@ -481,20 +543,8 @@ export default function FirmFlowPage() {
                 >
                   SAL — Soluționarea alternativă a litigiilor (ANPC)
                 </a>
-                <span
-                  className="hidden text-[#3399FF]/40 sm:inline"
-                  aria-hidden="true"
-                >
-                  ·
-                </span>
-                <a
-                  href="https://ec.europa.eu/consumers/odr"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors hover:text-[#3399FF]"
-                >
-                  Platforma ODR UE
-                </a>
+                {/* Platforma ODR a UE a fost desființată în iulie 2025 —
+                    linkul spre ea era mort, rămâne doar SAL/ANPC. */}
               </div>
             </div>
           </section>

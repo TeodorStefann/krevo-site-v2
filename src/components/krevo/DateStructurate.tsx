@@ -76,7 +76,12 @@ export function DateStructurate({
       "Sistemul de operare pentru firme de teren: pontaj cu verificare de locație, proiecte, devize din fotografii, oferte și facturi cu AI.",
   };
 
-  const grafic: Record<string, unknown>[] = [organizatie, siteWeb, produs];
+  /* Organizația/site-ul/produsul ies o singură dată, din layout-ul
+     rădăcină. Pe subpagini (unde vin firimituri) emitem DOAR firimiturile —
+     altfel Google primea totul de două ori pe aceeași pagină. */
+  const grafic: Record<string, unknown>[] = firimituri?.length
+    ? []
+    : [organizatie, siteWeb, produs];
 
   if (firimituri?.length) {
     grafic.push({

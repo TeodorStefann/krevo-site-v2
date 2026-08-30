@@ -227,7 +227,7 @@ export function Services() {
             Serviciile
           </p>
           <h1 className="text-center text-[32px] leading-tight font-bold text-white md:text-[42px]">
-            <TitleReveal text="Ce construim pentru tine." accentLast />
+            <TitleReveal text="Ce construiesc pentru tine." accentLast />
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-center text-[15.5px] leading-relaxed text-krevo-silver">
             De la platforme SaaS cu AI integrat până la prezențe digitale

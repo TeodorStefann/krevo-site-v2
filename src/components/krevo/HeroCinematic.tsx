@@ -333,12 +333,32 @@ export function HeroCinematic({ siteReady = false }: { siteReady?: boolean }) {
         }
       }
 
+      if (ruleaza) raf = requestAnimationFrame(draw);
+    };
+
+    /* Bucla desenează 150 de stele + 34 de particule la fiecare frame —
+       nu are ce căuta pornită când hero-ul e demult ieșit din ecran.
+       O oprim/pornim după vizibilitate. */
+    let ruleaza = false;
+    const porneste = () => {
+      if (ruleaza) return;
+      ruleaza = true;
       raf = requestAnimationFrame(draw);
     };
-    raf = requestAnimationFrame(draw);
+    const opreste = () => {
+      ruleaza = false;
+      cancelAnimationFrame(raf);
+    };
+    const io = new IntersectionObserver(
+      ([entry]) => (entry.isIntersecting ? porneste() : opreste()),
+      { threshold: 0 }
+    );
+    io.observe(bg);
+    porneste();
 
     return () => {
-      cancelAnimationFrame(raf);
+      io.disconnect();
+      opreste();
       window.removeEventListener("resize", resize);
     };
   }, [simple]);
@@ -490,8 +510,11 @@ export function HeroCinematic({ siteReady = false }: { siteReady?: boolean }) {
       {simple ? (
         <div className="relative flex h-screen w-full items-center overflow-hidden px-6 pt-24 pb-16">
           <div className="absolute inset-0 z-0" aria-hidden="true">
+            {/* piramida-blue.png nu a existat niciodată în /public — pe
+                telefon primul ecran era negru gol. Folosim aceeași piramidă
+                ca pe desktop, în WebP (77 KB în loc de 1,9 MB). */}
             <Image
-              src="/piramida-blue.png"
+              src="/hero-2-pyramid.webp"
               alt=""
               fill
               priority
@@ -540,7 +563,7 @@ export function HeroCinematic({ siteReady = false }: { siteReady?: boolean }) {
             }}
           >
             <Image
-              src="/hero-1-stars.png"
+              src="/hero-1-stars.webp"
               alt=""
               fill
               priority
@@ -582,7 +605,7 @@ export function HeroCinematic({ siteReady = false }: { siteReady?: boolean }) {
             }}
           >
             <Image
-              src="/hero-2-pyramid.png"
+              src="/hero-2-pyramid.webp"
               alt=""
               fill
               priority

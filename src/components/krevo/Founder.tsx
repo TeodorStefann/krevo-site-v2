@@ -51,16 +51,14 @@ export function Founder() {
             aria-hidden="true"
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* Portretul existent, direct — fallback-ul pe onError însemna un
+              404 + un flash de imagine spartă la fiecare vizită. Când există
+              portretul nou, schimbă doar src-ul. */}
           <img
-            src="/founder-teo.jpg"
+            src="/teodor.png"
             alt="Teodor Chiurtu, fondator Krevo"
             loading="lazy"
             decoding="async"
-            onError={(e) => {
-              /* până există portretul nou, cade elegant pe cel vechi */
-              const img = e.currentTarget;
-              if (!img.src.endsWith("/teodor.png")) img.src = "/teodor.png";
-            }}
             className="relative z-10 w-full transition-transform duration-700 ease-out select-none group-hover:scale-[1.02]"
             style={{
               /* Razele țin fade-ul PE marginile pozei (nu în afara lor):

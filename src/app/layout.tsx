@@ -7,9 +7,11 @@ import { BaraMobil } from "@/components/krevo/BaraMobil";
 import { DateStructurate } from "@/components/krevo/DateStructurate";
 import "./globals.css";
 
+/* Variabila fontului NU se numește --font-sans: @theme din globals.css
+   definește --font-sans pentru Tailwind și ar intra în referință circulară. */
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-sans",
+  variable: "--font-inter",
 });
 
 /* Display font — titlurile. Geometric, tech, cu personalitate.

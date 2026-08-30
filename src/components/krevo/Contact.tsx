@@ -6,6 +6,7 @@ import { ArrowUpRight, Calendar, CheckCircle2, Mail, Phone } from "lucide-react"
 import { FloatingPaths } from "./animations/FloatingPaths";
 import { PearlButton } from "@/components/ui/PearlButton";
 import { fundalSectiune } from "@/lib/krevo/fundal";
+import { TELEFON, WHATSAPP_HREF } from "@/lib/krevo/linkuri";
 
 /* Trebuie să corespundă exact cu INTEREST_OPTIONS din /api/contact/route.ts */
 const INTERESE = [
@@ -14,7 +15,6 @@ const INTERESE = [
   { valoare: "Automatizări AI", eticheta: "Automatizări AI", ajutor: "Oferte, documente, răspunsuri" },
   { valoare: "Altceva", eticheta: "Nu știu încă", ajutor: "Îți spun eu ce ți se potrivește" },
 ] as const;
-const WHATSAPP_HREF = "https://wa.me/40774451822?text=Salut%21%20Am%20v%C4%83zut%20site-ul%20Krevo%20%C8%99i%20vreau%20s%C4%83%20programez%20discu%C8%9Bia%20de%2015%20minute%20despre%20FirmFlow%20pentru%20firma%20mea.";
 
 const inputClass =
   "w-full rounded-xl border border-[#002B66] bg-[#050508] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-krevo-silver/40 focus:border-[#0066FF]";
@@ -362,7 +362,7 @@ export function Contact() {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
           <a href="tel:+40774451822" className={linkClass}>
             <Phone size={16} strokeWidth={1.75} aria-hidden="true" />
-            0774451822
+            {TELEFON}
           </a>
           <a href="mailto:teodor@krevo.ro" className={linkClass}>
             <Mail size={16} strokeWidth={1.75} aria-hidden="true" />
@@ -387,7 +387,7 @@ export function Contact() {
               aria-hidden="true"
             />
             <p className="mt-5 text-lg font-medium text-white">
-              Mulțumim! Îți răspundem în maxim 24 ore.
+              Mulțumesc! Îți răspund în maximum 24 de ore.
             </p>
           </div>
         ) : (

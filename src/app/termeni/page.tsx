@@ -8,7 +8,7 @@ import type { Metadata } from "next";
    Avea „use client” fără să folosească vreun hook — moștenea
    titlul paginii principale și nu se indexa corect. */
 export const metadata: Metadata = {
-  title: "Termeni și condiții — Krevo",
+  title: "Termeni și condiții",
   description:
     "Condițiile în care poți folosi site-ul și serviciile Krevo.",
   alternates: { canonical: "/termeni" },
@@ -39,16 +39,16 @@ export default function TermeniPage() {
                 1. Identificarea operatorului
               </h2>
               <p>
-                Operatorul datelor și furnizorul serviciilor prezentate pe
-                krevo.ro este Krevo, Persoană fizică autorizată din Craiova,
-                România. Persoana de contact: Teodor Chiurtu. Email:{" "}
+                Furnizorul serviciilor prezentate pe krevo.ro este Teodor
+                Chiurtu, persoană fizică, din Craiova, România — sub numele
+                comercial Krevo. Email:{" "}
                 <a
                   href="mailto:teodor@krevo.ro"
                   className="text-[#3399FF] hover:text-white"
                 >
                   teodor@krevo.ro
                 </a>
-                . Telefon: 0774451822. Site: https://krevo.ro.
+                . Telefon: 0774 451 822. Site: https://krevo.ro.
               </p>
               <p className="mt-3">
                 Acești Termeni reglementează accesul la site și relația dintre
@@ -108,7 +108,7 @@ export default function TermeniPage() {
                 <span className="font-semibold text-white">Clientul / utilizatorul</span>{" "}
                 se angajează să furnizeze informații corecte, să folosească
                 site-ul și serviciile în scopuri legale, să respecte drepturile
-                de proprietate intelectuală și să colaborize rezonabil la
+                de proprietate intelectuală și să colaboreze rezonabil la
                 implementare (accese, feedback, aprobări).
               </p>
             </section>
@@ -177,7 +177,7 @@ export default function TermeniPage() {
               </h2>
               <p>
                 Pentru întrebări despre termeni sau date personale:
-                teodor@krevo.ro · WhatsApp 0774451822 · Craiova, România.
+                teodor@krevo.ro · WhatsApp 0774 451 822 · Craiova, România.
               </p>
             </section>
           </div>

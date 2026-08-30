@@ -9,7 +9,7 @@ import type { Metadata } from "next";
    Avea „use client” fără să folosească vreun hook — moștenea
    titlul paginii principale și nu se indexa corect. */
 export const metadata: Metadata = {
-  title: "Politică de confidențialitate — Krevo",
+  title: "Politică de confidențialitate",
   description:
     "Cum colectăm, folosim și protejăm datele tale personale. Conform GDPR (UE 2016/679).",
   alternates: { canonical: "/confidentialitate" },
@@ -40,16 +40,16 @@ export default function ConfidentialitatePage() {
                 1. Identificarea operatorului
               </h2>
               <p>
-                Operatorul datelor cu caracter personal este Krevo, Persoană
-                fizică autorizată din Craiova, România. Responsabil contact:
-                Teodor Chiurtu —{" "}
+                Operatorul datelor cu caracter personal este Teodor Chiurtu,
+                persoană fizică, din Craiova, România — sub numele comercial
+                Krevo. Contact:{" "}
                 <a
                   href="mailto:teodor@krevo.ro"
                   className="text-[#3399FF] hover:text-white"
                 >
                   teodor@krevo.ro
                 </a>
-                , telefon 0774451822.
+                , telefon 0774 451 822.
               </p>
             </section>
 
@@ -67,11 +67,8 @@ export default function ConfidentialitatePage() {
                   automatizări AI etc.)
                 </li>
                 <li>
-                  Date tehnice: niciunele. Nu folosim cookies, analytics sau
-                  instrumente de urmărire
-                </li>
-                <li>
-                  Nu folosim niciun instrument de analiză sau de urmărire
+                  Date tehnice: nu colectăm. Fără cookies, fără analytics,
+                  fără instrumente de urmărire
                 </li>
               </ul>
             </section>
@@ -204,7 +201,7 @@ export default function ConfidentialitatePage() {
               </h2>
               <p>
                 Pentru exercitarea drepturilor GDPR sau întrebări despre
-                confidențialitate: teodor@krevo.ro · 0774451822 · Craiova,
+                confidențialitate: teodor@krevo.ro · 0774 451 822 · Craiova,
                 România. Vezi și{" "}
                 <Link href="/termeni" className="text-[#3399FF] hover:text-white">
                   Termenii și condițiile

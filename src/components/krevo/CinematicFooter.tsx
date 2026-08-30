@@ -218,15 +218,8 @@ export function CinematicFooter() {
             >
               ANPC
             </a>
-            {" · "}
-            <a
-              href="https://ec.europa.eu/consumers/odr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors hover:text-[#3399FF]"
-            >
-              SOL
-            </a>
+            {/* Platforma SOL/ODR a UE a fost desființată în iulie 2025 —
+                linkul era mort, rămâne doar ANPC/SAL. */}
             </span>
           </div>
 

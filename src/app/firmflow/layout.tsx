@@ -12,6 +12,7 @@ export const metadata: Metadata = {
       "Pontaj cu verificare de locație, devize din fotografii, oferte și facturi cu AI. Probă 5 zile, fără card.",
     url: "https://krevo.ro/firmflow",
     type: "website",
+    images: ["/og-image.png"],
   },
 };
 

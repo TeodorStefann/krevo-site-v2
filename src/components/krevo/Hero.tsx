@@ -53,7 +53,7 @@ export function Hero({ siteReady = false }: { siteReady?: boolean }) {
         aria-hidden="true"
       >
         <Image
-          src="/piramida-blue.png"
+          src="/hero-2-pyramid.webp"
           alt=""
           fill
           priority

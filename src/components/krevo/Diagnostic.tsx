@@ -154,8 +154,8 @@ export function Diagnostic() {
         <p className="mx-auto mt-5 max-w-xl text-[16px] leading-relaxed text-krevo-body md:text-[17px]">
           Nimeni nu se trezește dimineața știind ce software îi trebuie. Știe
           doar ce îl enervează. Răspunde la două întrebări și îți spun exact ce
-          ți se potrivește. Fără să vorbim cu cineva, fără să lași vreo adresă
-          de email.
+          ți se potrivește. Fără să vorbești cu nimeni, fără să lași vreo
+          adresă de email.
         </p>
       </div>
 
