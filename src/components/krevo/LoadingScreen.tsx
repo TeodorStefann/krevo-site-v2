@@ -139,11 +139,13 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
         </div>
 
         {/* ── 2. Numele ──────────────────────────────────────────────── */}
+        {/* Alb care se topește spre albastrul brandului la baza literelor —
+            leagă numele de glow-ul logo-ului, fără să se bată cu el. */}
         <h1 className="mt-6 flex overflow-hidden font-serif text-[38px] leading-none font-bold tracking-[0.22em] text-white md:mt-7 md:text-[52px]">
           {LITERE.map((litera, i) => (
             <motion.span
               key={litera + i}
-              className="inline-block"
+              className="inline-block bg-gradient-to-b from-white from-[30%] to-[#8FC1FF] bg-clip-text text-transparent"
               initial={faraMiscare ? { opacity: 0 } : { y: "115%", opacity: 0 }}
               animate={{ y: "0%", opacity: 1 }}
               transition={{
