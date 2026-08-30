@@ -644,7 +644,7 @@ export function HeroCinematic({ siteReady = false }: { siteReady?: boolean }) {
           style={{ opacity: scrollHint }}
           aria-hidden="true"
         >
-          Scroll ↓
+          Derulează ↓
         </motion.div>
       </div>
       )}

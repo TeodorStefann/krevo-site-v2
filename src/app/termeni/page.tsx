@@ -166,7 +166,7 @@ export default function TermeniPage() {
                 Acești Termeni sunt guvernați de legea română. Orice litigiu
                 legat de site sau de relația precontractuală se soluționează pe
                 cale amiabilă; în caz contrar, de instanțele competente din
-                România. Consumatorii pot apela și la mecanismele ANPC / SOL,
+                România. Consumatorii pot apela și la mecanismele ANPC / SAL,
                 conform legii.
               </p>
             </section>

@@ -50,9 +50,9 @@ export function Founder() {
             }}
             aria-hidden="true"
           />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           {/* Portretul de studio (editat) — cel vechi, teodor.png, era moale
               și neclar la dimensiunea asta. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/founder-teo.jpg"
             alt="Teodor Chiurtu, fondator Krevo"
@@ -131,23 +131,23 @@ export function Founder() {
           {/* Căile de contact, ca iconițe. Adresa scrisă cu litere mici
               lângă buton arăta a semnătură de email, nu a invitație. */}
           <div className="mt-7 flex items-center justify-center gap-2.5 md:justify-start">
-            <Contact
+            <LinieContact
               href={WHATSAPP_HREF}
               eticheta="Scrie-mi pe WhatsApp"
               extern
             >
               <IconWhatsApp />
-            </Contact>
-            <Contact href={EMAIL_HREF} eticheta="Trimite-mi un email">
+            </LinieContact>
+            <LinieContact href={EMAIL_HREF} eticheta="Trimite-mi un email">
               <Mail className="h-[18px] w-[18px]" strokeWidth={1.9} />
-            </Contact>
-            <Contact href={TELEFON_HREF} eticheta="Sună-mă">
+            </LinieContact>
+            <LinieContact href={TELEFON_HREF} eticheta="Sună-mă">
               <Phone className="h-[18px] w-[18px]" strokeWidth={1.9} />
-            </Contact>
+            </LinieContact>
             {LINKEDIN_HREF && (
-              <Contact href={LINKEDIN_HREF} eticheta="LinkedIn" extern>
+              <LinieContact href={LINKEDIN_HREF} eticheta="LinkedIn" extern>
                 <Linkedin className="h-[18px] w-[18px]" strokeWidth={1.9} />
-              </Contact>
+              </LinieContact>
             )}
           </div>
 
@@ -174,7 +174,7 @@ function IconWhatsApp() {
 }
 
 /** Un cerc de contact. Suprafață de atingere de 44px, cum cere mobilul. */
-function Contact({
+function LinieContact({
   href,
   eticheta,
   extern = false,

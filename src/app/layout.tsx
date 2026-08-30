@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     siteName: "Krevo",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Krevo — Firmele mari au sisteme. Tu ai Excel. Până acum.",
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     title: "Krevo — Construim fundația digitală a firmei tale",
     description:
       "Platforme SaaS cu AI integrat pentru firme din România. FirmFlow — tot ce mișcă în firma ta într-un singur loc.",
-    images: ["/og-image.png"],
+    images: ["/og-image.jpg"],
   },
 };
 

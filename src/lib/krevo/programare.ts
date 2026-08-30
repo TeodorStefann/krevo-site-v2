@@ -9,12 +9,12 @@
  * copiezi linkul public (arată ca https://cal.com/numele-tau/15min).
  */
 
+import { MESAJ_WHATSAPP, NUMAR_WHATSAPP } from "./linkuri";
+
 export const CAL_LINK = "https://cal.com/teodor-krevo/15-min";
 
-export const NUMAR_WHATSAPP = "40774451822";
-
-const MESAJ_IMPLICIT =
-  "Salut! Am văzut site-ul Krevo și vreau să programez discuția de 15 minute pentru firma mea.";
+/* Numărul și mesajul vin din linkuri.ts — o singură sursă de adevăr. */
+const MESAJ_IMPLICIT = MESAJ_WHATSAPP;
 
 /**
  * Construiește linkul de programare.

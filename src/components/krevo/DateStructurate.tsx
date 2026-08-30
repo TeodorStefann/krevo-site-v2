@@ -1,4 +1,5 @@
 import { FURNIZOR } from "@/lib/krevo/furnizor";
+import { LINKEDIN_HREF } from "@/lib/krevo/linkuri";
 
 /**
  * Datele structurate — ce citește Google despre site, dincolo de text.
@@ -34,7 +35,7 @@ export function DateStructurate({
       width: 500,
       height: 500,
     },
-    image: `${SITE}/og-image.png`,
+    image: `${SITE}/og-image.jpg`,
     email: FURNIZOR.email,
     telephone: FURNIZOR.telefon,
     address: {
@@ -51,7 +52,7 @@ export function DateStructurate({
     areaServed: { "@type": "Country", name: "România" },
     description:
       "Sisteme software pentru firme care lucrează pe teren — construcții, instalații, inginerie. Construite pe procesele firmei, nu pe șabloane.",
-    sameAs: ["https://www.linkedin.com/in/teodor-chiurtu-a04b07317/"],
+    sameAs: [LINKEDIN_HREF].filter(Boolean),
   };
 
   const siteWeb = {

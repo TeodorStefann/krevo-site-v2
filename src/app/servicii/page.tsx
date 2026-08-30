@@ -1,5 +1,3 @@
-"use client";
-
 import { Navbar } from "@/components/krevo/Navbar";
 import { Services } from "@/components/krevo/Services";
 import { CinematicFooter } from "@/components/krevo/CinematicFooter";

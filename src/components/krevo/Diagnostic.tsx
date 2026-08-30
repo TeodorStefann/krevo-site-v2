@@ -7,6 +7,7 @@ import { Check, Clock, RotateCcw, Sparkles, Tag } from "lucide-react";
 import { MotionButton } from "@/components/ui/MotionButton";
 import { PearlButton } from "@/components/ui/PearlButton";
 import { RezervaCall } from "./RezervaCall";
+import { useClipEconom } from "@/lib/krevo/clipEconom";
 import {
   DOMENII,
   DURERI,
@@ -105,6 +106,7 @@ export function Diagnostic() {
 
   const refPas2 = useRef<HTMLDivElement>(null);
   const refRaspuns = useRef<HTMLDivElement>(null);
+  const refClip = useClipEconom();
 
   /* Ducem omul la pasul următor, ca să nu creadă că nu s-a întâmplat nimic */
   useEffect(() => {
@@ -308,8 +310,8 @@ export function Diagnostic() {
                 <figure className="mt-3.5 overflow-hidden rounded-2xl border border-[#0F2647] bg-[#07090F]">
                   <video
                     key={solutie.clip}
+                    ref={refClip}
                     src={solutie.clip}
-                    autoPlay
                     loop
                     muted
                     playsInline

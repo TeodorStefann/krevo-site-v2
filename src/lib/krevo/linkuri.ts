@@ -17,7 +17,11 @@ export const EMAIL_HREF = `mailto:${EMAIL}`;
 export const TELEFON = "0774 451 822";
 export const TELEFON_HREF = "tel:+40774451822";
 
-const MESAJ_WHATSAPP =
+export const NUMAR_WHATSAPP = "40774451822";
+
+/** Mesajul pre-scris de WhatsApp — unul singur, pe tot site-ul.
+ *  programare.ts îl importă de aici, ca să nu existe două versiuni. */
+export const MESAJ_WHATSAPP =
   "Salut! Am văzut site-ul Krevo și vreau să programez discuția de 15 minute pentru firma mea.";
 
-export const WHATSAPP_HREF = `https://wa.me/40774451822?text=${encodeURIComponent(MESAJ_WHATSAPP)}`;
+export const WHATSAPP_HREF = `https://wa.me/${NUMAR_WHATSAPP}?text=${encodeURIComponent(MESAJ_WHATSAPP)}`;

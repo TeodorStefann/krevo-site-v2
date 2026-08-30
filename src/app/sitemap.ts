@@ -3,7 +3,9 @@ import type { MetadataRoute } from "next";
 const BASE_URL = "https://krevo.ro";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
+  /* Dată fixă, actualizată la fiecare modificare reală de conținut —
+     `new Date()` la fiecare cerere era un semnal fals de prospețime. */
+  const lastModified = new Date("2026-08-30");
 
   return [
     {

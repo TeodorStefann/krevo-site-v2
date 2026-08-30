@@ -203,6 +203,15 @@ export async function POST(request: Request) {
       );
     }
 
+    /* Consimțământul se verifică ÎNAINTE de orice atingere a bazei de
+       date — fără el, nu numărăm și nu stocăm nimic. */
+    if (body.consent !== true) {
+      return NextResponse.json(
+        { error: "Trebuie să accepți Politica de Confidențialitate." },
+        { status: 400 },
+      );
+    }
+
     /* Limita REALĂ, care funcționează și pe serverless.
        Cea din memorie (mai sus) se pierde la fiecare pornire la rece și
        fiecare cerere poate nimeri altă instanță — deci nu apăra nimic.
@@ -223,12 +232,6 @@ export async function POST(request: Request) {
       );
     }
 
-    if (body.consent !== true) {
-      return NextResponse.json(
-        { error: "Trebuie să accepți Politica de Confidențialitate." },
-        { status: 400 },
-      );
-    }
 
     const row = {
       name,

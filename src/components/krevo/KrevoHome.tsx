@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { LoadingScreen } from "./LoadingScreen";
 import { Navbar } from "./Navbar";
-import { Hero } from "./Hero";
 import { HeroCinematic } from "./HeroCinematic";
 import { PainCalculator } from "./PainCalculator";
 import { Portfolio } from "./Portfolio";
@@ -15,7 +14,6 @@ import { Contact } from "./Contact";
 import { CinematicFooter } from "./CinematicFooter";
 
 // Flip to false to instantly revert to the previous hero.
-const USE_CINEMATIC_HERO = true;
 /* Intro-ul de brand rulează O DATĂ pe sesiune — la revenire intri direct. */
 const INTRO_KEY = "krevo-intro-seen";
 
@@ -49,11 +47,7 @@ export function KrevoHome() {
       >
         <Navbar />
         <main>
-          {USE_CINEMATIC_HERO ? (
-            <HeroCinematic siteReady={loaded} />
-          ) : (
-            <Hero siteReady={loaded} />
-          )}
+          <HeroCinematic siteReady={loaded} />
           <div className="relative">
             <PainCalculator />
             <Portfolio />

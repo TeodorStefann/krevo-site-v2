@@ -6,6 +6,7 @@ import { MotionButton } from "@/components/ui/MotionButton";
 import { AnimatePresence, motion } from "framer-motion";
 import { TitleReveal } from "./animations/TitleReveal";
 import { fundalSectiune } from "@/lib/krevo/fundal";
+import { useClipEconom } from "@/lib/krevo/clipEconom";
 
 /** Haloul care urmărește cursorul pe card. */
 function urmaresteCursorul(e: React.MouseEvent<HTMLElement>) {
@@ -184,6 +185,7 @@ function PanouFunctie({ tab }: { tab: Tab }) {
 export function Portfolio() {
   const [activ, setActiv] = useState(0);
   const tab = TABURI[activ];
+  const refClip = useClipEconom();
 
   return (
     <section
@@ -291,7 +293,7 @@ export function Portfolio() {
                     className={`shrink-0 rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold whitespace-nowrap transition-colors ${
                       activ === i
                         ? "bg-[#0066FF]/20 text-[#3399FF] ring-1 ring-[#0066FF]/50"
-                        : "text-white/45 hover:bg-white/5 hover:text-white/80"
+                        : "text-white/60 hover:bg-white/5 hover:text-white/80"
                     }`}
                   >
                     {t.eticheta}
@@ -306,11 +308,12 @@ export function Portfolio() {
                   {tab.video && tab.src ? (
                     <motion.video
                       key={tab.id}
+                      ref={refClip}
                       src={tab.src}
-                      autoPlay
                       muted
                       loop
                       playsInline
+                      preload="metadata"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}

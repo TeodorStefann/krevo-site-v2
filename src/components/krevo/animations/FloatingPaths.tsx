@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
 /**
  * Trasee curgătoare de lumină — fundal viu, discret, în albastrul Krevo.
@@ -57,17 +58,26 @@ function Manunchi({ position }: { position: number }) {
 
 export function FloatingPaths({ className }: { className?: string }) {
   const reduceMotion = useReducedMotion();
+  const invelis = useRef<HTMLDivElement>(null);
+  /* 60 de trasee animate la nesfârșit costă procesor chiar și când
+     secțiunea nu e pe ecran — le pornim doar cât se văd. */
+  const peEcran = useInView(invelis, { margin: "200px 0px 200px 0px" });
   if (reduceMotion) return null;
 
   return (
     <div
+      ref={invelis}
       className={`pointer-events-none absolute inset-0 z-0 overflow-hidden text-[#3399FF] ${
         className ?? ""
       }`}
       aria-hidden="true"
     >
-      <Manunchi position={1} />
-      <Manunchi position={-1} />
+      {peEcran && (
+        <>
+          <Manunchi position={1} />
+          <Manunchi position={-1} />
+        </>
+      )}
     </div>
   );
 }

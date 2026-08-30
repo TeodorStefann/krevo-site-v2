@@ -401,8 +401,17 @@ export function PainCalculator() {
                 >
                   <span className="text-[#ef4444]">
                     {yearlyLoss.toLocaleString("ro-RO")} RON pe an
-                  </span>{" "}
-                  — cât {salaries.toLocaleString("ro-RO")} salarii medii
+                  </span>
+                  {salaries >= 1 && (
+                    <>
+                      {" "}— cât {salaries.toLocaleString("ro-RO")}{" "}
+                      {salaries === 1
+                        ? "salariu mediu"
+                        : salaries >= 20
+                          ? "de salarii medii"
+                          : "salarii medii"}
+                    </>
+                  )}
                 </motion.p>
 
                 {/* Defalcarea — omul vede exact de unde vine fiecare leu */}

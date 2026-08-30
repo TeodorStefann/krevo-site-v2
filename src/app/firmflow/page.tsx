@@ -12,6 +12,7 @@ import { NoiseOverlay } from "@/components/krevo/NoiseOverlay";
 import { TitleReveal } from "@/components/krevo/animations/TitleReveal";
 import { MotionButton } from "@/components/ui/MotionButton";
 import { RezervaCall } from "@/components/krevo/RezervaCall";
+import { useClipEconom } from "@/lib/krevo/clipEconom";
 
 const GOLD = "#3399FF";
 const APP_URL = "https://firmflow.ro";
@@ -72,6 +73,7 @@ function DemoVideo({
   alt: string;
   legenda?: string;
 }) {
+  const refClip = useClipEconom();
   return (
     <div
       className="w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0d1117] transition-all duration-300 hover:border-[#3399FF]/40"
@@ -87,8 +89,8 @@ function DemoVideo({
       </div>
       <div className="relative">
         <video
+          ref={refClip}
           src={src}
-          autoPlay
           muted
           loop
           playsInline
@@ -148,7 +150,7 @@ const DEMO_ROWS: Array<{
     checks: [
       "Liniile preluate automat din deviz",
       "Numerotare automată, după regimul tău",
-      "PDF profesional, gata de trimis",
+      "PDF + XML e-Factura, gata de trimis la ANAF",
     ],
   },
   {

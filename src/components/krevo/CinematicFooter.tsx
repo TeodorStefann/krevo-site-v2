@@ -205,7 +205,7 @@ export function CinematicFooter() {
           <div className="order-2 flex flex-col gap-1.5 text-[10px] font-semibold tracking-widest text-white/40 uppercase md:order-1 md:text-xs">
             {/* Datele de identificare a comerciantului — cerute de Legea
                 365/2002 ca fiind permanent și direct accesibile. */}
-            <span className="max-w-md leading-relaxed normal-case tracking-normal text-white/35">
+            <span className="max-w-md leading-relaxed normal-case tracking-normal text-white/55">
               {identificareFurnizor()}
             </span>
             <span>

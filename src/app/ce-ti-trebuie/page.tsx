@@ -18,6 +18,14 @@ export const metadata: Metadata = {
     siteName: "Krevo",
     locale: "ro_RO",
     type: "website",
+    images: ["/og-image.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ce îți trebuie, de fapt | Krevo",
+    description:
+      "Nu știi de unde să începi? Normal. Răspunde la două întrebări și îți spun ce ți se potrivește.",
+    images: ["/og-image.jpg"],
   },
 };
 

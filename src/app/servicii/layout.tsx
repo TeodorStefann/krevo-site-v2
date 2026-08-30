@@ -18,7 +18,14 @@ export const metadata: Metadata = {
       "Platforme SaaS cu AI, automatizări și prezențe digitale pentru firme din România.",
     url: "https://krevo.ro/servicii",
     type: "website",
-    images: ["/og-image.png"],
+    images: ["/og-image.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Servicii — ce construiesc, concret | Krevo",
+    description:
+      "Platforme SaaS cu AI, automatizări și prezențe digitale pentru firme din România.",
+    images: ["/og-image.jpg"],
   },
 };
 

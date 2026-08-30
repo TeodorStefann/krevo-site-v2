@@ -174,15 +174,8 @@ export function Footer() {
           >
             ANPC
           </a>
-          {" · "}
-          <a
-            href="https://ec.europa.eu/consumers/odr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors duration-200 hover:text-[#3399FF]"
-          >
-            Platforma SOL
-          </a>
+          {/* Platforma SOL/ODR a UE a fost desființată în iulie 2025 —
+              linkul era mort, rămâne doar ANPC/SAL. */}
           {" · Construit cu Next.js · Made in România"}
         </p>
 

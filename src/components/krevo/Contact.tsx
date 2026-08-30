@@ -53,6 +53,10 @@ function InvitatieInteractiva() {
       {/* ── Starea „Perfect — Hai să vorbim" ─────────────────────────── */}
       <div
         className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-7 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        /* Cât timp e invizibil, blocul nu trebuie să existe nici pentru
+           tastatură/cititor de ecran — altfel Tab aterizează pe un link
+           pe care ochiul nu-l vede. */
+        aria-hidden={!succes}
         style={{
           opacity: succes ? 1 : 0,
           transform: succes ? "translateY(0) scale(1)" : "translateY(20px) scale(0.95)",
@@ -86,6 +90,7 @@ function InvitatieInteractiva() {
           href={WHATSAPP_HREF}
           target="_blank"
           rel="noopener noreferrer"
+          tabIndex={succes ? 0 : -1}
           onMouseEnter={() => setHoverBtn(true)}
           onMouseLeave={() => setHoverBtn(false)}
           className="group relative flex cursor-pointer items-center gap-4 transition-all duration-500"
@@ -175,9 +180,20 @@ function InvitatieInteractiva() {
       {/* ── Titlul uriaș, interactiv ─────────────────────────────────── */}
       <div
         className="group relative cursor-pointer"
+        /* Titlul e interactiv — fără astea, cine navighează cu Tab
+           n-ar putea nici ajunge la el, nici „apăsa" pe el. */
+        role="button"
+        tabIndex={apasat ? -1 : 0}
+        aria-label="Hai să lucrăm împreună — deschide invitația"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         onClick={laClick}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            laClick();
+          }
+        }}
         style={{ pointerEvents: apasat ? "none" : "auto" }}
       >
         <div className="flex flex-col items-center gap-6">
