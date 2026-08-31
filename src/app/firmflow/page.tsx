@@ -311,6 +311,18 @@ export default function FirmFlowPage() {
               <p className="mt-6 text-[12.5px] text-krevo-silver/80">
                 Probă de 5 zile pe datele firmei tale · Fără card
               </p>
+              {/* Ușa de mijloc: cine nu e pregătit să vorbească sau să intre
+                  în aplicație primește întâi cifra care doare — calculatorul
+                  de pierdere de pe firmflow.ro. */}
+              <a
+                href="https://firmflow.ro/cat-costa"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex items-center gap-2 text-[14px] font-semibold text-[#3399FF] transition-colors hover:text-white"
+              >
+                Calculează cât pierde firma ta fără sistem
+                <span aria-hidden="true">→</span>
+              </a>
             </div>
 
             {/* Dovada, imediat sub promisiune: funcția unică, în mișcare */}
