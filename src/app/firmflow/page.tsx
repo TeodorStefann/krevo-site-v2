@@ -314,15 +314,27 @@ export default function FirmFlowPage() {
               {/* Ușa de mijloc: cine nu e pregătit să vorbească sau să intre
                   în aplicație primește întâi cifra care doare — calculatorul
                   de pierdere de pe firmflow.ro. */}
-              <a
-                href="https://firmflow.ro/cat-costa"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center gap-2 text-[14px] font-semibold text-[#3399FF] transition-colors hover:text-white"
-              >
-                Calculează cât pierde firma ta fără sistem
-                <span aria-hidden="true">→</span>
-              </a>
+              <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-8">
+                <a
+                  href="https://firmflow.ro/cat-costa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-[14px] font-semibold text-[#3399FF] transition-colors hover:text-white"
+                >
+                  Calculează cât pierde firma ta fără sistem
+                  <span aria-hidden="true">→</span>
+                </a>
+                {/* Prezentarea oficială — pentru cine vrea să o citească în
+                    liniște sau să o arate asociatului. */}
+                <a
+                  href="/FirmFlow-Prezentare.pdf"
+                  download
+                  className="inline-flex items-center gap-2 text-[14px] font-semibold text-[#3399FF] transition-colors hover:text-white"
+                >
+                  Descarcă prezentarea (PDF)
+                  <span aria-hidden="true">↓</span>
+                </a>
+              </div>
             </div>
 
             {/* Dovada, imediat sub promisiune: funcția unică, în mișcare */}
