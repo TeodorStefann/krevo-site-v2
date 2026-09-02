@@ -36,9 +36,17 @@ export type MesajFormular = {
 };
 
 export async function anuntaMesajNou(m: MesajFormular): Promise<void> {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return;
+  const token = process.env.TELEGRAM_BOT_TOKEN?.trim();
+  const chatId = process.env.TELEGRAM_CHAT_ID?.trim();
+  if (!token || !chatId) {
+    /* Fără chei nu e eroare — dar scriem în jurnal, ca să se vadă în
+       Vercel → Logs dacă variabilele n-au ajuns în deploy-ul curent. */
+    console.warn(
+      "[telegram] Sărit: lipsește",
+      !token ? "TELEGRAM_BOT_TOKEN" : "TELEGRAM_CHAT_ID"
+    );
+    return;
+  }
 
   const linii = [
     "🔵 <b>Mesaj nou pe krevo.ro</b>",
@@ -56,7 +64,7 @@ export async function anuntaMesajNou(m: MesajFormular): Promise<void> {
     /* Cu termen scurt: dacă Telegram e lent, nu ținem omul în formular. */
     const controler = new AbortController();
     const oprire = setTimeout(() => controler.abort(), 4000);
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    const raspuns = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -68,6 +76,22 @@ export async function anuntaMesajNou(m: MesajFormular): Promise<void> {
       signal: controler.signal,
     });
     clearTimeout(oprire);
+
+    /* Telegram răspunde 200 doar când a livrat. Un 400/401/403 înseamnă
+       chat_id greșit, token greșit sau bot blocat — înainte treceau
+       neobservate și nimeni nu știa de ce nu sună telefonul. */
+    if (!raspuns.ok) {
+      const detaliu = (await raspuns.json().catch(() => null)) as
+        | { description?: string }
+        | null;
+      console.error(
+        "[telegram] Telegram a refuzat mesajul:",
+        raspuns.status,
+        detaliu?.description ?? ""
+      );
+    } else {
+      console.log("[telegram] Notificare livrată.");
+    }
   } catch (err) {
     /* Nicio dată personală în log — doar faptul că n-a mers. */
     console.error(
