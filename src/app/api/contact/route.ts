@@ -186,21 +186,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Date prea lungi." }, { status: 400 });
     }
 
-    let supabase;
+    /* Baza de date e utilă, dar NU e scopul formularului. Scopul e ca
+       mesajul să ajungă la mine. Dacă Supabase e adormit (proiect pe
+       plan gratuit pus în pauză după 7 zile), pierdeam clientul complet:
+       nu se salva, nu pleca nici emailul, nici Telegramul, iar omul
+       vedea „încearcă din nou". De acum baza e opțională. */
+    let supabase: ReturnType<typeof getSupabaseAdmin> | null = null;
     try {
       supabase = getSupabaseAdmin();
     } catch (clientErr) {
-      console.error("[contact] Failed to create Supabase admin client:", {
+      console.error("[contact] Clientul Supabase nu s-a putut crea:", {
         message:
           clientErr instanceof Error ? clientErr.message : String(clientErr),
       });
-      return NextResponse.json(
-        {
-          error:
-            "Nu am putut trimite mesajul. Te rugăm să încerci din nou.",
-        },
-        { status: 500 },
-      );
     }
 
     /* Consimțământul se verifică ÎNAINTE de orice atingere a bazei de
@@ -218,18 +216,20 @@ export async function POST(request: Request) {
        Numărăm direct în baza de date câte mesaje a trimis aceeași adresă
        în ultimele 10 minute. Nu stocăm IP-uri, deci nici nu adăugăm date
        personale noi doar ca să ne apărăm de spam. */
-    const acumZeceMinute = new Date(Date.now() - RATE_WINDOW_MS).toISOString();
-    const { count: recente } = await supabase
-      .from("contact_requests")
-      .select("id", { count: "exact", head: true })
-      .eq("email", email)
-      .gte("created_at", acumZeceMinute);
+    if (supabase) {
+      const acumZeceMinute = new Date(Date.now() - RATE_WINDOW_MS).toISOString();
+      const { count: recente } = await supabase
+        .from("contact_requests")
+        .select("id", { count: "exact", head: true })
+        .eq("email", email)
+        .gte("created_at", acumZeceMinute);
 
-    if ((recente ?? 0) >= RATE_MAX) {
-      return NextResponse.json(
-        { error: "Ai trimis deja câteva mesaje. Îți răspund în curând." },
-        { status: 429 },
-      );
+      if ((recente ?? 0) >= RATE_MAX) {
+        return NextResponse.json(
+          { error: "Ai trimis deja câteva mesaje. Îți răspund în curând." },
+          { status: 429 },
+        );
+      }
     }
 
 
@@ -244,41 +244,41 @@ export async function POST(request: Request) {
       consent_text: TEXT_CONSIMTAMANT,
     };
 
-    let { error } = await supabase.from("contact_requests").insert(row);
+    let salvatInBaza = false;
 
-    /* Dacă proiectul n-are încă coloanele de consimțământ, salvăm mesajul
-       oricum — nu pierdem o cerere pentru o migrare nerulată.
-       Rulează supabase/contact-consimtamant.sql. */
-    if (error) {
-      const deBaza = {
-        name: row.name,
-        email: row.email,
-        phone: row.phone,
-        interest: row.interest,
-        message: row.message,
-        read: row.read,
-      };
-      ({ error } = await supabase.from("contact_requests").insert(deBaza));
-    }
+    if (supabase) {
+      let { error } = await supabase.from("contact_requests").insert(row);
 
-    if (error) {
-      console.error("[contact] Supabase insert failed:", {
-        message: error.message,
-        code: error.code,
-      });
-      return NextResponse.json(
-        {
-          error:
-            "Nu am putut trimite mesajul. Te rugăm să încerci din nou.",
-        },
-        { status: 500 },
-      );
+      /* Dacă proiectul n-are încă coloanele de consimțământ, salvăm mesajul
+         oricum — nu pierdem o cerere pentru o migrare nerulată.
+         Rulează supabase/contact-consimtamant.sql. */
+      if (error) {
+        const deBaza = {
+          name: row.name,
+          email: row.email,
+          phone: row.phone,
+          interest: row.interest,
+          message: row.message,
+          read: row.read,
+        };
+        ({ error } = await supabase.from("contact_requests").insert(deBaza));
+      }
+
+      if (error) {
+        console.error("[contact] Salvarea în Supabase a eșuat:", {
+          message: error.message,
+          code: error.code,
+        });
+      } else {
+        salvatInBaza = true;
+      }
     }
 
     /* Două canale, în paralel: emailul pentru urmă scrisă, Telegram
-       pentru sunetul pe telefon. Dacă unul cade, celălalt merge — și
-       niciunul nu poate bloca răspunsul către om. */
-    await Promise.allSettled([
+       pentru sunetul pe telefon. Rulează ACUM, indiferent dacă baza de
+       date a răspuns — un client care scrie la 2 noaptea nu trebuie să
+       depindă de starea unui server. */
+    const anunturi = await Promise.allSettled([
       sendNotificationEmail({ name, email, phone, interest, message }),
       anuntaMesajNou({
         nume: name,
@@ -288,6 +288,30 @@ export async function POST(request: Request) {
         mesaj: message,
       }),
     ]);
+
+    const anuntatCumva = anunturi.some((r) => r.status === "fulfilled");
+
+    /* Mesajul e „trimis" dacă a ajuns la mine pe cel puțin o cale. Când
+       s-a pierdut doar rândul din bază, îl reconstitui din email. Doar
+       când NIMIC n-a funcționat îi cerem omului să reîncerce. */
+    if (!salvatInBaza && !anuntatCumva) {
+      console.error("[contact] PIERDUT: nici baza, nici anunțurile n-au mers.", {
+        email,
+      });
+      return NextResponse.json(
+        {
+          error:
+            "Nu am putut trimite mesajul. Scrie-mi te rog direct la teodor@krevo.ro.",
+        },
+        { status: 500 },
+      );
+    }
+
+    if (!salvatInBaza) {
+      console.warn("[contact] Mesaj anunțat pe email/Telegram, dar NESALVAT în bază.", {
+        email,
+      });
+    }
 
     return NextResponse.json({ ok: true });
   } catch (err) {
